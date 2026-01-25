@@ -119,12 +119,17 @@ export default function ResourcesPage() {
             );
           })}
         </div>
-      </section>
-{/* 2.5 STUDY LINKS */}
-<StudyLinksSection />
+      </section> 
 
-{/* 3. BLOGS SECTION (Redesigned: Editorial Look) */}
-<section className="bg-white py-24 px-6 lg:px-12">
+
+
+     {/* 2.5 STUDY LINKS */}
+     <StudyLinksSection />
+
+
+
+     {/* 3. BLOGS SECTION (Redesigned: Editorial Look) */}
+       <section className="bg-white py-24 px-6 lg:px-12">
         <div className="max-w-7xl mx-auto">
           <h2 className="text-3xl font-serif text-slate-900 mb-12">Latest Insights</h2>
 
@@ -174,7 +179,7 @@ export default function ResourcesPage() {
 
 
 
-
+       {/* //CTA EVENTS CTA// */}
       <section className="w-full flex justify-center py-10">
       <Link
         href="/events"
@@ -190,10 +195,6 @@ export default function ResourcesPage() {
           transition-all duration-500 ease-out
         "
       >
-        {/* Gradient Overlay
-           1. Default: Visible (translate-x-0)
-           2. Hover: Slides out to the right (translate-x-full) 
-        */}
         <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-[#2E0249] to-[#7c3aed] transform translate-x-0 group-hover:translate-x-full transition-transform duration-500 ease-in-out" />
         
         {/* Content Layer (z-10 ensures it stays on top of background) */}
@@ -202,7 +203,7 @@ export default function ResourcesPage() {
           <ArrowRightCircle className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
         </span>
       </Link>
-    </section>
+      </section>
 
 
 
