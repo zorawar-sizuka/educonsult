@@ -1,0 +1,202 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+// --------------------
+// ENUMS
+// --------------------
+
+enum ContactService {
+  CAREER_COUNSELING
+  UNIVERSITY_SHORTLISTING
+  SOP_LOR_SUPPORT
+  SCHOLARSHIP_GUIDANCE
+  VISA_COUNSELING
+  PRE_DEPARTURE_BRIEFING
+  LANGUAGE_PREPARATION
+  OTHER
+}
+
+// --------------------
+// CORE FORMS
+// --------------------
+
+model Booking {
+  id        Int      @id @default(autoincrement())
+  name      String
+  email     String
+  phone     String?
+  date      DateTime
+  message   String?
+  createdAt DateTime @default(now())
+}
+
+model Inquiry {
+  id           Int      @id @default(autoincrement())
+  name         String
+  email        String
+  destination  String
+  gpa          String?
+  englishScore String?
+  course       String?
+  createdAt    DateTime @default(now())
+}
+
+model Contact {
+  id        Int            @id @default(autoincrement())
+  fullName  String
+  email     String
+  service   ContactService
+  message   String?
+  createdAt DateTime       @default(now())
+
+  @@index([email])
+  @@index([service])
+}
+
+// --------------------
+// EVENTS & CMS
+// --------------------
+
+model Event {
+  id              Int      @id @default(autoincrement())
+  title           String
+  category        String
+  date            DateTime
+  time            String
+  location        String
+  description     String
+  longDescription String?  @db.Text
+  imageUrl        String?  @db.Text
+  createdAt       DateTime @default(now())
+}
+
+model Subscriber {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  createdAt DateTime @default(now())
+}
+
+model EventRegistration {
+  id        Int      @id @default(autoincrement())
+  name      String
+  email     String
+  visitors  Int
+  eventName String
+  createdAt DateTime @default(now())
+}
+
+// --------------------
+// SAAS / TOOLS CORE
+// --------------------
+
+model Country {
+  id                   Int      @id @default(autoincrement())
+  code                 String   @unique
+  name                 String
+  currencyCode         String
+  livingCostMonthlyUsd Int      @default(1200)
+  updatedAt            DateTime @updatedAt
+
+  universities         University[]
+}
+
+model ExchangeRate {
+  id        Int      @id @default(autoincrement())
+  base      String
+  quote     String
+  rate      Float
+  fetchedAt DateTime @default(now())
+  provider  String   @default("unknown")
+
+  @@unique([base, quote])
+}
+
+model University {
+  id                Int      @id @default(autoincrement())
+  name              String
+  countryCode       String
+  city              String?
+  ranking           Int?
+  tuitionYearUsd    Int?
+  intake            String?
+  applicationFeeUsd Int?
+  website           String?
+  tags              String[]  @default([])
+
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  country           Country  @relation(fields: [countryCode], references: [code], onDelete: Cascade)
+  savedBy           SavedUniversity[]
+
+  @@index([countryCode])
+  @@index([tuitionYearUsd])
+  @@unique([name, countryCode], name: "name_countryCode")
+}
+
+model SavedUniversity {
+  id           Int      @id @default(autoincrement())
+  sessionId    String?
+  userId       String?
+  universityId Int
+  note         String?
+  createdAt    DateTime @default(now())
+
+  university   University @relation(fields: [universityId], references: [id], onDelete: Cascade)
+
+  @@unique([sessionId, universityId], name: "saved_uni_session_unique")
+  @@index([sessionId, createdAt])
+  @@index([universityId])
+}
+
+model ToolRun {
+  id        Int      @id @default(autoincrement())
+  toolType  String
+  sessionId String?
+  userId    String?
+  payload   Json
+  result    Json?
+  saved     Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  @@index([toolType, createdAt])
+  @@index([sessionId])
+}
+
+// --------------------
+// SOP BUILDER
+// --------------------
+
+model SOPTemplate {
+  id        Int      @id @default(autoincrement())
+  name      String
+  isDefault Boolean  @default(false)
+  schema    Json
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  drafts    SOPDraft[]
+}
+
+model SOPDraft {
+  id         Int      @id @default(autoincrement())
+  sessionId  String?
+  userId     String?
+  templateId Int
+  inputs     Json
+  generated  String?  @db.Text
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  template   SOPTemplate @relation(fields: [templateId], references: [id], onDelete: Cascade)
+
+  @@index([sessionId, createdAt])
+  @@index([templateId])
+}

@@ -1,0 +1,192 @@
+'use client';
+
+import React, { useEffect, useMemo, useState } from 'react';
+import ToolShell from './ToolsShell';
+import PillButton from './ui/PillButton';
+import { SelectField, Slider } from './ui/Fields';
+
+import { livingCosts } from '@/app/data/toolsData';
+import { useExchangeRate } from '@/hooks/useExchangeRate';
+import { logToolRun } from '@/hooks/toolRunClient';
+
+export default function CostTool({ countryOptions = [], countryMap, restore }) {
+  const [inputs, setInputs] = useState({
+    country: countryOptions?.[0] || 'Australia',
+    duration: 2
+  });
+
+  const [saving, setSaving] = useState(false);
+  const [saveMsg, setSaveMsg] = useState("");
+
+  // Live cached rate (USD->NPR)
+  const { rate: usdToNpr, meta: rateMeta, loading: rateLoading } =
+    useExchangeRate({ base: "USD", quote: "NPR" });
+
+  // keep country valid
+  useEffect(() => {
+    if (!countryOptions?.length) return;
+    setInputs(prev => (countryOptions.includes(prev.country) ? prev : { ...prev, country: countryOptions[0] }));
+  }, [countryOptions]);
+
+  // restore inputs
+  useEffect(() => {
+    const payload = restore?.payload;
+    if (!payload) return;
+    setInputs(prev => ({ ...prev, ...payload }));
+    setSaveMsg("");
+  }, [restore?.ts]);
+
+  const selected = countryMap?.get?.(inputs.country);
+
+  const livingMonthlyUsd =
+    selected?.livingCostMonthlyUsd ??
+    (livingCosts?.[inputs.country] ?? 1200);
+
+  // ---- Per-year costs ----
+  const livingYearUsd = livingMonthlyUsd * 12;
+  const tuitionYearUsd = 25000; // placeholder for now
+  const totalYearUsd = livingYearUsd + tuitionYearUsd;
+
+  // ---- Program total (multiplies by duration) ----
+  const durationYears = Number(inputs.duration) || 1;
+  const programTotalUsd = totalYearUsd * durationYears;
+
+  const safeRate = typeof usdToNpr === "number" ? usdToNpr : 134.5;
+  const totalYearNpr = totalYearUsd * safeRate;
+  const programTotalNpr = programTotalUsd * safeRate;
+
+  // Result object we will save on click
+  const computed = useMemo(() => ({
+    livingMonthlyUsd,
+    livingYearUsd,
+    tuitionYearUsd,
+    totalYearUsd,
+    programTotalUsd,
+    totalYearNpr,
+    programTotalNpr,
+    durationYears,
+    rateUsed: safeRate,
+    rateFetchedAt: rateMeta?.fetchedAt ?? null,
+  }), [
+    livingMonthlyUsd,
+    livingYearUsd,
+    tuitionYearUsd,
+    totalYearUsd,
+    programTotalUsd,
+    totalYearNpr,
+    programTotalNpr,
+    durationYears,
+    safeRate,
+    rateMeta?.fetchedAt,
+  ]);
+
+  // Save ONLY on button click (no auto logging spam)
+  const handleSave = async () => {
+    setSaving(true);
+    setSaveMsg("");
+
+    const payload = { ...inputs };
+    const result = { ...computed };
+
+    const res = await logToolRun({
+      toolType: "cost",
+      payload,
+      result,
+      saved: true, // ⭐ mark as saved
+    });
+
+    if (res?.ok) setSaveMsg("Saved! Open History → Saved to compare.");
+    else setSaveMsg("Could not save. Try again.");
+
+    setSaving(false);
+  };
+
+  return (
+    <ToolShell
+      title="Estimate your study budget (USD → NPR)."
+      description="Uses DB living-cost baselines + a cached live exchange rate. Save your estimate to compare later."
+      ctaLabel="Learn budgeting"
+      onCta={() => {}}
+      leftExtra={
+        <div className="text-xs text-slate-500">
+          Rate: {rateLoading ? 'Loading…' : `1 USD ≈ ${safeRate.toFixed(2)} NPR`}
+          {rateMeta?.fetchedAt ? ` • Updated ${new Date(rateMeta.fetchedAt).toLocaleString()}` : ''}
+        </div>
+      }
+    >
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <SelectField
+          label="Destination"
+          value={inputs.country}
+          onChange={(v) => setInputs({ ...inputs, country: v })}
+          options={countryOptions.length ? countryOptions : Object.keys(livingCosts)}
+        />
+
+        <div className="rounded-2xl border border-slate-200 bg-slate-50 p-5">
+          <div className="text-sm font-medium text-slate-700">Estimated (total for duration)</div>
+
+          <div className="mt-2 text-2xl font-serif text-slate-900">
+            NPR {programTotalNpr.toLocaleString()}
+          </div>
+
+          <div className="mt-1 text-sm text-slate-600">
+            ≈ ${programTotalUsd.toLocaleString()} USD / {durationYears} years
+          </div>
+
+          <div className="mt-3 text-xs text-slate-500">
+            Per year: NPR {totalYearNpr.toLocaleString()} (≈ ${totalYearUsd.toLocaleString()} USD)
+          </div>
+        </div>
+
+        <div className="md:col-span-2">
+          <Slider
+            label={`Course Duration: ${inputs.duration} years`}
+            value={inputs.duration}
+            onChange={(v) => setInputs({ ...inputs, duration: v })}
+            min={1}
+            max={5}
+            step={0.5}
+          />
+        </div>
+
+        <div className="md:col-span-2 rounded-2xl border border-slate-200 bg-white p-5">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 text-sm">
+            <div>
+              <div className="text-slate-500">Living (monthly)</div>
+              <div className="font-bold">${livingMonthlyUsd.toLocaleString()}</div>
+            </div>
+            <div>
+              <div className="text-slate-500">Living (yearly)</div>
+              <div className="font-bold">${livingYearUsd.toLocaleString()}</div>
+            </div>
+            <div>
+              <div className="text-slate-500">Tuition (yearly)</div>
+              <div className="font-bold">${tuitionYearUsd.toLocaleString()}</div>
+            </div>
+            <div>
+              <div className="text-slate-500">Total (yearly)</div>
+              <div className="font-bold">${totalYearUsd.toLocaleString()}</div>
+            </div>
+          </div>
+        </div>
+
+        <div className="md:col-span-2">
+          <PillButton onClick={handleSave} className="w-full py-4" disabled={saving}>
+            {saving ? "Saving…" : "Looks good — save & compare"}
+          </PillButton>
+
+          {saveMsg && (
+            <div className="mt-3 text-sm text-slate-600">
+              {saveMsg}
+            </div>
+          )}
+        </div>
+
+        <div className="md:col-span-2 text-xs text-slate-500">
+          Living cost is {selected?.livingCostMonthlyUsd ? "from DB" : "fallback"}.
+          Tuition is a placeholder for now (we’ll connect it to University DB later).
+        </div>
+      </div>
+    </ToolShell>
+  );
+}
