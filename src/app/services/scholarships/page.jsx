@@ -4,6 +4,7 @@ import React from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { Award, Coins, FileText, Globe, School, Speech, TrendingUp } from "lucide-react";
+import InquireButton from "@/components/FormButton/InquireButton";
 
 // Data specific to Scholarship Guidance
 const scholarshipData = [
@@ -141,13 +142,13 @@ export default function Scholarship() {
           3. CTA
       ------------------------------------------------------- */}
       <section className="py-24 flex justify-center">
-        <button className="group relative px-8 py-4 bg-slate-900 text-white rounded-full overflow-hidden">
+        <InquireButton className="group relative px-8 py-4 bg-slate-900 text-white rounded-full overflow-hidden">
           <div className="absolute inset-0 w-full h-full bg-blue-600 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out" />
           <span className="relative z-10 font-medium tracking-wide flex items-center gap-2">
             Check Your Eligibility
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
           </span>
-        </button>
+        </InquireButton>
       </section>
 
     </div>

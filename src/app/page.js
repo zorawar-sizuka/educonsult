@@ -13,10 +13,10 @@ import LogoMarquee from "@/components/Marquee";
 export default function Home() {
   return (
     <>
-      <Hero1 backgroundImageUrl="/hero/hero1.jpg" />  
-      <div className="block md:hidden">
-      <LogoMarquee/> 
-      </div>   
+      <Hero1/>  
+      <div className="block md:hidden w-100vw   relative left-1/2 -translate-x-1/2 my-10 bg-white">
+     <LogoMarquee originalColor={true} />
+      </div>
       <Hero2/> 
       <DestinationsCluster/>  
       <Hero3/>

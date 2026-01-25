@@ -4,6 +4,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import BookButton from "./FormButton/BookButton"; // IMPORT THE REAL LOGIC COMPONENT
+import Image from "next/image";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -98,14 +99,16 @@ const Navbar = () => {
           ].join(" ")}
         >
           {/* Logo */}
-          <Link href="/" className="relative z-10 flex items-center gap-3 pl-1">
-            <span className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-black text-white">
-              <span className="font-bold text-xs">R</span>
-            </span>
-            <span className="text-[18px] font-bold tracking-tight text-black">
-              ROSS
-            </span>
-          </Link>
+          <a href="/" className="relative z-10 flex items-center pl-1">
+   <Image
+    src="/logo.png" // Ensure logo.png is inside your public/ folder
+    alt="ROSS Logo"
+    width={120}     // Intrinsic width of your image (adjust as needed)
+    height={40}     // Intrinsic height
+    className="h-9 w-auto object-contain" // h-9 (36px) matches your previous circle size
+    priority        // Loads image immediately as LCP
+  />
+</a>
 
           {/* Desktop Links */}
           <div className="relative z-10 hidden lg:flex items-center gap-1">

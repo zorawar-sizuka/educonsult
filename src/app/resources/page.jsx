@@ -3,9 +3,10 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Download, ArrowRight, X, ArrowUpRight, Calendar, Clock } from 'lucide-react';
+import { Download, ArrowRight, X, ArrowUpRight, Calendar, Clock, ArrowRightCircle } from 'lucide-react';
 import { resourcesData } from '@/app/data/resourceData'; 
 import StudyLinksSection from '@/components/StudyLink';
+import Link from 'next/link';
 const getTagColor = (tag) => {
     const t = tag.toLowerCase();
     if (t.includes('anxiety') || t.includes('exam')) return 'bg-[#FEF3C7] text-[#92400E]'; // Yellow
@@ -168,7 +169,43 @@ export default function ResourcesPage() {
             ))}
           </div>
         </div>
-      </section>
+      </section> 
+
+
+
+
+
+      <section className="w-full flex justify-center py-10">
+      <Link
+        href="/events"
+        className="
+          group relative overflow-hidden
+          inline-flex items-center gap-3
+          px-10 py-4
+          bg-[#1a0b2e] /* The Dark Matte background (revealed on hover) */
+          text-white
+          font-semibold tracking-widest uppercase text-sm
+          rounded-sm
+          shadow-2xl shadow-purple-900/30
+          transition-all duration-500 ease-out
+        "
+      >
+        {/* Gradient Overlay
+           1. Default: Visible (translate-x-0)
+           2. Hover: Slides out to the right (translate-x-full) 
+        */}
+        <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-[#2E0249] to-[#7c3aed] transform translate-x-0 group-hover:translate-x-full transition-transform duration-500 ease-in-out" />
+        
+        {/* Content Layer (z-10 ensures it stays on top of background) */}
+        <span className="relative z-10 flex items-center gap-2">
+          Checkout Events
+          <ArrowRightCircle className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
+        </span>
+      </Link>
+    </section>
+
+
+
 
       {/* 4. THE PAPER POPUP MODAL */}
       <AnimatePresence>

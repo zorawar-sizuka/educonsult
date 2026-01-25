@@ -8,11 +8,12 @@ export default function LogoMarquee({
   speed = 40,
   pauseOnHover = true,
   className = "",
+  originalColor = false, // 1. Added new prop with default false
 }) {
   return (
     <div className={`w-full ${className}`}>
       
-      <div className="text-center mb-8 lg:mb-12">
+      <div className="text-center px-16">
         {/* Optional header */}
       </div>
 
@@ -30,20 +31,28 @@ export default function LogoMarquee({
           >
             {/* Premium white effect container */}
             <div className="relative h-8 md:h-10 lg:h-12 w-auto">
-              {/* Original image with transparency mask */}
               <div className="relative h-full w-auto">
                 <Image
                   src={l.src}
                   alt={l.alt}
                   width={160}
                   height={50}
-                  className="h-full w-auto object-contain opacity-100 grayscale brightness-0 invert group-hover:grayscale-0 group-hover:invert-0 group-hover:brightness-100 transition-all duration-500 cursor-pointer"
+                  // 2. Logic: If originalColor is true, we skip the filters.
+                  //    If false, we apply grayscale, brightness-0, and invert.
+                  className={`h-full w-auto object-contain opacity-100 transition-all duration-500 cursor-pointer 
+                    ${originalColor 
+                      ? "" 
+                      : "grayscale brightness-0 invert group-hover:grayscale-0 group-hover:invert-0 group-hover:brightness-100"
+                    }`}
                   priority={false} 
                   placeholder="blur" 
                   blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaUMk9jkHLUw2QzGpEnb0STETSlGYb4kXq6CWWKv/9k="
                 />
-                {/* Subtle glow effect */}
-                <div className="absolute inset-0 bg-white/0 group-hover:bg-white/5 transition-all duration-300 rounded-lg"></div>
+                
+                {/* 3. Only show the hover glow effect if we are NOT in original color mode */}
+                {!originalColor && (
+                   <div className="absolute inset-0 bg-white/0 group-hover:bg-white/5 transition-all duration-300 rounded-lg"></div>
+                )}
               </div>
             </div>
           </div>

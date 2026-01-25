@@ -6,6 +6,7 @@ import React from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { CalendarClock, CheckCircle, FileSignature, GraduationCap, MailCheck, School, Speech } from "lucide-react";
+import BookButton from "@/components/FormButton/BookButton";
 
 // Data specific to Admission Counselling (The Execution Phase)
 const admissionData = [
@@ -142,14 +143,15 @@ export default function AdmissionCounselling() {
       {/* -------------------------------------------------------
           3. CTA
       ------------------------------------------------------- */}
-      <section className="py-24 flex justify-center">
-        <button className="group relative px-8 py-4 bg-slate-900 text-white rounded-full overflow-hidden">
+      <section className="py-24 flex justify-center"> 
+
+        <BookButton className="group relative px-8 py-4 bg-slate-900 text-white rounded-full overflow-hidden">
           <div className="absolute inset-0 w-full h-full bg-blue-600 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out" />
           <span className="relative z-10 font-medium tracking-wide flex items-center gap-2">
             Start Your Application
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
           </span>
-        </button>
+        </BookButton>
       </section>
 
     </div>

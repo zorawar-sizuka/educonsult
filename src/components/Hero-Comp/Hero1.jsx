@@ -61,22 +61,39 @@ export default function Hero() {
   }, []);
 
   return (
-    <section id="hero" className="relative w-full min-h-screen overflow-hidden text-white">
+    <section id="#top" className="relative w-full min-h-screen overflow-hidden text-white">
       
       {/* Background Container */}
       <div
-        ref={bgRef} // Attached Ref
+        ref={bgRef}
         className="absolute inset-0 z-0 will-change-transform"
       >
-        <Image
-          src="/hero/hero1.jpg"
-          alt="Atmospheric university campus"
-          fill
-          priority
-          sizes="100vw"
-          className="object-cover" 
-        />
-        <div className="absolute inset-0 bg-black/20" />
+        {/* --- 1. MOBILE IMAGE (Visible up to 'md' breakpoint) --- */}
+        <div className="block md:hidden relative w-full h-full">
+            <Image
+            src="/hero/hero1_mobile.jpg" // 👈 Add your mobile portrait image here
+            alt="Atmospheric university campus"
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover object-center" 
+            />
+        </div>
+
+        {/* --- 2. DESKTOP IMAGE (Hidden on mobile, Visible on 'md' and up) --- */}
+        <div className="hidden md:block relative w-full h-full">
+            <Image
+            src="/hero/hero1.jpg"
+            alt="Atmospheric university campus"
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover" 
+            />
+        </div>
+
+        {/* Dark Overlay (Applies to whichever image is visible) */}
+        <div className="absolute inset-0 bg-black/20 z-10" />
       </div>
 
       {/* Content Container */}
@@ -106,7 +123,7 @@ export default function Hero() {
           </div>
 
           {/* Marquee area */}
-          <div className="opacity-[0.80] hover:opacity-[0.95] transition-opacity duration-300 hidden md:block">
+          <div className="opacity-[0.80] hover:opacity-[0.95] transition-opacity duration-300 hidden md:block ">
             <Marquee />
           </div>
         </div>
@@ -115,7 +132,7 @@ export default function Hero() {
       {/* Scroll indicator */}
       <div
         ref={scrollIndRef} // Attached Ref
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20"
+        className="absolute bottom-12 left-1/2 -translate-x-1/2 z-20 hidden md:block"
       >
         <div className="flex flex-col items-center">
           <span className="text-[11px] text-white/55 mb-2 tracking-wider uppercase">
