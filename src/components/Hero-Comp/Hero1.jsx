@@ -106,7 +106,7 @@ export default function Hero() {
           </div>
 
           {/* Marquee area */}
-          <div className="opacity-[0.55] hover:opacity-[0.75] transition-opacity duration-300">
+          <div className="opacity-[0.80] hover:opacity-[0.95] transition-opacity duration-300 hidden md:block">
             <Marquee />
           </div>
         </div>

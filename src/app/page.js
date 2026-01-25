@@ -8,11 +8,15 @@ import Founder from "@/components/Founder";
 import Stats from "@/components/Stats";
 import ContactSection from "@/components/Contact";
 import TestimonialsCarousel from "@/components/Testimonials";
+import LogoMarquee from "@/components/Marquee";
 
 export default function Home() {
   return (
     <>
-      <Hero1 backgroundImageUrl="/hero/hero1.jpg" />   
+      <Hero1 backgroundImageUrl="/hero/hero1.jpg" />  
+      <div className="block md:hidden">
+      <LogoMarquee/> 
+      </div>   
       <Hero2/> 
       <DestinationsCluster/>  
       <Hero3/>

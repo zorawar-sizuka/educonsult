@@ -157,25 +157,25 @@ export default function AboutPage() {
 
       {/* -------------------------------------------------------
           4. LEADERSHIP TEAM
-          Inspired by Screenshot 2026-01-22 at 21.50.12.png
+        
           - Square/Portrait aspect ratio
           - Text overlay at bottom
           - Gradient fade
       ------------------------------------------------------- */}
-      <div className="py-12 px-4 md:px-6 bg-[#F6F5F2]">
-        <section className="py-20 max-w-7xl mx-auto">
+    <div className="py-12 px-4 md:px-6 bg-[#F6F5F2]">
+        <section className="py-12 md:py-20 max-w-7xl mx-auto">
             
-            <div className="text-center mb-16">
+            <div className="text-center mb-12 md:mb-16">
               <span className="text-xs font-bold uppercase tracking-widest text-[#10b981] mb-2 block">
                 Expertise
               </span>
-              <h3 className="text-4xl md:text-5xl font-medium text-slate-900 font-serif">
+              <h3 className="text-3xl md:text-5xl font-medium text-slate-900 font-serif">
                 Meet Our Leaders
               </h3>
             </div>
 
-            {/* Team Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {/* Team Grid: 2 cols on mobile, 4 on desktop */}
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-4 gap-y-10 lg:gap-6">
               {teamMembers.map((member, index) => (
                 <motion.div 
                   key={member.id}
@@ -183,28 +183,44 @@ export default function AboutPage() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
-                  className="group relative overflow-hidden rounded-2xl aspect-[4/5] bg-slate-300 cursor-pointer"
+                  // Layout Switch:
+                  // Mobile: Flex column for Avatar style (Image Top, Text Bottom)
+                  // Desktop: Aspect Ratio Card (Image Fill, Text Overlay)
+                  className="group relative flex flex-col items-center lg:block lg:aspect-[4/5] lg:rounded-2xl lg:overflow-hidden lg:bg-slate-300 cursor-pointer"
                 >
-                  {/* Image */}
-                  <Image
-                    src={member.image}
-                    alt={member.name}
-                    fill
-                    className="object-cover transition-transform duration-700 ease-in-out group-hover:scale-110"
-                  />
                   
-                  {/* Gradient Overlay (Dark at bottom) */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-80 transition-opacity duration-300" />
+                  {/* --- IMAGE CONTAINER --- */}
+                  {/* Mobile: Fixed Width/Height Circle (w-32 h-32 rounded-full) 
+                      Desktop: Absolute Fill (inset-0 w-full h-full rounded-none) */}
+                  <div className="relative w-32 h-32 sm:w-40 sm:h-40 rounded-full overflow-hidden shadow-lg 
+                                  lg:shadow-none lg:absolute lg:inset-0 lg:w-full lg:h-full lg:rounded-none">
+                    <Image
+                      src={member.image}
+                      alt={member.name}
+                      fill
+                      className="object-cover transition-transform duration-700 ease-in-out group-hover:scale-110"
+                    />
+                    
+                    {/* Gradient Overlay: HIDDEN on mobile, Visible on Desktop */}
+                    <div className="hidden lg:block absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-80 transition-opacity duration-300" />
+                  </div>
 
-                  {/* Text Content (Positioned Absolute Bottom) */}
-                  <div className="absolute bottom-0 left-0 w-full p-6 transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
-                    <h4 className="text-xl font-bold text-white mb-1">
+                  {/* --- TEXT CONTENT --- */}
+                  {/* Mobile: Margin Top, Dark Text
+                      Desktop: Absolute Position, White Text */}
+                  <div className="mt-4 text-center 
+                                  lg:mt-0 lg:absolute lg:bottom-0 lg:left-0 lg:w-full lg:p-6 lg:text-left 
+                                  lg:transform lg:translate-y-2 lg:group-hover:translate-y-0 lg:transition-transform lg:duration-300">
+                    
+                    <h4 className="text-lg md:text-xl font-bold text-slate-900 lg:text-white mb-1">
                       {member.name}
                     </h4>
-                    <p className="text-sm font-medium text-white/70 uppercase tracking-wide">
+                    
+                    <p className="text-xs md:text-sm font-medium text-emerald-600 lg:text-white/70 uppercase tracking-wide">
                       {member.role}
                     </p>
                   </div>
+
                 </motion.div>
               ))}
             </div>

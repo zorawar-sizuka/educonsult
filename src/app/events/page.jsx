@@ -164,42 +164,65 @@ const EventModal = ({ event, onClose }) => {
         </div>
 
         {/* Modal Content */}
-        <div className="p-8 md:p-12">
-          <div className="flex flex-col md:flex-row gap-8 mb-10 border-b border-slate-200 pb-8">
-             <div className="flex items-start gap-4 flex-1">
-                <div className="p-3 bg-white border border-slate-100 shadow-sm rounded-2xl text-indigo-600">
-                    <CalendarDays className="w-6 h-6"/>
-                </div>
-                <div>
-                    <p className="text-xs text-slate-400 uppercase font-bold tracking-widest mb-1">Date & Time</p>
-                    <p className="text-lg text-slate-900 font-medium">{formatDate(event.date).full}</p>
-                    <p className="text-slate-500">{event.time}</p>
-                </div>
-             </div>
-             <div className="flex items-start gap-4 flex-1">
-                <div className="p-3 bg-white border border-slate-100 shadow-sm rounded-2xl text-indigo-600">
-                    <MapPin className="w-6 h-6"/>
-                </div>
-                <div>
-                    <p className="text-xs text-slate-400 uppercase font-bold tracking-widest mb-1">Location</p>
-                    <p className="text-lg text-slate-900 font-medium">{event.location}</p>
-                </div>
-             </div>
-          </div>
-          
-          <div className="prose prose-lg text-slate-600 max-w-none mb-12 font-light">
-            <p className="text-xl text-slate-800 font-normal leading-relaxed">{event.description}</p>
-            <p>{event.longDescription || "Join us for an immersive experience designed to inspire and connect. This event brings together industry leaders and creative minds."}</p>
-          </div>
+        <div className="p-6 md:p-12 bg-white h-full overflow-y-auto">
+  
+  {/* Header Info Section */}
+  <div className="flex flex-col md:flex-row gap-6 md:gap-8 mb-8 md:mb-10 border-b border-slate-200 pb-8">
+    
+    {/* Date Block */}
+    <div className="flex items-start gap-4 flex-1">
+      <div className="shrink-0 p-3 bg-white border border-slate-100 shadow-sm rounded-2xl text-indigo-600">
+        <CalendarDays className="w-5 h-5 md:w-6 md:h-6" />
+      </div>
+      <div>
+        <p className="text-[10px] md:text-xs text-slate-400 uppercase font-bold tracking-widest mb-1">
+          Date & Time
+        </p>
+        <p className="text-base md:text-lg text-slate-900 font-medium">
+          {formatDate(event.date).full}
+        </p>
+        <p className="text-sm md:text-base text-slate-500">
+          {event.time}
+        </p>
+      </div>
+    </div>
 
-          <button 
-            onClick={() => setShowRegister(true)}
-            className="w-full bg-slate-900 text-white py-5 rounded-2xl font-bold text-lg hover:bg-indigo-600 transition-colors flex items-center justify-center gap-2 group shadow-xl shadow-slate-900/10"
-          >
-            Secure Your Spot
-            <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-          </button>
-        </div>
+    {/* Location Block */}
+    <div className="flex items-start gap-4 flex-1">
+      <div className="shrink-0 p-3 bg-white border border-slate-100 shadow-sm rounded-2xl text-indigo-600">
+        <MapPin className="w-5 h-5 md:w-6 md:h-6" />
+      </div>
+      <div>
+        <p className="text-[10px] md:text-xs text-slate-400 uppercase font-bold tracking-widest mb-1">
+          Location
+        </p>
+        <p className="text-base md:text-lg text-slate-900 font-medium leading-tight">
+          {event.location}
+        </p>
+      </div>
+    </div>
+  </div>
+
+  {/* Description - Made responsive (prose-base on mobile, prose-lg on desktop) */}
+  <div className="prose prose-base md:prose-lg text-slate-600 max-w-none mb-8 md:mb-12 font-light">
+    <p className="text-lg md:text-xl text-slate-800 font-normal leading-relaxed">
+      {event.description}
+    </p>
+    <p>
+      {event.longDescription ||
+        "Join us for an immersive experience designed to inspire and connect. This event brings together industry leaders and creative minds."}
+    </p>
+  </div>
+
+  {/* Button */}
+  <button
+    onClick={() => setShowRegister(true)}
+    className="w-full bg-slate-900 text-white py-4 md:py-5 rounded-2xl font-bold text-base md:text-lg hover:bg-indigo-600 transition-colors flex items-center justify-center gap-2 group shadow-xl shadow-slate-900/10 active:scale-[0.98] duration-200"
+  >
+    Secure Your Spot
+    <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+  </button>
+</div>
       </motion.div>
     </div>
     </>

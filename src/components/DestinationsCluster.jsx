@@ -239,14 +239,22 @@ export default function DestinationsCluster() {
     <section className="relative w-full py-16 md:py-24 bg-[white] overflow-hidden">
       <div className="max-w-[1440px] mx-auto px-6 lg:px-12">
         
-        {/* --- Header --- */}
-        <div className="mb-12 md:mb-20 text-center max-w-3xl mx-auto">
-          <Notifier content="Global Opportunities" position="top-center" />
-          <h2 className="text-4xl md:text-6xl font-serif text-stone-900 mb-6 leading-[0.95]">
-            The world is your <br />
+      {/* --- Header --- */}
+      <div className="flex flex-col items-center text-center max-w-3xl mx-auto mb-16 md:mb-24 px-6 md:px-0">
+          
+          {/* Notifier Wrapper - Adds space below the tag */}
+          <div className="mb-8 md:mb-10">
+            <Notifier content="Global Opportunities" />
+          </div>
+
+          {/* Headline - Responsive sizing and leading */}
+          <h2 className="text-4xl sm:text-5xl md:text-7xl font-serif text-stone-900 mb-6 md:mb-8 leading-tight md:leading-[0.95] tracking-tight">
+            The world is your <br className="hidden md:block" />
             <span className="italic text-stone-400">campus.</span>
           </h2>
-          <p className="text-stone-500 text-lg font-light max-w-xl mx-auto">
+
+          {/* Description - Constrained width for readability */}
+          <p className="text-base md:text-xl text-stone-500 font-light leading-relaxed max-w-lg md:max-w-2xl mx-auto">
             We've built partnerships with top universities in the world's most innovative cities. Hover over the map to explore.
           </p>
         </div>

@@ -1,14 +1,26 @@
 'use client';
 
-import React, { useRef } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import Image from 'next/image';
 import { motion, useScroll, useTransform, useInView, useSpring } from 'framer-motion';
 import Link from 'next/link';
 
+// --- Utility Hook for Mobile Detection ---
+const useIsMobile = () => {
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+  return isMobile;
+};
+
 // --- Sub-Component: Physics-Based Counter ---
 const SmoothCounter = ({ value, suffix = "" }) => {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-50px" });
+  const isInView = useInView(ref, { once: true, margin: "-20px" }); // Reduced margin for mobile responsiveness
 
   const springValue = useSpring(0, {
     damping: 30,
@@ -16,7 +28,7 @@ const SmoothCounter = ({ value, suffix = "" }) => {
     mass: 1
   });
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (isInView) springValue.set(value);
   }, [isInView, value, springValue]);
 
@@ -31,15 +43,23 @@ const SmoothCounter = ({ value, suffix = "" }) => {
   );
 };
 
-// --- Sub-Component: Text Reveal Animation ---
+// --- Sub-Component: Text Reveal Animation (Optimized) ---
 const RevealText = ({ children, delay = 0 }) => {
+  const isMobile = useIsMobile();
+
   return (
     <div className="overflow-hidden">
       <motion.div
-        initial={{ y: "100%" }}
-        whileInView={{ y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.8, delay, ease: [0.33, 1, 0.68, 1] }}
+        // Mobile: Slide up only 20px (lighter). Desktop: Slide from 100% (dramatic).
+        initial={{ y: isMobile ? 20 : "100%", opacity: isMobile ? 0 : 1 }}
+        whileInView={{ y: 0, opacity: 1 }}
+        viewport={{ once: true, margin: isMobile ? "-10%" : "0px" }}
+        transition={{ 
+          // Mobile: Faster, simpler easing. Desktop: Slower, sophisticated bezier.
+          duration: isMobile ? 0.5 : 0.8, 
+          delay: isMobile ? 0 : delay, // Remove stagger delay on mobile for snappiness
+          ease: isMobile ? "easeOut" : [0.33, 1, 0.68, 1] 
+        }}
       >
         {children}
       </motion.div>
@@ -75,6 +95,7 @@ const RotatingBadge = () => (
 // --- Main Component ---
 const AboutEditorial = () => {
   const containerRef = useRef(null);
+  const isMobile = useIsMobile();
 
   // Parallax Logic
   const { scrollYProgress } = useScroll({
@@ -82,7 +103,14 @@ const AboutEditorial = () => {
     offset: ["start end", "end start"]
   });
 
-  const y = useTransform(scrollYProgress, [0, 1], ["0%", "20%"]);
+  // OPTIMIZATION: 
+  // Desktop: Parallax moves 20%. 
+  // Mobile: Parallax moves 0% (Static) to prevent scroll jank.
+  const y = useTransform(
+    scrollYProgress, 
+    [0, 1], 
+    ["0%", isMobile ? "0%" : "20%"] 
+  );
 
   const stats = [
     { number: 12, suffix: "+", label: "Years Experience" },
@@ -91,67 +119,37 @@ const AboutEditorial = () => {
     { number: 5, suffix: "M", label: "Scholarships Secured" },
   ];
 
-  // ✅ Bento images data (swap freely)
-
   const bentoImages = [
-
     {
-
       id: "a",
-
       src: "/collage/collage1.avif",
-
       alt: "Student success",
-
-      className: "col-span-7 row-span-2", // BIG tile
-
+      className: "col-span-7 row-span-2", 
       overlayQuote: true,
-
     },
-
     {
-
       id: "b",
-
       src: "/collage/collage2.avif",
-
       alt: "Counseling session",
-
       className: "col-span-5 row-span-1",
-
     },
-
     {
-
       id: "c",
-
       src: "/collage/collage3.avif",
-
       alt: "Documentation and planning",
-
       className: "col-span-3 row-span-1",
-
     },
-
     {
-
       id: "d",
-
       src: "/collage/collage4.avif",
-
       alt: "Global network map",
-
       className: "col-span-2 row-span-1",
-
     },
-
   ];
-
-
 
   return (
     <section ref={containerRef} className="relative w-full bg-[#FAFAF9] text-stone-900 py-24 lg:py-40 overflow-hidden">
-      {/* Background Decor (Grid) */}
+      {/* Background Decor */}
       <div
         className="absolute inset-0 z-0 opacity-[0.03]"
         style={{
@@ -169,7 +167,6 @@ const AboutEditorial = () => {
             <div className="space-y-2 mb-6 lg:mb-8">
               <RevealText>
                 <span className="flex items-center gap-3 text-xs font-bold tracking-[0.2em] text-amber-600 uppercase mb-3 lg:mb-4">
-                  {/* The Amber Dash */}
                   <span className="h-0.5 w-8 bg-amber-600 rounded-full flex-shrink-0" />
                   About Us
                 </span>
@@ -188,7 +185,8 @@ const AboutEditorial = () => {
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4, duration: 0.8 }}
+              viewport={{ once: true }}
+              transition={{ delay: isMobile ? 0 : 0.4, duration: 0.8 }}
               className="text-base sm:text-lg text-stone-600 font-light leading-relaxed mb-8 lg:mb-10"
             >
               Founded with a vision to democratize global education, we bridge the gap between potential and opportunity. We don't just process applications; we architect careers through radical transparency and precision.
@@ -197,7 +195,8 @@ const AboutEditorial = () => {
             <motion.div
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
-              transition={{ delay: 0.6 }} 
+              viewport={{ once: true }}
+              transition={{ delay: isMobile ? 0.2 : 0.6 }} 
               className="mb-8 lg:mb-0"
             >
               <Link 
@@ -205,13 +204,11 @@ const AboutEditorial = () => {
                 className="group relative inline-flex items-center gap-4 px-6 sm:px-8 py-3 sm:py-4 bg-stone-900 text-white rounded-full overflow-hidden transition-all hover:pr-6"
               >
                 <span className="relative z-10 text-sm font-medium tracking-wide">Read Our Vision</span>
-                
                 <div className="relative z-10 w-5 h-5 sm:w-6 sm:h-6 bg-white rounded-full flex items-center justify-center text-stone-900 group-hover:bg-amber-400 transition-colors">
                   <svg className="w-2.5 h-2.5 sm:w-3 sm:h-3 -rotate-45 group-hover:rotate-0 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
                   </svg>
                 </div>
-
                 <div className="absolute inset-0 bg-stone-800 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out" />
               </Link>
             </motion.div>
@@ -228,14 +225,20 @@ const AboutEditorial = () => {
                     key={img.id}
                     className={`group relative overflow-hidden rounded-2xl lg:rounded-[2.2rem] ${img.className}`}
                   >
+                    {/* OPTIMIZATION: 
+                      1. Added will-change-transform for GPU optimization 
+                      2. 'y' value is effectively 0 on mobile due to logic above
+                    */}
                     <motion.div
                       style={{ y }}
-                      className="absolute -top-[10%] left-0 w-full h-[120%]"
+                      className="absolute -top-[10%] left-0 w-full h-[120%] will-change-transform"
                     >
                       <Image
                         src={img.src}
                         alt={img.alt}
                         fill
+                        // OPTIMIZATION: Sizes prop prevents downloading 4k image on mobile
+                        sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
                         className="object-cover grayscale group-hover:grayscale-0 transition-all duration-700"
                         priority={idx === 0}
                       />
@@ -260,13 +263,10 @@ const AboutEditorial = () => {
         </div>
 
         {/* --- STATS GRID --- */}
-        {/* CHANGED: grid-cols-2 ensures 2 cards per row on mobile */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 md:gap-8 lg:gap-12 border-t border-stone-200 pt-12 lg:pt-16">
           {stats.map((stat, index) => (
             <div 
               key={index} 
-              // CHANGED: Added bg-white/50 and shadow-sm for mobile default.
-              // Used lg: to revert to transparent/no-shadow until hover on desktop.
               className="
                 flex flex-col items-center justify-center text-center group cursor-default 
                 p-4 sm:p-6 md:p-8 rounded-2xl 
@@ -276,8 +276,6 @@ const AboutEditorial = () => {
                 min-h-[160px] sm:min-h-[200px]
               "
             >
-              {/* Centered Numeric Value */}
-              {/* CHANGED: scale-105 default on mobile, reset to scale-100 on desktop */}
               <div className="
                 text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-serif text-stone-900 
                 flex items-baseline justify-center gap-1 mb-2 sm:mb-3 
@@ -288,8 +286,6 @@ const AboutEditorial = () => {
                 <span className="text-xl sm:text-2xl lg:text-4xl text-stone-400 font-sans font-light">{stat.suffix}</span>
               </div>
               
-              {/* Centered Label */}
-              {/* CHANGED: text-amber-600 default on mobile, reset to stone-500 on desktop */}
               <span className="
                 text-[10px] sm:text-xs md:text-sm font-bold uppercase tracking-widest 
                 text-amber-600 lg:text-stone-500 lg:group-hover:text-amber-600 
@@ -298,8 +294,6 @@ const AboutEditorial = () => {
                 {stat.label}
               </span>
               
-              {/* Optional subtle centered indicator */}
-              {/* CHANGED: w-16 and amber bg default on mobile, reset on desktop */}
               <div className="
                 mt-4 sm:mt-6 md:mt-8 h-0.5 transition-all duration-300
                 w-16 bg-amber-400 
