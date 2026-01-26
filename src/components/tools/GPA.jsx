@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Calculator, Download, ArrowRightLeft, 
@@ -8,6 +8,8 @@ import {
 } from 'lucide-react';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
+
+import { getSessionId, logToolRun } from '@/hooks/toolRunClient'; // Added for tracking
 
 // --- NEB Official Data ---
 const GRADING_SYSTEM = [
@@ -53,6 +55,13 @@ export default function GPACalculator() {
   const [marks, setMarks] = useState({});
   const [subjectGpas, setSubjectGpas] = useState({});
   const [result, setResult] = useState(null);
+  const [sessionId, setSessionId] = useState(null); // Added for tracking
+
+  // Fetch session ID on mount
+  useEffect(() => {
+    const id = getSessionId();
+    setSessionId(id);
+  }, []);
 
   // --- Logic ---
   const handleMarksChange = (id, type, val, max) => {
@@ -65,7 +74,7 @@ export default function GPACalculator() {
     setSubjectGpas(prev => ({ ...prev, [id]: val }));
   };
 
-  const calculate = () => {
+  const calculate = async () => {
     const subjects = STREAMS[stream].subjects;
 
     if (mode === 'gpaToMarks') {
@@ -96,14 +105,26 @@ export default function GPACalculator() {
       const avgGPA = totalGPA / count;
       const finalGrade = GRADING_SYSTEM.find(r => avgGPA >= r.gpaRange[0] && avgGPA <= r.gpaRange[1]) || GRADING_SYSTEM[GRADING_SYSTEM.length - 1];
 
-      setResult({
+      const calcResult = {
         gpa: avgGPA.toFixed(2),
         grade: finalGrade.grade,
         percentage: `${finalGrade.interval}%`,
         remark: finalGrade.remark,
         details,
         mode
-      });
+      };
+
+      setResult(calcResult);
+
+      // Log the tool run
+      if (sessionId) {
+        await logToolRun({
+          toolType: "gpa",
+          sessionId,
+          payload: { stream, mode, subjectGpas },
+          result: calcResult
+        });
+      }
 
     } else {
       let totalGP = 0;
@@ -138,14 +159,26 @@ export default function GPACalculator() {
       const percentage = (totalObtained / totalFull) * 100;
       const finalGrade = GRADING_SYSTEM.find(r => finalGPA >= r.gpaRange[0] && finalGPA <= r.gpaRange[1]) || GRADING_SYSTEM[GRADING_SYSTEM.length - 1];
 
-      setResult({
+      const calcResult = {
         gpa: finalGPA.toFixed(2),
         grade: finalGrade.grade,
         percentage: `${percentage.toFixed(1)}%`,
         remark: finalGrade.remark,
         details,
         mode
-      });
+      };
+
+      setResult(calcResult);
+
+      // Log the tool run
+      if (sessionId) {
+        await logToolRun({
+          toolType: "gpa",
+          sessionId,
+          payload: { stream, mode, marks },
+          result: calcResult
+        });
+      }
     }
   };
 

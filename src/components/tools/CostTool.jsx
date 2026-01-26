@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useMemo, useState } from 'react';
-import ToolShell from './ToolsShell';
+import ToolShell from './TipsShell';
 import PillButton from './ui/PillButton';
 import { SelectField, Slider } from './ui/Fields';
 
@@ -9,34 +9,49 @@ import { livingCosts } from '@/app/data/toolsData';
 import { useExchangeRate } from '@/hooks/useExchangeRate';
 import { logToolRun } from '@/hooks/toolRunClient';
 
-export default function CostTool({ countryOptions = [], countryMap, restore }) {
+export default function CostTool({ countryOptions = [], countryMap = new Map(), restore }) {
   const [inputs, setInputs] = useState({
-    country: countryOptions?.[0] || 'Australia',
+    country: countryOptions?.[0] || 'AUS', // Default to seeded code
     duration: 2
   });
 
   const [saving, setSaving] = useState(false);
   const [saveMsg, setSaveMsg] = useState("");
 
-  // Live cached rate (USD->NPR)
-  const { rate: usdToNpr, meta: rateMeta, loading: rateLoading } =
-    useExchangeRate({ base: "USD", quote: "NPR" });
-
-  // keep country valid
+  // Restore from history
   useEffect(() => {
-    if (!countryOptions?.length) return;
-    setInputs(prev => (countryOptions.includes(prev.country) ? prev : { ...prev, country: countryOptions[0] }));
-  }, [countryOptions]);
-
-  // restore inputs
-  useEffect(() => {
-    const payload = restore?.payload;
+    const payload = restore?.data; // Access via unified structure
     if (!payload) return;
     setInputs(prev => ({ ...prev, ...payload }));
     setSaveMsg("");
   }, [restore?.ts]);
 
-  const selected = countryMap?.get?.(inputs.country);
+  // Live cached rate (USD->NPR)
+  const { rate: usdToNpr, meta: rateMeta, loading: rateLoading } =
+    useExchangeRate({ base: "USD", quote: "NPR" });
+
+  // FIXED: Standardize fallback to codes only (no names to avoid dups)
+  const fallbackCodes = ['USA', 'UK', 'AUS', 'CAN', 'DEU', 'JPN', 'NZL'];
+  const effectiveCodes = countryOptions?.length ? countryOptions : fallbackCodes;
+
+  // FIXED: Always transform to {value, label}—label from map, fallback to code if missing
+  const displayOptions = useMemo(() => {
+    return effectiveCodes.map(code => ({
+      value: code,
+      label: countryMap.get(code)?.name || code.toUpperCase() // Uppercase codes for fallback (e.g., "USA")
+    }));
+  }, [effectiveCodes, countryMap]);
+
+  // Keep country valid
+  useEffect(() => {
+    if (!displayOptions?.length) return;
+    const validCountry = displayOptions.find(opt => opt.value === inputs.country)?.value;
+    if (!validCountry) {
+      setInputs(prev => ({ ...prev, country: displayOptions[0].value }));
+    }
+  }, [displayOptions]);
+
+  const selected = countryMap?.get(inputs.country);
 
   const livingMonthlyUsd =
     selected?.livingCostMonthlyUsd ??
@@ -119,7 +134,7 @@ export default function CostTool({ countryOptions = [], countryMap, restore }) {
           label="Destination"
           value={inputs.country}
           onChange={(v) => setInputs({ ...inputs, country: v })}
-          options={countryOptions.length ? countryOptions : Object.keys(livingCosts)}
+          options={displayOptions} // FIXED: Uses value/label—no dups!
         />
 
         <div className="rounded-2xl border border-slate-200 bg-slate-50 p-5">
@@ -184,7 +199,7 @@ export default function CostTool({ countryOptions = [], countryMap, restore }) {
 
         <div className="md:col-span-2 text-xs text-slate-500">
           Living cost is {selected?.livingCostMonthlyUsd ? "from DB" : "fallback"}.
-          Tuition is a placeholder for now (we’ll connect it to University DB later).
+          Tuition is a placeholder for now (we'll connect it to University DB later).
         </div>
       </div>
     </ToolShell>

@@ -133,7 +133,7 @@ export default function DiscoveryTool() {
         <div>
           <h2 className="text-2xl font-serif text-slate-900">University Finder</h2>
           <p className="text-slate-500 text-sm mt-1">
-            Browse DB universities, filter by tuition, and save your shortlist.
+            Browse  universities, filter by tuition, and save your shortlist.
           </p>
         </div>
 
@@ -177,7 +177,8 @@ export default function DiscoveryTool() {
             <option value="Australia">Australia</option>
             <option value="Japan">Japan</option>
             <option value="Canada">Canada</option>
-            <option value="Germany">Germany</option>
+            <option value="Germany">Germany</option> 
+            <option value="NZL">New Zealand</option>
           </select>
         </div>
 

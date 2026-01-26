@@ -4,6 +4,8 @@ import { prisma } from '@/lib/prisma'; // Import from the file we created above
 // 'force-dynamic' ensures we always get the latest CMS data
 export const dynamic = 'force-dynamic';
 
+
+//GET REQUEST //
 export async function GET(req) {
   try {
     const { searchParams } = new URL(req.url);
@@ -59,6 +61,7 @@ export async function GET(req) {
   }
 }
 
+// POST REQUEST
 export async function POST(req) {
   try {
     const body = await req.json();
@@ -88,6 +91,7 @@ export async function POST(req) {
   }
 }
 
+// DELETE REQUEST
 export async function DELETE(req) {
   try {
     const { searchParams } = new URL(req.url);
@@ -105,5 +109,32 @@ export async function DELETE(req) {
   } catch (error) {
     console.error("DELETE Event Error:", error);
     return NextResponse.json({ error: "Failed to delete" }, { status: 500 });
+  }
+} 
+
+// PUT REQUEST
+export async function PUT(req) {
+  try {
+    const body = await req.json();
+    const { id, ...updateData } = body; // id is separate for where clause
+
+    if (!id) {
+      return NextResponse.json({ error: 'ID required for update' }, { status: 400 });
+    }
+
+    // Ensure date is parsed if provided
+    if (updateData.date) {
+      updateData.date = new Date(updateData.date);
+    }
+
+    const updatedEvent = await prisma.event.update({
+      where: { id: Number(id) },
+      data: updateData,
+    });
+
+    return NextResponse.json(updatedEvent, { status: 200 });
+  } catch (error) {
+    console.error('PUT Event Error:', error);
+    return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }

@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useState, useMemo } from 'react';
-import ToolShell from './ToolsShell';
+import ToolShell from './TipsShell';
 import PillButton from './ui/PillButton';
 import { TextInput, TextArea } from './ui/Fields';
 

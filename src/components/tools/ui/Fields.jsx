@@ -1,3 +1,6 @@
+// 
+
+
 'use client';
 
 import React from 'react';
@@ -36,7 +39,10 @@ export function SelectField({ label, value, onChange, options = [] }) {
           focus:bg-white focus:border-slate-900 focus:ring-4 focus:ring-slate-900/10 transition"
       >
         {options.map((o) => (
-          <option key={o} value={o}>{o}</option>
+          // FIXED: Use o.value as key (unique string) instead of o (object)
+          <option key={o.value || o} value={o.value || o}>
+            {o.label || o} {/* Render label if object, fallback to o */}
+          </option>
         ))}
       </select>
     </div>
@@ -74,4 +80,13 @@ export function Slider({ label, value, onChange, min, max, step }) {
       />
     </div>
   );
-}
+} 
+
+
+
+
+
+
+
+
+
