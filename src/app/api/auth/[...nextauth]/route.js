@@ -91,6 +91,92 @@
 
 
 
+// import NextAuth from "next-auth";
+// import CredentialsProvider from "next-auth/providers/credentials";
+// import { PrismaAdapter } from "@auth/prisma-adapter";
+// import { prisma } from "@/lib/prisma";
+// import bcrypt from "bcrypt";
+
+// export const authOptions = {
+//   debug: true,
+//   adapter: PrismaAdapter(prisma),
+//   providers: [
+//     CredentialsProvider({
+//       name: "credentials",
+//       credentials: {
+//         email: { label: "Email", type: "email" },
+//         password: { label: "Password", type: "password" },
+//       },
+//       async authorize(credentials) {
+//         console.log("[AUTH DEBUG] Credentials received:", { email: credentials?.email });
+
+//         if (!credentials?.email || !credentials?.password) {
+//           console.log("[AUTH DEBUG] Missing email/password");
+//           return null;
+//         }
+
+//         try {
+//           const user = await prisma.user.findUnique({
+//             where: { email: credentials.email.toLowerCase().trim() },
+//           });
+
+//           console.log(
+//             "[AUTH DEBUG] User found:",
+//             user ? { id: user.id, email: user.email, role: user.role } : "None"
+//           );
+
+//           if (!user || user.role !== "ADMIN") {
+//             console.log("[AUTH DEBUG] Invalid user or role");
+//             return null;
+//           }
+
+//           const isValidPassword = await bcrypt.compare(credentials.password, user.password);
+//           console.log("[AUTH DEBUG] Password match:", isValidPassword);
+
+//           if (!isValidPassword) {
+//             console.log("[AUTH DEBUG] Password mismatch");
+//             return null;
+//           }
+
+//           return { id: user.id, email: user.email, role: user.role };
+//         } catch (error) {
+//           console.error("[AUTH DEBUG] Error in authorize:", error);
+//           return null;
+//         }
+//       },
+//     }),
+//   ],
+//   pages: { signIn: "/admin/login" },
+//   session: { strategy: "jwt" },
+//   callbacks: {
+//     async jwt({ token, user }) {
+//       if (user) token.role = user.role;
+//       return token;
+//     },
+//     async session({ session, token }) {
+//       if (token) {
+//         session.user.id = token.sub;
+//         session.user.role = token.role;
+//       }
+//       return session;
+//     },
+//   },
+//   secret: process.env.NEXTAUTH_SECRET,
+// };
+
+// const handler = NextAuth(authOptions);
+
+// export { handler as GET, handler as POST };
+
+
+
+
+
+
+
+
+
+
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { PrismaAdapter } from "@auth/prisma-adapter";
@@ -98,8 +184,18 @@ import { prisma } from "@/lib/prisma";
 import bcrypt from "bcrypt";
 
 export const authOptions = {
-  debug: true,
+  // 1. TRUST HOST: Critical for Vercel deployment
+  trustHost: true, 
+  
+  // 2. ADAPTER & DEBUG
   adapter: PrismaAdapter(prisma),
+  debug: process.env.NODE_ENV === 'development', // Only debug in dev
+
+  session: { 
+    strategy: "jwt",
+    maxAge: 30 * 24 * 60 * 60, // 30 days
+  },
+
   providers: [
     CredentialsProvider({
       name: "credentials",
@@ -108,60 +204,55 @@ export const authOptions = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-        console.log("[AUTH DEBUG] Credentials received:", { email: credentials?.email });
-
         if (!credentials?.email || !credentials?.password) {
-          console.log("[AUTH DEBUG] Missing email/password");
           return null;
         }
 
-        try {
-          const user = await prisma.user.findUnique({
-            where: { email: credentials.email.toLowerCase().trim() },
-          });
+        const user = await prisma.user.findUnique({
+          where: { email: credentials.email.toLowerCase().trim() },
+        });
 
-          console.log(
-            "[AUTH DEBUG] User found:",
-            user ? { id: user.id, email: user.email, role: user.role } : "None"
-          );
-
-          if (!user || user.role !== "ADMIN") {
-            console.log("[AUTH DEBUG] Invalid user or role");
-            return null;
-          }
-
-          const isValidPassword = await bcrypt.compare(credentials.password, user.password);
-          console.log("[AUTH DEBUG] Password match:", isValidPassword);
-
-          if (!isValidPassword) {
-            console.log("[AUTH DEBUG] Password mismatch");
-            return null;
-          }
-
-          return { id: user.id, email: user.email, role: user.role };
-        } catch (error) {
-          console.error("[AUTH DEBUG] Error in authorize:", error);
+        // Security: Generic error for user not found OR wrong role
+        if (!user || user.role !== "ADMIN") {
           return null;
         }
+
+        const isValidPassword = await bcrypt.compare(credentials.password, user.password);
+
+        if (!isValidPassword) {
+          return null;
+        }
+
+        // Return the object that will be passed to the JWT callback
+        return { 
+            id: user.id, 
+            email: user.email, 
+            role: user.role 
+        };
       },
     }),
   ],
-  pages: { signIn: "/admin/login" },
-  session: { strategy: "jwt" },
+  
   callbacks: {
     async jwt({ token, user }) {
-      if (user) token.role = user.role;
+      // "user" is only available the first time they log in
+      if (user) {
+        token.id = user.id; // Persist ID to token
+        token.role = user.role;
+      }
       return token;
     },
     async session({ session, token }) {
       if (token) {
-        session.user.id = token.sub;
+        session.user.id = token.id;
         session.user.role = token.role;
       }
       return session;
     },
   },
-  secret: process.env.AUTH_SECRET,
+  
+  pages: { signIn: "/admin/login" },
+  secret: process.env.NEXTAUTH_SECRET,
 };
 
 const handler = NextAuth(authOptions);
