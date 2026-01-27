@@ -118,8 +118,8 @@ export default function EligibilityTool({ countryOptions = [], countryMap = new 
       onCta={() => {}}
       leftExtra={
         <p className="mt-4 text-sm text-slate-600 leading-relaxed">
-          This tool gives a fast screening based on common entry thresholds (not a final admission decision).
-          Requirements vary by university, course, and intake — use this as your starting point and refine with our team.
+          This tool gives a fast screening based on common entry thresholds.
+          Requirements vary by university, course, and intake —
         </p>
       }
     >

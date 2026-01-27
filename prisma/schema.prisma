@@ -74,8 +74,10 @@ model Event {
   description     String
   longDescription String?  @db.Text
   imageUrl        String?  @db.Text
+  isPublished     Boolean  @default(false)
   createdAt       DateTime @default(now())
 }
+
 
 model Subscriber {
   id        Int      @id @default(autoincrement())
@@ -101,7 +103,8 @@ model Country {
   code                 String   @unique
   name                 String
   currencyCode         String
-  livingCostMonthlyUsd Int      @default(1200)
+  livingCostMonthlyUsd Int      @default(1200) 
+  tutionCostMonthlyUsd Int      @default(12000)
   updatedAt            DateTime @updatedAt
 
   universities         University[]

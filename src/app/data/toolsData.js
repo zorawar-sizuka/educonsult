@@ -17,6 +17,8 @@
 // - University Finder: Filter/sort by code, ranking, tags.
 
 // Run seed.js for DB (preferred). This file is pure fallback—no changes needed in hooks/tools.
+
+
 import { jsPDF } from "jspdf";
 export const clamp = (num, min, max) => Math.min(Math.max(num, min), max);
 
@@ -108,6 +110,17 @@ export const livingCosts = {
   JPN: 1200,
   NZL: 1400,
 };
+// 3. TUTION COSTS (Fallback Map - Code Key, Dynamic USD/Month) in per 6 months are semester
+export const tutionCosts = {
+  USA: 17500, // Ranges from $25k (State) to $60k+ (Private)
+  UK: 14000,  // Approx £22k average for international students
+  AUS: 13500, // Approx AUD $40k
+  CAN: 11000, // Approx CAD $30k
+  DEU: 2000,  // Public is near-free (~$500 fees), this average accounts for private options
+  JPN: 6000, // Averages between National ($5k) and Private ($10k-15k)
+  NZL: 12000, // Approx NZD $38k
+};
+
 
 // 4. ELIGIBILITY LOGIC (Updated for Code-Based Destination + JLPT for Japan)
 export function checkEligibility(profile) {

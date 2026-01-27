@@ -5,7 +5,8 @@ import ToolShell from './TipsShell';
 import PillButton from './ui/PillButton';
 import { SelectField, Slider } from './ui/Fields';
 
-import { livingCosts } from '@/app/data/toolsData';
+import { livingCosts } from '@/app/data/toolsData'; 
+import { tutionCosts } from '@/app/data/toolsData';
 import { useExchangeRate } from '@/hooks/useExchangeRate';
 import { logToolRun } from '@/hooks/toolRunClient';
 
@@ -59,10 +60,19 @@ export default function CostTool({ countryOptions = [], countryMap = new Map(), 
 
   // ---- Per-year costs ----
   const livingYearUsd = livingMonthlyUsd * 12;
-  const tuitionYearUsd = 25000; // placeholder for now
-  const totalYearUsd = livingYearUsd + tuitionYearUsd;
 
-  // ---- Program total (multiplies by duration) ----
+
+/////SONUS CHANGES APPLIED HERE////
+const tutionMonthlyUsd =
+selected?.tutionCostMonthlyUsd ??
+(tutionCosts?.[inputs.country] ?? 1200); 
+
+const tuitionYearUsd = tutionMonthlyUsd * 2 ; // placeholder for now
+
+
+/////SONUS CHANGES APPLIED HERE////
+  // ---- Program total (multiplies by duration) ---- 
+  const totalYearUsd = livingYearUsd + tuitionYearUsd;
   const durationYears = Number(inputs.duration) || 1;
   const programTotalUsd = totalYearUsd * durationYears;
 
@@ -73,7 +83,8 @@ export default function CostTool({ countryOptions = [], countryMap = new Map(), 
   // Result object we will save on click
   const computed = useMemo(() => ({
     livingMonthlyUsd,
-    livingYearUsd,
+    livingYearUsd, 
+    tutionMonthlyUsd,
     tuitionYearUsd,
     totalYearUsd,
     programTotalUsd,
@@ -84,7 +95,8 @@ export default function CostTool({ countryOptions = [], countryMap = new Map(), 
     rateFetchedAt: rateMeta?.fetchedAt ?? null,
   }), [
     livingMonthlyUsd,
-    livingYearUsd,
+    livingYearUsd, 
+    tutionMonthlyUsd,
     tuitionYearUsd,
     totalYearUsd,
     programTotalUsd,
@@ -196,11 +208,11 @@ export default function CostTool({ countryOptions = [], countryMap = new Map(), 
             </div>
           )}
         </div>
-
+{/* 
         <div className="md:col-span-2 text-xs text-slate-500">
           Living cost is {selected?.livingCostMonthlyUsd ? "from DB" : "fallback"}.
           Tuition is a placeholder for now (we'll connect it to University DB later).
-        </div>
+        </div> */}
       </div>
     </ToolShell>
   );

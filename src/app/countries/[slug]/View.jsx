@@ -61,7 +61,7 @@ const UniversityScroller = ({ universities }) => {
             className="snap-center shrink-0 w-[200px] h-[220px] bg-white border border-slate-100 rounded-3xl p-6 flex flex-col items-center justify-between shadow-sm hover:shadow-md transition-shadow cursor-pointer"
           >
             <div className="relative w-24 h-24 mb-4">
-              <Image src={uni.logo} alt={uni.name} fill className="object-contain" />
+              <Image src={uni.logo} alt={uni.name} fill sizes='96px' className="object-contain" />
             </div>
             <p className="text-sm font-bold text-center text-slate-800 leading-tight">{uni.name}</p>
           </motion.div>
@@ -103,7 +103,7 @@ export default function CountryView({ country }) {
              transition={{ delay: 0.1 }}
              className="text-6xl md:text-8xl font-serif text-white mb-6"
            >
-             {country.name}
+             Study in {country.name}
            </motion.h1>
            <p className="text-xl text-slate-200 max-w-2xl font-light">
              {country.tagline}

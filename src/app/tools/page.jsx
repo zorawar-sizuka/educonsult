@@ -208,7 +208,7 @@ import {
   ArrowRight, Globe, CheckCircle2
 } from 'lucide-react';
 
-import { useCountries } from '@/hooks/useCountries';
+
 
 // --- Tool Imports ---
 import EligibilityTool from '@/components/tools/EligibilityTool';
@@ -217,13 +217,14 @@ import CostTool from '@/components/tools/CostTool';
 import SOPBuilder from '@/components/tools/SOPBuilder';
 import GPACalculator from '@/components/tools/GPA';
 import HistoryDrawer from '@/components/tools/HistoryDrawer'; 
+import { useCountries } from '@/hooks/useCountries';
 
 
 
 const lottieUrl = "/lottie/tools.json";
 
 export default function ToolsPage() { 
-  const { refresh: refreshCountries } = useCountries();
+ 
 
   const [activeTab, setActiveTab] = useState('eligibility');
   const [animationData, setAnimationData] = useState(null);
@@ -405,12 +406,7 @@ export default function ToolsPage() {
               <ArrowRight className="w-3 h-3 opacity-0 -translate-x-2 group-hover:translate-x-0 group-hover:opacity-100 transition-all" />
             </button> 
 
-            <button 
-  onClick={refreshCountries}
-  className="px-4 py-2 rounded-full bg-slate-900 text-white font-bold text-sm hover:bg-black transition"
->
-  Refresh Countries
-</button>
+    
           </div>
         </div>
 

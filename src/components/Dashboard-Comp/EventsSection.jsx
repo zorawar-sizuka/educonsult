@@ -18,6 +18,7 @@ export default function EventsSection() {
     description: "",
     longDescription: "",
     imageUrl: "",
+    isPublished: false,
   });
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [editingEvent, setEditingEvent] = useState(null);
@@ -61,7 +62,9 @@ export default function EventsSection() {
       location: "",
       description: "",
       longDescription: "",
-      imageUrl: "",
+      imageUrl: "", 
+      isPublished: newEvent.isPublished,
+
     });
   };
 
@@ -124,6 +127,15 @@ export default function EventsSection() {
     }
   };
 
+
+
+
+
+
+
+
+
+  
   const handleDeleteEvent = async (id) => {
     if (!confirm("Delete event?")) return;
     setError(null);
@@ -167,10 +179,31 @@ export default function EventsSection() {
 
   return (
     <>
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-8"> 
+
+
+
+
+
         <div className="lg:col-span-4">
           <div className="bg-white p-4 sm:p-6 rounded-2xl shadow-sm border border-slate-200 sticky top-8">
-            <h2 className="text-lg font-bold text-slate-800 mb-4">Add Event</h2>
+          <div className="flex items-center justify-between mb-4">
+  <h2 className="text-lg font-bold text-slate-800">Add Event</h2>
+
+  <button
+    type="button"
+    onClick={() => setNewEvent({ ...newEvent, isPublished: !newEvent.isPublished })}
+    className={`px-3 py-1.5 rounded-full text-xs font-bold border transition
+      ${newEvent.isPublished
+        ? "bg-emerald-600 text-white border-emerald-600"
+        : "bg-slate-100 text-slate-700 border-slate-200 hover:bg-slate-200"
+      }`}
+    title="Controls whether this event is visible on the public /events page"
+  >
+    {newEvent.isPublished ? "Published" : "Draft"}
+  </button>
+</div>
+
             <form onSubmit={handleCreateEvent} className="space-y-3">
               <input
                 required
@@ -252,11 +285,18 @@ export default function EventsSection() {
                 disabled={loading}
                 className="w-full py-3 bg-blue-600 text-white font-bold rounded-xl hover:bg-blue-700 transition disabled:opacity-60"
               >
-                {loading ? "Saving..." : "+ Publish Event"}
+               {loading ? "Saving..." : newEvent.isPublished ? "+ Publish Event" : "+ Save Draft"}
+
               </button>
             </form>
-          </div>
+          </div> 
         </div>
+
+
+
+
+
+
 
         <div className="lg:col-span-8 space-y-4">
           {events.length === 0 && !loading ? (
@@ -312,7 +352,25 @@ export default function EventsSection() {
       {editModalOpen && editingEvent && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
           <div className="bg-white rounded-2xl p-6 max-w-md w-full max-h-[90vh] overflow-y-auto">
-            <h2 className="text-lg font-bold text-slate-800 mb-4">Edit Event</h2>
+          <div className="flex items-center justify-between mb-4">
+  <h2 className="text-lg font-bold text-slate-800">Edit Event</h2>
+
+  <button
+    type="button"
+    onClick={() =>
+      setEditingEvent({ ...editingEvent, isPublished: !editingEvent.isPublished })
+    }
+    className={`px-3 py-1.5 rounded-full text-xs font-bold border transition
+      ${editingEvent.isPublished
+        ? "bg-emerald-600 text-white border-emerald-600"
+        : "bg-slate-100 text-slate-700 border-slate-200 hover:bg-slate-200"
+      }`}
+    title="Controls whether this event is visible on the public /events page"
+  >
+    {editingEvent.isPublished ? "Published" : "Draft"}
+  </button>
+</div>
+
             <form onSubmit={handleUpdateEvent} className="space-y-3">
               <input
                 required
@@ -407,7 +465,15 @@ export default function EventsSection() {
               </div>
             </form>
           </div>
-        </div>
+        </div> 
+
+
+
+
+
+
+
+
       )}
     </>
   );

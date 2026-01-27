@@ -8,7 +8,7 @@ import LeadsSection from "@/components/Dashboard-Comp/LeadSection";
 import EventsSection from "@/components/Dashboard-Comp/EventsSection";
 
 export default function AdminPage() { 
-  const { data: session, status } = useSession(); 
+
   
   const [activeTab, setActiveTab] = useState("leads");
   const [animationData, setAnimationData] = useState(null);
@@ -27,7 +27,10 @@ export default function AdminPage() {
         setLottieError(true);
       });
   }, []);
+  const { data: session, status } = useSession();
 
+  if (status === "loading") return <p>Loading...</p>;
+  if (!session) return <p>Access Denied. <a href="/admin/login">Sign in</a></p>;
   return (
     <div className="min-h-screen bg-slate-50 p-4 sm:p-8 font-sans text-slate-900">
       <div className="max-w-7xl mx-auto">

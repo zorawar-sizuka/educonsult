@@ -133,12 +133,12 @@ const commonCourses = [
         { name: 'Harvard University', logo: '/scroller/usa_universities/1.png' },
         { name: 'Stanford University,', logo: '/scroller/usa_universities/2.png' },
         { name: 'University of California', logo: '/scroller/usa_universities/3.png' },
-        { name: 'University of Washington', logo: '/scroller/usa_universities/4.pngng' },
+        { name: 'University of Washington', logo: '/scroller/usa_universities/4.png' },
         { name: 'Columbia University', logo: '/scroller/usa_universities/5.png' }, 
         { name: 'Yale University', logo: '/scroller/usa_universities/6.png' }, 
         { name: 'Pennsylvania', logo: '/scroller/usa_universities/7.png' }, 
-        { name: 'Chicago University",', logo: '/scroller/usa_universities/8.png' }, 
-        { name: 'Princeton University",', logo: '/scroller/usa_universities/9.png' }, 
+        { name: 'Chicago University', logo: '/scroller/usa_universities/8.png' }, 
+        { name: 'Princeton University', logo: '/scroller/usa_universities/9.png' }, 
         
       ],
   

@@ -61,7 +61,7 @@ export default function Hero() {
   }, []);
 
   return (
-    <section id="#top" className="relative w-full min-h-screen overflow-hidden text-white">
+    <section id="top" className="relative w-full min-h-screen overflow-hidden text-white">
       
       {/* Background Container */}
       <div
@@ -106,15 +106,15 @@ export default function Hero() {
             className="max-w-[640px] will-change-transform"
           >
             <h1 className="mt-24 text-[52px] sm:text-[64px] lg:text-[78px] leading-[1.05] tracking-wide font-sans">
-              Grow your
+              EEIC 
               <br />
-              <span className="font-semibold font-sans">future faster</span>
+              <span className="font-semibold font-sans">Education Consultancy</span>
             </h1>
 
             <p className="mt-6 text-[15px] sm:text-[16px] leading-relaxed text-white/70 max-w-[520px]">
-              We simplify the complex process, from course selection to visa prep — so you can focus on
-              landing at the right institution for your goals.
-            </p>
+  From course selection to SOP and visa prep — we guide you end-to-end so you can reach the right university for your goals.
+</p>
+
 
             <div className="mt-10 flex flex-col sm:flex-row gap-3 sm:gap-4">
               <BookButton/>

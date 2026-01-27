@@ -6,25 +6,25 @@ async function seedCountries() {
 
   const countries = [
     // USA (avg across cities; NYC/SF high, Midwest low)
-    { code: "USA", name: "United States", currencyCode: "USD", livingCostMonthlyUsd: 1800 },
+    { code: "USA", name: "United States", currencyCode: "USD", livingCostMonthlyUsd: 1800, tutionCostMonthlyUsd:17500 },
     
     // UK (London high, avg others)
-    { code: "UK", name: "United Kingdom", currencyCode: "GBP", livingCostMonthlyUsd: 1500 },
+    { code: "UK", name: "United Kingdom", currencyCode: "GBP", livingCostMonthlyUsd: 1500,  tutionCostMonthlyUsd: 14000 },
     
     // Australia (Sydney/Melbourne high)
-    { code: "AUS", name: "Australia", currencyCode: "AUD", livingCostMonthlyUsd: 1700 },
+    { code: "AUS", name: "Australia", currencyCode: "AUD", livingCostMonthlyUsd: 1700, tutionCostMonthlyUsd: 13500 },
     
     // Canada (Toronto/Vancouver high)
-    { code: "CAN", name: "Canada", currencyCode: "CAD", livingCostMonthlyUsd: 1400 },
+    { code: "CAN", name: "Canada", currencyCode: "CAD", livingCostMonthlyUsd: 1400, tutionCostMonthlyUsd: 11000 },
     
     // Germany (Berlin/Munich avg; low COL)
-    { code: "DEU", name: "Germany", currencyCode: "EUR", livingCostMonthlyUsd: 1000 },
+    { code: "DEU", name: "Germany", currencyCode: "EUR", livingCostMonthlyUsd: 1000, tutionCostMonthlyUsd: 2000 },
     
     // Japan (Tokyo high, avg others)
-    { code: "JPN", name: "Japan", currencyCode: "JPY", livingCostMonthlyUsd: 1200 },
+    { code: "JPN", name: "Japan", currencyCode: "JPY", livingCostMonthlyUsd: 1200, tutionCostMonthlyUsd: 6005 },
     
     // New Zealand (Auckland high)
-    { code: "NZL", name: "New Zealand", currencyCode: "NZD", livingCostMonthlyUsd: 1400 },
+    { code: "NZL", name: "New Zealand", currencyCode: "NZD", livingCostMonthlyUsd: 1400, tutionCostMonthlyUsd: 12000 },
   ];
 
   let seededCount = 0;
