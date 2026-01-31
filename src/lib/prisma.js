@@ -12,27 +12,19 @@
 
 
 
-
-
 import { PrismaClient } from "@prisma/client";
 import { withAccelerate } from "@prisma/extension-accelerate";
 
 const globalForPrisma = globalThis;
 
-function makeClient() {
-  // If ACCELERATE_URL is not set, this will create a normal Prisma client.
-  // If Prisma 7 forces accelerateUrl/adapter in your setup, then you MUST set it.
-  const client = new PrismaClient(
-    process.env.ACCELERATE_URL
-      ? { accelerateUrl: process.env.ACCELERATE_URL }
-      : {}
-  );
+function createPrismaClient() {
+  const client = new PrismaClient();
 
-  // IMPORTANT: $extends returns a new client
+  // Prisma v5: enable accelerate via extension only
   return process.env.ACCELERATE_URL ? client.$extends(withAccelerate()) : client;
 }
 
-export const prisma = globalForPrisma.prisma ?? makeClient();
+export const prisma = globalForPrisma.prisma ?? createPrismaClient();
 
 if (process.env.NODE_ENV !== "production") {
   globalForPrisma.prisma = prisma;
