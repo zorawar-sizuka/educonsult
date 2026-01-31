@@ -1,12 +1,12 @@
-@import "tailwindcss/preflight";
-@tailwind utilities;
+@import "tailwindcss";
+
 
 
 @layer base {
   body {
     @apply bg-white text-slate-900;
   }
-}
+}               
 :root {
   --bg: 255 255 255;
   --fg: 12 18 28;
