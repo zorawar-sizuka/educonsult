@@ -29,14 +29,8 @@ const nextConfig = {
     ],
   }, 
   experimental: {
-    turbo: {
-      // Add rules for CSS processing
-      rules: {
-        '*.css': {
-          loaders: ['postcss'],
-          as: '*.css',
-        },
-      },
+    serverActions: {
+      allowedOrigins: ["ea68609d6f87.ngrok-free.app", "localhost:3000"],
     },
   },
 };
