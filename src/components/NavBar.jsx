@@ -71,7 +71,8 @@ const Navbar = () => {
         name: "About",
         href: "/about",
         dropdown: [
-          { name: "Our Story", href: "/about" },
+          { name: "Our Story", href: "/about" }, 
+          { name: "Vision", href: "/vision" },
           { name: "FAQs", href: "/appendix/faqs" },
           { name: "Privacy Policy", href: "/appendix/privacy-policy" },
           { name: "Terms & Conditions", href: "/appendix/t&c" },

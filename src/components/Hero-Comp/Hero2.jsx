@@ -111,7 +111,7 @@ export default function Hero2() {
 
   {/* UPGRADED CTA BUTTON */}
   <Link 
-    href="/services" 
+    href="/vision" 
     className="group inline-flex items-center gap-3 font-bold text-[#0A2558] text-sm tracking-widest uppercase hover:text-blue-700 transition-colors"
   >
     Explore the Vision
