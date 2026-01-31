@@ -122,26 +122,26 @@ const AboutEditorial = () => {
   const bentoImages = [
     {
       id: "a",
-      src: "/collage/collage1.avif",
+      src: "/collage/collage2.jpg",
       alt: "Student success",
       className: "col-span-7 row-span-2", 
       overlayQuote: true,
     },
     {
       id: "b",
-      src: "/collage/collage2.avif",
+      src: "/collage/collage5.png",
       alt: "Counseling session",
       className: "col-span-5 row-span-1",
     },
     {
       id: "c",
-      src: "/collage/collage3.avif",
+      src: "/collage/collage3.jpg",
       alt: "Documentation and planning",
       className: "col-span-3 row-span-1",
     },
     {
       id: "d",
-      src: "/collage/collage4.avif",
+      src: "/collage/collage4.png",
       alt: "Global network map",
       className: "col-span-2 row-span-1",
     },
@@ -204,7 +204,7 @@ const AboutEditorial = () => {
                 className="group relative inline-flex items-center gap-4 px-6 sm:px-8 py-3 sm:py-4 bg-stone-900 text-white rounded-full overflow-hidden transition-all hover:pr-6"
               >
                 <span className="relative z-10 text-sm font-medium tracking-wide">Read Our Vision</span>
-                <div className="relative z-10 w-5 h-5 sm:w-6 sm:h-6 bg-white rounded-full flex items-center justify-center text-stone-900 group-hover:bg-amber-400 transition-colors">
+                <div className="relative z-10 w-5 h-5 sm:w-6 sm:h-6 bg-white rounded-full flex items-center justify-center text-stone-900 group-hover:bg-amber-600 transition-colors">
                   <svg className="w-2.5 h-2.5 sm:w-3 sm:h-3 -rotate-45 group-hover:rotate-0 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
                   </svg>

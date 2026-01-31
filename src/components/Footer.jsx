@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import Link from 'next/link';
 
@@ -38,9 +40,6 @@ const Footer = () => {
         links: [ 
          { name: "AI Tools", href: "/tools" },
           { name: "Resources", href: "/resources" },
-         
-         
-          
         ],
       },
     {
@@ -49,7 +48,6 @@ const Footer = () => {
         { name: "FAQs", href: "/appendix/faqs" },
         { name: "Privacy Policy", href: "/appendix/privacy-policy" },
         { name: "Terms & Conditions", href: "/appendix/t&c" },
-        
       ],
     },
   ];
@@ -87,33 +85,66 @@ const Footer = () => {
             <h3 className="text-xs font-bold tracking-widest uppercase text-gray-500 mb-4">
               Connect
             </h3>
-            <div className="flex items-center gap-6 text-gray-900">
-              {/* Mail Icon */}
-              <a href="mailto:info@educonsult.com" className="hover:text-blue-600 transition-colors">
+            
+            {/* Social Icons Flex Container */}
+            <div className="flex flex-wrap items-center gap-6 text-gray-900">
+              
+              {/* Mail Icon - Opens Default Mail Client */}
+              <a 
+                href="mailto:info@espotinternational.com" 
+                className="hover:text-blue-600 transition-colors"
+                aria-label="Email Us"
+              >
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
                 </svg>
               </a>
               
-              {/* Instagram */}
-              <a href="#" className="hover:text-pink-600 transition-colors">
+              {/* Instagram - Added https:// and target blank */}
+              <a 
+                href="https://www.instagram.com/espotinternational/" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="hover:text-pink-600 transition-colors"
+                aria-label="Instagram"
+              >
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/>
                 </svg>
               </a>
 
-              {/* LinkedIn */}
-              <a href="#" className="hover:text-blue-700 transition-colors">
+              {/* Facebook - New Addition */}
+              <a 
+                href="https://www.facebook.com/espotinternational/" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="hover:text-blue-700 transition-colors"
+                aria-label="Facebook"
+              >
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/>
+                  <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
                 </svg>
               </a>
+
+              {/* TikTok - New Addition */}
+              <a 
+                href="https://www.tiktok.com/@espotinternational"
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="hover:text-black transition-colors"
+                aria-label="TikTok"
+              >
+                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                   <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/>
+                 </svg>
+              </a>
+
             </div>
             
-            {/* Added: Quick Contact Info */}
+            {/* Quick Contact Info */}
             <div className="mt-6 text-xs text-gray-500 space-y-1">
-              <p>+977-1-4XXXXXX</p>
-              <p>Putalisadak, Kathmandu</p>
+              <p>01-5332391</p>
+              <p>Putalisadak Near Star Mall, Kathmandu</p>
             </div>
           </div>
         </div>
@@ -123,7 +154,7 @@ const Footer = () => {
           
           {/* Updated Brand Logo */}
           <div className="text-xl font-serif font-bold tracking-tight text-gray-900">
-            EduGlobal<span className="text-blue-600">.</span>
+            EIEC<span className="text-blue-600">.</span>
           </div>
 
           {/* Copyright */}

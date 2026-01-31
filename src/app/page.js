@@ -67,11 +67,9 @@ export default function Home() {
       />
 
       <Hero1 />
-
       <div className="block md:hidden w-100vw relative left-1/2 -translate-x-1/2 my-10 bg-white">
         <LogoMarquee originalColor={true} />
       </div>
-
       <Hero2 />
       <DestinationsCluster />
       <Hero3 />

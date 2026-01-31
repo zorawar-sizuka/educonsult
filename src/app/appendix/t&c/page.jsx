@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import Image from 'next/image'; // Need import
+import Image from 'next/image';
 import { motion } from "framer-motion";
 import {
   Globe,
@@ -12,67 +12,63 @@ import {
   ShieldCheck,
   Copyright,
   AlertTriangle,
-  // Gavel, // Removed Gavel import
   RefreshCw,
-  Gavel
+  Gavel, // Uncommented and used
+  BookOpen,
+  FileWarning
 } from 'lucide-react';
 
-// Data defined outside component
+// Data updated to match E-Spot International (EEIC) Document
 const SECTIONS = [
   {
     icon: <Globe size={20} />,
-    title: "1. Services Offered",
-    content: "Study In Global provides international education consultancy services including student counseling, university application assistance, visa guidance, pre-departure briefings, and test prep recommendations. Services may vary by region (UK, Nepal, Australia, Canada, India)."
-  },
-  {
-    icon: <UserCheck size={20} />,
-    title: "2. Eligibility",
-    content: "You must be at least 18 years old or have guardian consent to use our services. All provided information must be accurate and lawful within your jurisdiction."
+    title: "1. Scope of Services",
+    content: "E-Spot International Education Consultancy provides student counseling, university admission assistance, visa guidance, and test preparation. We act as a facilitator between students and institutions; final decisions are made by the respective authorities."
   },
   {
     icon: <CheckCircle2 size={20} />,
-    title: "3. User Responsibilities",
-    content: "Users must not misuse the platform, provide misleading information, or violate any laws. You are responsible for the data you submit and decisions made based on our guidance."
-  },
-  {
-    icon: <ArrowRightLeft size={20} />,
-    title: "4. Consultation and Advice",
-    content: "Study In Global offers guidance based on experience, but does not guarantee admissions, scholarships, or visa outcomes. Final decisions rest with universities and authorities."
-  },
-  {
-    icon: <Banknote size={20} />,
-    title: "5. Payments and Refunds",
-    content: "Some services involve fees. These are outlined clearly. Refunds are governed by service agreements; generally, consultation fees are non-refundable after service starts."
-  },
-  {
-    icon: <ShieldCheck size={20} />,
-    title: "6. Privacy",
-    content: "Personal data is collected and handled per our Privacy Policy. This may include sensitive information like academic records or identification documents."
-  },
-  {
-    icon: <Copyright size={20} />,
-    title: "7. Intellectual Property",
-    content: "All materials provided by Study In Global are protected by intellectual property laws. Do not reproduce or reuse content without permission."
+    title: "2. Client Responsibilities",
+    content: "Clients must provide complete, accurate, and truthful information. You are responsible for submitting genuine documents and meeting all deadlines. EEIC is not liable for rejections caused by false information or incomplete documentation."
   },
   {
     icon: <AlertTriangle size={20} />,
-    title: "8. Limitation of Liability",
-    content: "We are not liable for visa denials, university decisions, or legal changes. Services are provided as-is, with no guarantees or warranties."
+    title: "3. No Guarantee Clause",
+    content: "While we provide expert guidance, EEIC does not guarantee admission to any institution, approval of visas, or scholarships. All outcomes depend on individual eligibility and external authorities."
   },
   {
-    icon: <Gavel size={20} />, // Kept this one as it's inside the data array, not the header image
-    title: "9. Termination",
-    content: "We may suspend or terminate access for violations of these terms or applicable law without notice."
+    icon: <Banknote size={20} />,
+    title: "4. Fees & Payments",
+    content: "Service fees are non-refundable unless stated otherwise in writing. Fees cover consultancy services only and do not include third-party charges (e.g., embassy fees, university application fees)."
   },
   {
-    icon: <Globe size={20} />,
-    title: "10. Jurisdiction and Governing Law",
-    content: "These terms are governed by the laws of the country where the services are rendered (UK, Nepal, Australia, Canada, or India)."
+    icon: <FileWarning size={20} />,
+    title: "5. Limitation of Liability",
+    content: "EEIC is not responsible for decisions made by universities/embassies, policy changes by governments, or delays caused by external factors beyond our control."
+  },
+  {
+    icon: <ShieldCheck size={20} />,
+    title: "6. Confidentiality",
+    content: "All client information is handled confidentially and used strictly for service-related purposes (admissions, visa processing) in accordance with our Privacy Policy."
+  },
+  {
+    icon: <ArrowRightLeft size={20} />,
+    title: "7. Termination of Services",
+    content: "We reserve the right to refuse or terminate services if false information is provided, required cooperation is not maintained, or these Terms & Conditions are violated."
+  },
+  {
+    icon: <Copyright size={20} />,
+    title: "8. Intellectual Property",
+    content: "All materials, guides, and resources provided by E-Spot International are protected. Unauthorized reproduction or distribution is prohibited."
+  },
+  {
+    icon: <Gavel size={20} />,
+    title: "9. Governing Law",
+    content: "These Terms & Conditions shall be governed by and interpreted in accordance with the laws of Nepal. Any disputes are subject to the jurisdiction of courts in Nepal."
   },
   {
     icon: <RefreshCw size={20} />,
-    title: "11. Changes to the Terms",
-    content: "These Terms may be updated. Continued use of our services implies your acceptance of updates. The date below indicates the last update."
+    title: "10. Updates to Terms",
+    content: "E-Spot International reserves the right to update these terms. Continued use of our services implies acceptance of the latest version."
   }
 ];
 
@@ -95,25 +91,24 @@ const TermsOfService = () => {
         >
           <div className="flex-1 text-center md:text-left">
             <div className="inline-flex items-center justify-center p-3 bg-blue-50 rounded-2xl mb-6">
-              <Globe size={24} className="text-blue-600" />
+              <BookOpen size={24} className="text-blue-600" />
             </div>
             <h1 className="text-3xl md:text-5xl font-serif font-bold text-slate-900 mb-4">
               Terms of Service
             </h1>
             <p className="text-slate-500 text-lg leading-relaxed mb-6">
-              Please read these terms carefully before using our services. By using Study In Global, you agree to the rules outlined below.
+              Please read these terms carefully. By engaging with <span className="font-semibold text-slate-800">E-Spot International (EEIC)</span>, you agree to the rules and policies outlined below.
             </p>
             <span className="inline-flex items-center gap-2 px-4 py-2 bg-slate-100 text-slate-600 rounded-full text-xs font-bold uppercase tracking-wider">
               <RefreshCw size={14} className="animate-spin-slow" /> 
-              Last updated: {new Date().toLocaleDateString('en-GB')}
+              Last updated: January 2026
             </span>
           </div>
           
           {/* Illustration IMAGE Container */}
-          {/* Added 'relative' and 'overflow-hidden' for the image fill to work */}
           <div className="hidden md:flex relative items-center justify-center bg-slate-50 w-48 h-48 rounded-full border-4 border-slate-100 shadow-inner overflow-hidden shrink-0">
              <Image 
-               src="/logos/tc.png" // REPLACE WITH YOUR IMAGE PATH eg: "/images/terms.png"
+               src="/logos/tc.png" // Ensure this image exists in public/logos/
                alt="Legal documents illustration"
                fill
                className="object-cover"
@@ -169,12 +164,13 @@ const TermsOfService = () => {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
         >
-          <div className="inline-flex items-center gap-2 bg-slate-900 text-white px-8 py-4 rounded-full shadow-lg shadow-slate-900/20 hover:scale-105 transition-transform cursor-default">
+          {/* Non-clickable Thank You Badge */}
+          <div className="inline-flex items-center gap-2 bg-slate-900 text-white px-8 py-4 rounded-full shadow-lg shadow-slate-900/20 cursor-default">
             <Globe size={18} />
-            <span className="font-bold text-sm tracking-wide">Thank you for choosing Study In Global</span>
+            <span className="font-bold text-sm tracking-wide">Thank you for choosing EEIC</span>
           </div>
           <p className="text-slate-400 text-xs uppercase tracking-widest">
-            © {new Date().getFullYear()} Study In Global. All rights reserved.
+            © {new Date().getFullYear()} E-Spot International. All rights reserved.
           </p>
         </motion.footer>
       </div>

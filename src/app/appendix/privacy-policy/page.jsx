@@ -1,20 +1,24 @@
 'use client';
 
-import Image from 'next/image';// Update path if needed
+import React from 'react';
+import Image from 'next/image';
 import { motion } from 'framer-motion';
 
 // Lucide React icons
 import {
-  Eye,           // Access
-  Edit3,         // Rectification
-  Trash2,        // Erasure
-  Pause,         // Restriction
-  UserCog,       // Personalization
+  FileText,      // For Scope
+  AlertTriangle, // For No Guarantee
+  UserCheck,     // For Responsibilities
+  CreditCard,    // For Fees
+  UserCog,       // Admission/Counseling
   MessageCircle, // Communication
-  TrendingUp,    // Improvements
+  GraduationCap, // Test Prep
   Shield,        // Security
   Mail,
-  Phone
+  Phone,
+  Gavel,          // Governing Law
+  BookOpen,      // Intro
+  Database       // Data Collection
 } from 'lucide-react';
 
 const PrivacyPolicy = () => {
@@ -34,6 +38,7 @@ const PrivacyPolicy = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 py-16 px-4 sm:px-6 lg:px-8 pt-32">
       <div className="max-w-4xl mx-auto">
+        
         {/* Header with animated gradient */}
         <motion.header 
           className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl shadow-sm p-8 mb-12 overflow-hidden border border-gray-200"
@@ -44,13 +49,13 @@ const PrivacyPolicy = () => {
           <div className="flex flex-col md:flex-row items-center">
             {/* Text Content - Left Side */}
             <div className="md:w-2/3 text-left pr-0 md:pr-8">
-              <h1 className="text-4xl font-bold text-gray-800 mb-4">Privacy Policy</h1>
+              <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Privacy Policy & Terms</h1>
               <p className="text-gray-600 text-lg max-w-2xl">
-                Your privacy matters to us. This document explains how we collect, use, and protect your information.
+                At E-Spot International Education Consultancy, we respect your privacy and are committed to protecting the personal information you share with us.
               </p>
               <div className="mt-6">
                 <span className="inline-block px-4 py-2 bg-blue-100 hover:bg-blue-200 text-blue-800 rounded-full text-sm font-medium transition-all">
-                  Last Updated: June 2023
+                  Last Updated: January 2026
                 </span>
               </div>
             </div>
@@ -60,7 +65,7 @@ const PrivacyPolicy = () => {
               <div className="relative h-full min-h-[300px] rounded-lg overflow-hidden">
                 <div className="absolute inset-0 bg-blue-100/30 flex items-center justify-center">
                   <Image 
-                    src="/logos/privacy.png"
+                    src="/logos/privacy.png" // Ensure this image exists in your public folder
                     alt="Privacy Visual"
                     fill
                     className="object-contain"
@@ -82,20 +87,19 @@ const PrivacyPolicy = () => {
               {[
                 "Introduction",
                 "Information We Collect",
-                "Use of Data", 
-                "Data Sharing & Security",
-                "User Rights",
-                "Contact Us"
+                "How We Use Data", 
+                "Security & Sharing",
+                "Terms & Conditions",
+                "Governing Law"
               ].map((item, index) => (
                 <li key={index}>
-                  <a 
-                    href={`#section-${index+1}`} 
+                  <button 
                     onClick={(e) => handleSectionClick(e, `section-${index+1}`)}
-                    className="flex items-center text-blue-600 hover:text-blue-800 transition-colors cursor-pointer"
+                    className="flex items-center text-left text-blue-600 hover:text-blue-800 transition-colors cursor-pointer focus:outline-none"
                   >
-                    <span className="mr-2 text-blue-500">{index + 1}.</span>
+                    <span className="mr-2 text-blue-500 font-semibold">{index + 1}.</span>
                     {item}
-                  </a>
+                  </button>
                 </li>
               ))}
             </ul>
@@ -103,77 +107,80 @@ const PrivacyPolicy = () => {
 
           {/* Policy Sections */}
           <div className="divide-y divide-gray-200">
-            {/* Introduction */}
+            
+            {/* 1. Introduction */}
             <section id="section-1" className="p-6 md:p-8 hover:bg-gray-50 transition-colors">
               <div className="flex items-start">
-                <div className="flex-shrink-0 h-8 w-8 rounded-full bg-blue-100 flex items-center justify-center mr-4 mt-1">
-                  <span className="text-blue-600 font-medium">1</span>
+                <div className="flex-shrink-0 h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center mr-4 mt-1">
+                  <BookOpen className="h-5 w-5 text-blue-600" />
                 </div>
                 <div>
                   <h2 className="text-2xl font-semibold text-gray-800 mb-4">Introduction</h2>
-                  <div className="prose prose-blue max-w-none text-gray-600">
-                    <p>
-                      Welcome to Study In Global. We are committed to protecting your privacy and ensuring the security of your personal information. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website or use our services.
+                  <div className="prose prose-blue max-w-none text-gray-600 leading-relaxed">
+                    <p className="mb-4">
+                      This Privacy Policy explains how we collect, use, store, and safeguard your data when you interact with our services. By using our services and submitting your information, you consent to the collection and use of your data as outlined in this Privacy Policy.
                     </p>
                     <p>
-                      Please read this policy carefully. By accessing or using our service, you agree to the collection and use of information in accordance with this policy.
+                       E-Spot International reserves the right to update or modify this Privacy Policy at any time. Any changes will be effective immediately upon publication.
                     </p>
                   </div>
                 </div>
               </div>
             </section>
 
-            {/* Information We Collect */}
+            {/* 2. Information We Collect */}
             <section id="section-2" className="p-6 md:p-8 hover:bg-gray-50 transition-colors">
               <div className="flex items-start">
-                <div className="flex-shrink-0 h-8 w-8 rounded-full bg-blue-100 flex items-center justify-center mr-4 mt-1">
-                  <span className="text-blue-600 font-medium">2</span>
+                <div className="flex-shrink-0 h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center mr-4 mt-1">
+                  <Database className="h-5 w-5 text-blue-600" />
                 </div>
                 <div>
                   <h2 className="text-2xl font-semibold text-gray-800 mb-4">Information We Collect</h2>
                   <div className="prose prose-blue max-w-none text-gray-600">
-                    <p>We collect several types of information from and about users of our website, including:</p>
-                    <ul className="list-disc pl-5 space-y-2">
-                      <li><strong>Personal Data:</strong> Name, email address, phone number, and other contact information you provide when registering or contacting us.</li>
-                      <li><strong>Usage Data:</strong> Information about how you interact with our website (pages visited, time spent, etc.) collected through cookies and similar technologies.</li>
-                      <li><strong>Technical Data:</strong> IP address, browser type, device information, and other technical details.</li>
+                    <p className="mb-4">We may collect personal information including, but not limited to:</p>
+                    <ul className="list-disc pl-5 space-y-3">
+                      <li><strong>Personal Details:</strong> Full name, date of birth, contact details (phone number, email, address).</li>
+                      <li><strong>Education Records:</strong> Academic records and educational background.</li>
+                      <li><strong>Identity Documents:</strong> Identification documents such as passport and citizenship.</li>
+                      <li><strong>Application Data:</strong> Visa, immigration, and application-related information.</li>
+                      <li><strong>Voluntary Info:</strong> Any additional information voluntarily provided for counseling or processing purposes.</li>
                     </ul>
                   </div>
                 </div>
               </div>
             </section>
 
-            {/* Use of Data */}
+            {/* 3. Use of Data (Grid Layout) */}
             <section id="section-3" className="p-6 md:p-8 hover:bg-gray-50 transition-colors">
               <div className="flex items-start">
-                <div className="flex-shrink-0 h-8 w-8 rounded-full bg-blue-100 flex items-center justify-center mr-4 mt-1">
-                  <span className="text-blue-600 font-medium">3</span>
+                <div className="flex-shrink-0 h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center mr-4 mt-1">
+                  <UserCog className="h-5 w-5 text-blue-600" />
                 </div>
                 <div>
-                  <h2 className="text-2xl font-semibold text-gray-800 mb-4">Use of Data</h2>
+                  <h2 className="text-2xl font-semibold text-gray-800 mb-4">How We Use Your Information</h2>
                   <div className="prose prose-blue max-w-none text-gray-600">
-                    <p>We use the information we collect for various purposes:</p>
-                    <div className="grid md:grid-cols-2 gap-4 mt-4">
+                    <p>The information collected is used strictly for the following purposes:</p>
+                    <div className="grid md:grid-cols-2 gap-4 mt-6">
                       {[
                         { 
                           icon: <UserCog className="h-6 w-6 text-purple-600" />, 
-                          title: "Personalization", 
-                          desc: "To provide personalized content and recommendations" 
+                          title: "Admission Counseling", 
+                          desc: "Providing education counseling and university/college admission processing." 
                         },
                         { 
                           icon: <MessageCircle className="h-6 w-6 text-blue-600" />, 
                           title: "Communication", 
-                          desc: "To respond to your inquiries and provide support" 
+                          desc: "Communicating regarding your application status or service updates." 
                         },
                         { 
-                          icon: <TrendingUp className="h-6 w-6 text-green-600" />, 
-                          title: "Improvements", 
-                          desc: "To analyze and improve our website and services" 
+                          icon: <GraduationCap className="h-6 w-6 text-green-600" />, 
+                          title: "Visa & Prep", 
+                          desc: "Visa application preparation, submission, and test preparation guidance." 
                         },
                         { 
                           icon: <Shield className="h-6 w-6 text-red-600" />, 
-                          title: "Security", 
-                          desc: "To detect and prevent fraudulent activity" 
+                          title: "Internal Records", 
+                          desc: "Internal record-keeping and service improvement." 
                         }
                       ].map((item, index) => (
                         <div key={index} className="bg-white p-4 rounded-lg border border-gray-200 hover:border-blue-200 transition-colors shadow-sm">
@@ -190,99 +197,103 @@ const PrivacyPolicy = () => {
               </div>
             </section>
 
-            {/* Data Sharing & Security */}
+            {/* 4. Data Sharing & Security */}
             <section id="section-4" className="p-6 md:p-8 hover:bg-gray-50 transition-colors">
               <div className="flex items-start">
-                <div className="flex-shrink-0 h-8 w-8 rounded-full bg-blue-100 flex items-center justify-center mr-4 mt-1">
-                  <span className="text-blue-600 font-medium">4</span>
+                <div className="flex-shrink-0 h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center mr-4 mt-1">
+                  <Shield className="h-5 w-5 text-blue-600" />
                 </div>
                 <div>
-                  <h2 className="text-2xl font-semibold text-gray-800 mb-4">Data Sharing & Security</h2>
+                  <h2 className="text-2xl font-semibold text-gray-800 mb-4">Data Protection & Sharing</h2>
                   <div className="prose prose-blue max-w-none text-gray-600">
-                    <p>We value your trust and implement appropriate security measures:</p>
-                    <ul className="list-disc pl-5 space-y-2">
-                      <li>We only share data with third parties when necessary for service provision or when required by law</li>
-                      <li>All data transfers use secure protocols and encryption</li>
-                      <li>We implement access controls and regular security audits</li>
+                    <p className="mb-4">We implement appropriate administrative and technical measures to protect your personal data from unauthorized access or misuse.</p>
+                    <ul className="list-disc pl-5 space-y-3">
+                      <li>Access to sensitive information is limited to authorized staff only.</li>
+                      <li>We do not sell, trade, or rent your personal data to third parties for marketing purposes.</li>
+                      <li>Data is shared only with universities, embassies, or official authorities for application purposes.</li>
+                      <li>We may share data with trusted third parties strictly involved in service delivery.</li>
                     </ul>
-                    <div className="mt-6 p-4 bg-yellow-50 border-l-4 border-yellow-400">
-                      <p className="text-yellow-700"><strong>Note:</strong> While we strive to protect your data, no internet transmission is 100% secure. We cannot guarantee absolute security.</p>
-                    </div>
                   </div>
                 </div>
               </div>
             </section>
 
-            {/* User Rights */}
+            {/* 5. Terms & Conditions */}
             <section id="section-5" className="p-6 md:p-8 hover:bg-gray-50 transition-colors">
               <div className="flex items-start">
-                <div className="flex-shrink-0 h-8 w-8 rounded-full bg-blue-100 flex items-center justify-center mr-4 mt-1">
-                  <span className="text-blue-600 font-medium">5</span>
+                <div className="flex-shrink-0 h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center mr-4 mt-1">
+                  <FileText className="h-5 w-5 text-blue-600" />
                 </div>
                 <div>
-                  <h2 className="text-2xl font-semibold text-gray-800 mb-4">User Rights</h2>
+                  <h2 className="text-2xl font-semibold text-gray-800 mb-4">Terms & Conditions</h2>
                   <div className="prose prose-blue max-w-none text-gray-600">
-                    <p>You have certain rights regarding your personal data:</p>
-                    <div className="mt-4 space-y-4">
+                    <p className="mb-6">By engaging with E-Spot International Education Consultancy, you agree to the following:</p>
+                    <div className="space-y-4">
                       {[
                         { 
-                          icon: <Eye className="h-5 w-5 text-blue-600" />, 
-                          right: "Access", 
-                          desc: "Request a copy of your personal data" 
+                          icon: <FileText className="h-5 w-5 text-blue-600" />, 
+                          title: "Scope of Services", 
+                          desc: "We provide counseling, admission assistance, and visa documentation support. Final decisions are made solely by educational institutions and government authorities." 
                         },
                         { 
-                          icon: <Edit3 className="h-5 w-5 text-green-600" />, 
-                          right: "Rectification", 
-                          desc: "Correct inaccurate or incomplete data" 
+                          icon: <AlertTriangle className="h-5 w-5 text-yellow-600" />, 
+                          title: "No Guarantee Clause", 
+                          desc: "We do not guarantee admission, visa approval, or scholarships. All outcomes depend on eligibility, documentation, and external authorities." 
                         },
                         { 
-                          icon: <Trash2 className="h-5 w-5 text-red-600" />, 
-                          right: "Erasure", 
-                          desc: "Request deletion of your personal data" 
+                          icon: <UserCheck className="h-5 w-5 text-green-600" />, 
+                          title: "Client Responsibilities", 
+                          desc: "Clients must provide truthful information and genuine documents. We are not liable for rejections caused by false information." 
                         },
                         { 
-                          icon: <Pause className="h-5 w-5 text-yellow-600" />, 
-                          right: "Restriction", 
-                          desc: "Limit how we use your data" 
+                          icon: <CreditCard className="h-5 w-5 text-red-600" />, 
+                          title: "Fees & Payments", 
+                          desc: "Service fees are non-refundable unless stated in writing. Fees cover consultancy services only and exclude embassy/university charges." 
                         }
                       ].map((item, index) => (
-                        <div key={index} className="flex items-start">
-                          <div className="flex-shrink-0 h-10 w-10 rounded-full bg-blue-50 flex items-center justify-center mr-3 mt-1">
+                        <div key={index} className="flex items-start p-3 rounded-lg hover:bg-gray-50/80 transition-colors">
+                          <div className="flex-shrink-0 h-10 w-10 rounded-full bg-blue-50 flex items-center justify-center mr-4 mt-1">
                             {item.icon}
                           </div>
                           <div>
-                            <h3 className="font-medium text-gray-800">{item.right}</h3>
-                            <p className="text-sm text-gray-600">{item.desc}</p>
+                            <h3 className="font-semibold text-gray-800">{item.title}</h3>
+                            <p className="text-sm text-gray-600 mt-1 leading-relaxed">{item.desc}</p>
                           </div>
                         </div>
                       ))}
                     </div>
-                    <p className="mt-6">To exercise these rights, please contact us using the information below.</p>
                   </div>
                 </div>
               </div>
             </section>
 
-            {/* Contact Us */}
+            {/* 6. Governing Law / Contact */}
             <section id="section-6" className="p-6 md:p-8 hover:bg-gray-50 transition-colors">
               <div className="flex items-start">
-                <div className="flex-shrink-0 h-8 w-8 rounded-full bg-blue-100 flex items-center justify-center mr-4 mt-1">
-                  <span className="text-blue-600 font-medium">6</span>
+                <div className="flex-shrink-0 h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center mr-4 mt-1">
+                  <Gavel className="h-5 w-5 text-blue-600" />
                 </div>
                 <div>
-                  <h2 className="text-2xl font-semibold text-gray-800 mb-4">Contact Us</h2>
+                  <h2 className="text-2xl font-semibold text-gray-800 mb-4">Governing Law & Contact</h2>
                   <div className="prose prose-blue max-w-none text-gray-600">
-                    <p>If you have questions about this policy or your personal data:</p>
-                    <div className="mt-6 bg-blue-50 rounded-lg p-6 max-w-md">
-                      <h3 className="font-medium text-blue-800 mb-3">Study In Global Data Protection</h3>
-                      <ul className="space-y-2">
-                        <li className="flex items-start">
-                          <Mail className="h-5 w-5 text-blue-500 mr-3 flex-shrink-0" />
-                          <span>privacy@studyinglobal.co.uk</span>
+                    <p className="mb-4">
+                       These Terms & Conditions shall be governed by and interpreted in accordance with the laws of <strong>Nepal</strong>. We reserve the right to refuse or terminate services if false information is provided or terms are violated.
+                    </p>
+
+                    <div className="mt-8 bg-blue-50/80 border border-blue-100 rounded-xl p-6 max-w-md">
+                      <h3 className="font-semibold text-blue-900 mb-4">E-Spot International Support</h3>
+                      <ul className="space-y-3">
+                        <li className="flex items-center">
+                          <Gavel className="h-5 w-5 text-blue-500 mr-3 flex-shrink-0" />
+                          <span className="text-blue-800">Jurisdiction: Nepal</span>
                         </li>
-                        <li className="flex items-start">
+                        <li className="flex items-center">
+                          <Mail className="h-5 w-5 text-blue-500 mr-3 flex-shrink-0" />
+                          <span className="text-blue-800">info@espot.edu.np</span>
+                        </li>
+                        <li className="flex items-center">
                           <Phone className="h-5 w-5 text-blue-500 mr-3 flex-shrink-0" />
-                          <span>+44 (20) 3983-5140</span>
+                          <span className="text-blue-800">Contact your local branch</span>
                         </li>
                       </ul>
                     </div>
@@ -297,7 +308,7 @@ const PrivacyPolicy = () => {
         <div className="mt-8 text-center">
           <button
             onClick={scrollToTop}
-            className="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 cursor-pointer transition-colors"
+            className="inline-flex items-center px-6 py-3 border border-gray-300 shadow-sm text-sm font-medium rounded-full text-gray-700 bg-white hover:bg-gray-50 hover:text-blue-600 cursor-pointer transition-all duration-300 transform hover:-translate-y-1"
           >
             ↑ Back to Top
           </button>

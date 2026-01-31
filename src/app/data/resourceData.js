@@ -18,7 +18,7 @@ export const resourcesData = {
       iconBg: "bg-[#3B82F6]",   // Blue Icon Circle
       iconColor: "text-white",
       textColor: "text-[#1E3A8A]",
-      downloadUrl: "/resources/downloadables/sop-guide.pdf" // <--- File must be in public/downloads/
+      downloadUrl: "/resources/downloadables/sop_guide.pdf" // <--- File must be in public/downloads/
     },
     {
       title: "Visa Document Checklist",
@@ -29,7 +29,7 @@ export const resourcesData = {
       iconBg: "bg-[#10B981]",   // Green Icon Circle
       iconColor: "text-white",
       textColor: "text-[#064E3B]",
-      downloadUrl: "/resources/downloadables/sop-guide.pdf"
+      downloadUrl: "/resources/downloadables/visa_checklist.pdf"
     },
     {
       title: "Scholarship Handbook",
@@ -40,7 +40,7 @@ export const resourcesData = {
       iconBg: "bg-[#0EA5E9]",   // Sky Icon Circle
       iconColor: "text-white",
       textColor: "text-[#0C4A6E]",
-      downloadUrl: "/resources/downloadables/sop-guide.pdf"
+      downloadUrl: "/resources/downloadables/scholarship_handbook.pdf"
     }
   ],
 

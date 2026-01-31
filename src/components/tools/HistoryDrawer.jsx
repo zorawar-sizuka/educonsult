@@ -197,7 +197,8 @@ export default function HistoryDrawer({ open, onClose, activeTab, onRestore }) {
     activeTab === "eligibility" ? "eligibility" :
     activeTab === "calculator" ? "cost" :
     activeTab === "sop" ? "sop" :
-    activeTab === "discovery" ? "finder" : ""
+    activeTab === "discovery" ? "University Finder" :
+    activeTab === "gpa" ? "GPA" : ""
   ), [activeTab]);
 
   // Step 9 view
@@ -249,7 +250,7 @@ export default function HistoryDrawer({ open, onClose, activeTab, onRestore }) {
               <div>
                 <div className="text-xs font-bold uppercase text-slate-400">History</div>
                 <div className="text-lg font-bold text-slate-900">
-                  {savedOnly ? "Saved runs" : "Recent runs"}{toolType ? ` • ${toolType}` : ""}
+                  {savedOnly ? "Saved Tool runs for:" : "Recent Tool runs for "}{toolType ? ` • ${toolType.toUpperCase()}` : ""}
                 </div>
               </div>
 

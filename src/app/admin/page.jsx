@@ -35,9 +35,9 @@ export default function AdminPage() {
     <div className="min-h-screen bg-slate-50 p-4 sm:p-8 font-sans text-slate-900">
       <div className="max-w-7xl mx-auto">
         {/* LOTTIE HERO SECTION */}
-        <div className="max-w-5xl mx-auto">
-          <div className="flex flex-col items-center justify-center text-center my-18">
-            <div className="w-[60%] max-w-xs mx-auto">
+        <div className="max-w-6xl mx-auto">
+          <div className="flex flex-col items-center justify-center text-center my-12">
+            <div className="w-[80%] max-w-lg mx-auto">
               {!lottieError && animationData ? (
                 <Lottie className="aspect-square w-full" animationData={animationData} loop={true} />
               ) : (

@@ -129,7 +129,7 @@ export default function Founder() {
                 className="pt-2"
               >
                 {/* Headline */}
-                <h3 className="text-3xl sm:text-4xl lg:text-[52px] leading-[1.03] tracking-tight text-[#0E4D45]">
+                <h3 className="text-3xl sm:text-4xl lg:text-[52px] leading-[1.03] tracking-tight text-[#3c55a5]">
                  <span className="font-light">We’re a trusted &amp;</span> 
                   <br />
                   <span className="font-semibold"> professional</span>
@@ -162,7 +162,7 @@ export default function Founder() {
 
                 {/* Experience Circle */}
                 <div className="mt-10 md:mt-14 flex items-center gap-6 md:gap-10">
-                  <ExperienceCircle years="15+" label="Years" sublabel="Experience" />
+                  <ExperienceCircle years="10+" label="Years" sublabel="Experience" />
                   <div className="text-xs md:text-sm text-slate-500 leading-relaxed max-w-[200px] md:max-w-[260px]">
                     Experience you can rely on — built across admissions, documentation, and visa coaching.
                   </div>
@@ -196,7 +196,7 @@ function StatPill({ label, value, delay, side }) {
         cursor-default
       "
     >
-      <span className="flex items-center justify-center bg-[#1F4E3D] text-white text-xs md:text-sm font-bold px-3 py-1.5 md:px-4 md:py-2 rounded-full min-w-[3rem] md:min-w-[4rem] tracking-wide">
+      <span className="flex items-center justify-center bg-[#0c39b1] text-white text-xs md:text-sm font-bold px-3 py-1.5 md:px-4 md:py-2 rounded-full min-w-[3rem] md:min-w-[4rem] tracking-wide">
         {value}
       </span>
       <span className="px-3 md:px-5 text-xs md:text-sm font-medium text-slate-700 whitespace-nowrap">
@@ -207,11 +207,11 @@ function StatPill({ label, value, delay, side }) {
 }
 
 /** Subcomponent: Experience Circle */
-function ExperienceCircle({ years = "15+", label = "EXPERIENCE" }) {
+function ExperienceCircle({ years = "10+", label = "EXPERIENCE" }) {
     return (
       <div className="relative flex items-center">
         {/* Large Number */}
-        <div className="text-[80px] md:text-[120px] leading-none tracking-tight text-[#0E4D45] font-light">
+        <div className="text-[80px] md:text-[120px] leading-none tracking-tight text-[#f26523] font-light">
           {years}
         </div>
   

@@ -168,10 +168,188 @@
 
 
 
+// import { NextResponse } from "next/server";
+// import { prisma } from "@/lib/prisma";
+// import { getServerSession } from "next-auth";
+// import { authOptions } from "@/app/api/auth/[...nextauth]/route"; 
+// import { revalidateTag } from "next/cache";
+
+// export const dynamic = "force-dynamic";
+
+// async function requireAdmin(req) {
+//   const session = await getServerSession(authOptions);
+
+//   if (!session?.user) {
+//     return { ok: false, res: NextResponse.json({ error: "Unauthorized" }, { status: 401 }) };
+//   }
+
+//   if (session.user.role !== "ADMIN") {
+//     return { ok: false, res: NextResponse.json({ error: "Forbidden" }, { status: 403 }) };
+//   }
+
+//   return { ok: true, session };
+// }
+
+// // GET
+// export async function GET(req) {
+//   const guard = await requireAdmin(req);
+//   if (!guard.ok) return guard.res;
+
+//   try {
+//     const { searchParams } = new URL(req.url);
+//     const monthName = searchParams.get("month");
+
+//     let dateFilter = {};
+
+//     if (monthName && monthName !== "All Months") {
+//       const currentYear = new Date().getFullYear();
+//       const monthIndex = new Date(`${monthName} 1, ${currentYear}`).getMonth();
+
+//       const startDate = new Date(currentYear, monthIndex, 1);
+//       const endDate = new Date(currentYear, monthIndex + 1, 0, 23, 59, 59);
+
+//       dateFilter = {
+//         date: { gte: startDate, lte: endDate },
+//       };
+//     }
+
+//     const events = await prisma.event.findMany({
+//       where: dateFilter,
+//       orderBy: { date: "asc" },
+//       select: {
+//         id: true,
+//         title: true,
+//         category: true,
+//         date: true,
+//         time: true,
+//         location: true,
+//         description: true,
+//         longDescription: true,
+//         imageUrl: true, 
+//         isPublished: true,
+
+//       },
+//     });
+
+//     return NextResponse.json(events);
+//   } catch (error) {
+//     console.error("GET Events Error:", error);
+//     return NextResponse.json({ error: "Failed to fetch events" }, { status: 500 });
+//   }
+// }
+
+// // POST
+// export async function POST(req) {
+//   const guard = await requireAdmin(req);
+//   if (!guard.ok) return guard.res;
+
+//   try {
+//     const body = await req.json();
+
+//     if (!body.title || !body.date) {
+//       return NextResponse.json({ error: "Title and Date are required" }, { status: 400 });
+//     }
+
+//     const newEvent = await prisma.event.create({
+//       data: {
+//         title: body.title,
+//         category: body.category || "General",
+//         date: new Date(body.date),
+//         time: body.time,
+//         location: body.location,
+//         description: body.description,
+//         longDescription: body.longDescription,
+//         imageUrl: body.imageUrl, 
+//         isPublished: Boolean(body.isPublished),
+
+//       },
+//     });
+
+//     return NextResponse.json(newEvent, { status: 201 });
+//   } catch (error) {
+//     console.error("POST Event Error:", error);
+//     return NextResponse.json({ error: error.message }, { status: 500 });
+//   }
+// }
+
+// // DELETE
+// export async function DELETE(req) {
+//   const guard = await requireAdmin(req);
+//   if (!guard.ok) return guard.res;
+
+//   try {
+//     const { searchParams } = new URL(req.url);
+//     const id = searchParams.get("id");
+
+//     if (!id) return NextResponse.json({ error: "ID required" }, { status: 400 });
+
+//     await prisma.event.delete({ where: { id: Number(id) } });
+
+//     return NextResponse.json({ success: true });
+//   } catch (error) {
+//     console.error("DELETE Event Error:", error);
+//     return NextResponse.json({ error: "Failed to delete" }, { status: 500 });
+//   }
+// }
+
+// // PUT
+// export async function PUT(req) {
+//   const guard = await requireAdmin(req);
+//   if (!guard.ok) return guard.res;
+
+//   try {
+//     const body = await req.json();
+//     const { id, ...updateData } = body;
+
+//     if (!id) {
+//       return NextResponse.json({ error: "ID required for update" }, { status: 400 });
+//     }
+
+//     if (updateData.date) updateData.date = new Date(updateData.date); 
+
+//     if (typeof updateData.isPublished !== "undefined") {
+//       updateData.isPublished = Boolean(updateData.isPublished);
+//     }
+    
+
+//     const updatedEvent = await prisma.event.update({
+//       where: { id: Number(id) },
+//       data: updateData, 
+      
+//     });
+
+//     return NextResponse.json(updatedEvent, { status: 200 });
+//   } catch (error) {
+//     console.error("PUT Event Error:", error);
+//     return NextResponse.json({ error: error.message }, { status: 500 });
+//   }
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { revalidateTag } from "next/cache";
+import { unstable_cache } from "next/cache";
 
 export const dynamic = "force-dynamic";
 
@@ -189,15 +367,8 @@ async function requireAdmin(req) {
   return { ok: true, session };
 }
 
-// GET
-export async function GET(req) {
-  const guard = await requireAdmin(req);
-  if (!guard.ok) return guard.res;
-
-  try {
-    const { searchParams } = new URL(req.url);
-    const monthName = searchParams.get("month");
-
+const getCachedAdminEvents = unstable_cache(
+  async (monthName = "All Months") => {
     let dateFilter = {};
 
     if (monthName && monthName !== "All Months") {
@@ -212,7 +383,7 @@ export async function GET(req) {
       };
     }
 
-    const events = await prisma.event.findMany({
+    return await prisma.event.findMany({
       where: dateFilter,
       orderBy: { date: "asc" },
       select: {
@@ -224,11 +395,25 @@ export async function GET(req) {
         location: true,
         description: true,
         longDescription: true,
-        imageUrl: true, 
+        imageUrl: true,
         isPublished: true,
-
       },
     });
+  },
+  ["admin-events"],
+  { tags: ["admin-events"] }
+);
+
+// GET (Admin list)
+export async function GET(req) {
+  const guard = await requireAdmin(req);
+  if (!guard.ok) return guard.res;
+
+  try {
+    const { searchParams } = new URL(req.url);
+    const monthName = searchParams.get("month") || "All Months";
+
+    const events = await getCachedAdminEvents(monthName);
 
     return NextResponse.json(events);
   } catch (error) {
@@ -258,11 +443,14 @@ export async function POST(req) {
         location: body.location,
         description: body.description,
         longDescription: body.longDescription,
-        imageUrl: body.imageUrl, 
+        imageUrl: body.imageUrl,
         isPublished: Boolean(body.isPublished),
-
       },
     });
+
+    // Invalidate caches
+    revalidateTag("events");
+    revalidateTag("admin-events");
 
     return NextResponse.json(newEvent, { status: 201 });
   } catch (error) {
@@ -284,6 +472,9 @@ export async function DELETE(req) {
 
     await prisma.event.delete({ where: { id: Number(id) } });
 
+    revalidateTag("events");
+    revalidateTag("admin-events");
+
     return NextResponse.json({ success: true });
   } catch (error) {
     console.error("DELETE Event Error:", error);
@@ -304,18 +495,19 @@ export async function PUT(req) {
       return NextResponse.json({ error: "ID required for update" }, { status: 400 });
     }
 
-    if (updateData.date) updateData.date = new Date(updateData.date); 
+    if (updateData.date) updateData.date = new Date(updateData.date);
 
     if (typeof updateData.isPublished !== "undefined") {
       updateData.isPublished = Boolean(updateData.isPublished);
     }
-    
 
     const updatedEvent = await prisma.event.update({
       where: { id: Number(id) },
-      data: updateData, 
-      
+      data: updateData,
     });
+
+    revalidateTag("events");
+    revalidateTag("admin-events");
 
     return NextResponse.json(updatedEvent, { status: 200 });
   } catch (error) {

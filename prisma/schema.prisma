@@ -4,8 +4,6 @@ generator client {
 
 datasource db {
   provider  = "postgresql"
-  url       = env("DATABASE_URL")
-  directUrl = env("DIRECT_URL")
 }
 
 // --------------------
@@ -75,7 +73,10 @@ model Event {
   longDescription String?  @db.Text
   imageUrl        String?  @db.Text
   isPublished     Boolean  @default(false)
-  createdAt       DateTime @default(now())
+  createdAt       DateTime @default(now()) 
+  @@index([date])
+  @@index([isPublished])
+  @@index([date, isPublished])
 }
 
 

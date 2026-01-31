@@ -1,38 +1,38 @@
-import { withAuth } from "next-auth/middleware";
+// import { withAuth } from "next-auth/middleware";
 
-export default withAuth(
-  async function middleware(req) {
-    // TEMP LOG: Remove after testing
-    console.log(`[Middleware] Path: ${req.nextUrl.pathname}, Token: ${!!req.nextauth.token}, Role: ${req.nextauth.token?.role || 'none'}`);
+// export default withAuth(
+//   async function middleware(req) {
+//     // TEMP LOG: Remove after testing
+//     console.log(`[Middleware] Path: ${req.nextUrl.pathname}, Token: ${!!req.nextauth.token}, Role: ${req.nextauth.token?.role || 'none'}`);
 
-    // Custom redirect for non-admins (only if protected route)
-    const pathname = req.nextUrl.pathname;
-    if (pathname.startsWith("/admin") && pathname !== "/admin/login" && !(req.nextauth.token?.role === "ADMIN")) {
-      console.log(`[Middleware] Redirecting to login from ${pathname}`);
-      return Response.redirect(new URL("/admin/login", req.url));
-    }
-  },
-  {
-    callbacks: {
-      authorized: ({ token, req }) => {
-        const pathname = req.nextUrl.pathname;
-        // TEMP LOG: Remove after testing
-        console.log(`[Authorized Check] Path: ${pathname}, Authorized: ${!!token && token.role === "ADMIN"}`);
+//     // Custom redirect for non-admins (only if protected route)
+//     const pathname = req.nextUrl.pathname;
+//     if (pathname.startsWith("/admin") && pathname !== "/admin/login" && !(req.nextauth.token?.role === "ADMIN")) {
+//       console.log(`[Middleware] Redirecting to login from ${pathname}`);
+//       return Response.redirect(new URL("/admin/login", req.url));
+//     }
+//   },
+//   {
+//     callbacks: {
+//       authorized: ({ token, req }) => {
+//         const pathname = req.nextUrl.pathname;
+//         // TEMP LOG: Remove after testing
+//         console.log(`[Authorized Check] Path: ${pathname}, Authorized: ${!!token && token.role === "ADMIN"}`);
 
-        // Protect /admin/* but EXCLUDE login explicitly (even with queries/fragments)
-        if (pathname.startsWith("/admin") && !pathname.match(/^\/admin\/login($|\?)/)) {
-          return !!token && token.role === "ADMIN";
-        }
-        // All else (incl. /admin/login?anything) is public
-        return true;
-      },
-    },
-  }
-);
+//         // Protect /admin/* but EXCLUDE login explicitly (even with queries/fragments)
+//         if (pathname.startsWith("/admin") && !pathname.match(/^\/admin\/login($|\?)/)) {
+//           return !!token && token.role === "ADMIN";
+//         }
+//         // All else (incl. /admin/login?anything) is public
+//         return true;
+//       },
+//     },
+//   }
+// );
 
-export const config = {
-  matcher: ["/admin/:path*"],
-}; 
+// export const config = {
+//   matcher: ["/admin/:path*"],
+// }; 
 
 
 
@@ -76,3 +76,44 @@ export const config = {
 //   // Apply this middleware to everything starting with /admin
 //   matcher: ["/admin/:path*"],
 // };
+
+
+
+
+
+
+// LOGIN PAGE FOR PRODUCTION// 
+
+import { withAuth } from "next-auth/middleware";
+import { NextResponse } from "next/server";
+
+export default withAuth(
+  function middleware(req) {
+    const token = req.nextauth.token;
+    const pathname = req.nextUrl.pathname;
+
+    // Only protect /admin routes except login
+    if (pathname.startsWith("/admin") && pathname !== "/admin/login") {
+      if (!token || token.role !== "ADMIN") {
+        const loginUrl = new URL("/admin/login", req.url);
+        loginUrl.searchParams.set("callbackUrl", pathname);
+        return NextResponse.redirect(loginUrl);
+      }
+    }
+  },
+  {
+    callbacks: {
+      authorized: ({ token, req }) => {
+        const pathname = req.nextUrl.pathname;
+        if (pathname.startsWith("/admin") && pathname !== "/admin/login") {
+          return !!token && token.role === "ADMIN";
+        }
+        return true;
+      },
+    },
+  }
+);
+
+export const config = {
+  matcher: ["/admin/:path*"],
+};

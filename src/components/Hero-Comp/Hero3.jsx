@@ -78,7 +78,7 @@ export default function Hero3() {
           >
             <div className="relative">
               
-              {/* CROSS LINES: Hidden on Mobile (hidden), Visible on SM+ (block) */}
+              {/* CROSS LINES: Hidden on Mobile, Visible on SM+ */}
               <div className="pointer-events-none absolute inset-0 hidden sm:block">
                 {/* Vertical Line */}
                 <div className="absolute left-1/2 top-0 bottom-0 w-px bg-slate-200/80" />
@@ -88,25 +88,35 @@ export default function Hero3() {
 
               {/* GRID: 2 Columns on Mobile, 2 Columns on Desktop */}
               <div className="grid grid-cols-2">
+                
+                {/* --- CHANGED SLOT 1 (Top Left) --- */}
+                {/* Replaced "Generic Strategies" with "Strategic Precision" to match Target Icon */}
                 <FeatureCell
                   Icon={Target}
-                  titleTop="Generic"
-                  titleBottom="Strategies"
-                  desc="One-size-fits-all plans with limited personalization for your course, country, and profile."
+                  titleTop="Strategic"
+                  titleBottom="Precision"
+                  desc="We use data-driven insights to target the universities where your specific profile has the highest success rate."
                 />
+
+                {/* --- CHANGED SLOT 2 (Top Right) --- */}
+                {/* Replaced "Limited Guidance" with "Dedicated Mentors" to match Users Icon */}
                 <FeatureCell
                   Icon={Users}
-                  titleTop="Limited"
-                  titleBottom="Guidance"
-                  desc="Support fades after basics. Students handle confusion, rework, and deadlines alone."
+                  titleTop="Dedicated"
+                  titleBottom="Mentors"
+                  desc="You get a personal counselor—not a generic support team—guiding you from the first form to your final visa."
                   align="right"
                 />
+
+                {/* --- UNCHANGED SLOT 3 (Bottom Left) --- */}
                 <FeatureCell
                   Icon={Sparkles}
                   titleTop="Tailored"
                   titleBottom="Consulting"
                   desc="A roadmap built around your academics, goals, budget, and realistic admit chances."
                 />
+
+                {/* --- UNCHANGED SLOT 4 (Bottom Right) --- */}
                 <FeatureCell
                   Icon={BadgeDollarSign}
                   titleTop="Transparent"
@@ -123,20 +133,15 @@ export default function Hero3() {
   );
 }
 
+// --- SUB-COMPONENT (Unchanged) ---
 function FeatureCell({ Icon, titleTop, titleBottom, desc, align }) {
   return (
     <div className="px-4 py-6 sm:px-10 sm:py-12"> 
       
-      {/* ALIGNMENT FIXES:
-        1. items-center (Mobile) -> Centers the Flex column (Icon + Text) vertically 
-        2. sm:items-start (Desktop) -> Aligns them to the left 
-      */}
+      {/* ALIGNMENT FIXES */}
       <div className={`flex flex-col sm:flex-row items-center sm:items-start justify-between gap-3 sm:gap-8 ${align === "right" ? "sm:pl-14" : "sm:pr-14"}`}>
         
-        {/* TEXT ALIGNMENT FIXES:
-          1. text-center (Mobile) -> Centers the text
-          2. sm:text-left (Desktop) -> Aligns text to left
-        */}
+        {/* TEXT ALIGNMENT FIXES */}
         <div className="max-w-sm order-2 sm:order-1 text-center sm:text-left">
           <h3 className="text-[16px] sm:text-[34px] sm:leading-[1.03] tracking-tight text-slate-900 leading-tight">
             <span className="font-light">{titleTop}</span>

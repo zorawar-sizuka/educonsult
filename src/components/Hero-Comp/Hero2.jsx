@@ -12,7 +12,7 @@ import Notifier from "./Notifier";
 const SERVICES = [
   { 
     id: 1, 
-    label: "IELTS Practice", 
+    label: "AI Tools", 
     icon: (
       <svg className="w-6 h-6 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
@@ -23,7 +23,7 @@ const SERVICES = [
   },
   { 
     id: 2, 
-    label: "Student Counseling", 
+    label: "Global Learning", 
     icon: (
       <svg className="w-6 h-6 text-orange-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 14l9-5-9-5-9 5 9 5z" />
@@ -44,7 +44,7 @@ const SERVICES = [
   },
   { 
     id: 4, 
-    label: "Abroad Studies", 
+    label: "Academic Advising", 
     icon: (
       <svg className="w-6 h-6 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -93,26 +93,42 @@ export default function Hero2() {
 
         <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-20 h-full">
           
-          {/* Left Column */}
-          <div className="w-full lg:w-1/2 flex flex-col items-start z-10 text-left order-2 lg:order-1">
-            <h1 className="text-5xl lg:text-7xl font-sans font-bold leading-tight text-[#0A2558] mb-6">
-              ROSS Global: <br />
-              <span className="text-black">What's </span>
-              <span className="text-[#E63946]">Next?</span>
-            </h1>
+     {/* Left Column */}
+<div className="w-full lg:w-1/2 flex flex-col items-start z-10 text-left order-2 lg:order-1">
+  <h1 className="text-5xl lg:text-7xl font-sans font-bold leading-tight text-[#0c38b1] mb-6">
+    EIEC: <br />
+    <span className="text-[black]">The  </span> 
+    <span className="text-[#fe5f01]"> New </span>
+    <span className="text-[black]">Era</span>
+  </h1>
 
-            <p className="text-lg text-gray-600 leading-relaxed max-w-lg mb-8">
-              ROSS looks ahead with an expanded vision to be the student's lifelong launch pad 
-              for realizing their highest potential—whether through education abroad, skilled careers, or migration.
-            </p>
+  {/* UPGRADED CONTENT */}
+  <p className="text-lg text-gray-600 leading-relaxed max-w-lg mb-8">
+    We are redefining the trajectory of global success. Beyond admissions and borders, 
+    EIEC is evolving into your lifelong strategic partner—bridging the gap between 
+    world-class education, skilled career pathways, and global citizenship.
+  </p>
 
-            <Link href="/services" className="group inline-flex items-center gap-2 font-bold text-[#0A2558] text-sm tracking-wider uppercase hover:text-blue-700 transition-colors">
-              Learn More
-              <span className="bg-[#E63946] text-white rounded-full p-1 group-hover:translate-x-1 transition-transform">
-                <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M9 5l7 7-7 7"></path></svg>
-              </span>
-            </Link>
-          </div>
+  {/* UPGRADED CTA BUTTON */}
+  <Link 
+    href="/services" 
+    className="group inline-flex items-center gap-3 font-bold text-[#0A2558] text-sm tracking-widest uppercase hover:text-blue-700 transition-colors"
+  >
+    Explore the Vision
+    {/* New Icon: Diagonal "Growth" Arrow */}
+    <span className="bg-[#fe5f01] text-white rounded-full p-1.5 transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1">
+      <svg 
+        className="w-3.5 h-3.5" 
+        fill="none" 
+        stroke="currentColor" 
+        viewBox="0 0 24 24" 
+        strokeWidth="2.5"
+      >
+        <path strokeLinecap="round" strokeLinejoin="round" d="M7 17L17 7M17 7H7M17 7V17" />
+      </svg>
+    </span>
+  </Link>
+</div>
 
           {/* Right Column */}
           <div className="w-full lg:w-1/2 relative flex items-center justify-center lg:justify-end mt-12 lg:mt-0 order-1 lg:order-2 mb-16 lg:mb-0">

@@ -52,4 +52,6 @@ export async function GET(req) {
     console.error("Public Events API Error:", err);
     return NextResponse.json([], { status: 200 });
   }
-}
+} 
+
+

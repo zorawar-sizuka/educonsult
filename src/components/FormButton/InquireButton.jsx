@@ -137,7 +137,7 @@ export default function InquireButton({ children, className }) {
           className={`
             inline-flex items-center justify-center
             h-11 px-6 rounded-full
-            border border-white/35 bg-white/10
+            border border-white bg-white/10
             text-white text-lg
             backdrop-blur-md
             transition-all duration-300 ease-out

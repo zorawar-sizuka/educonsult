@@ -7,7 +7,7 @@ import BookButton from "./FormButton/BookButton";
 
 
 export default function FloatingDock() {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
 
   return (
     <div className="fixed bottom-8 right-8 z-50 flex flex-col items-end">
@@ -111,18 +111,39 @@ export default function FloatingDock() {
           whileTap={{ scale: 0.95 }}
           transition={{ type: "spring", stiffness: 400, damping: 20 }}
           className="
-            relative flex items-center justify-center w-17 h-17 
+            relative flex items-center justify-center w-15 h-15 
             rounded-full shadow-2xl z-50
-            bg-gradient-to-br from-purple-400 to-indigo-500
+            bg-[#3b57a9]
             border-2 border-white/20 
           "
         >
           {/* Replaced SVG with bot.png image */}
-          <img 
+          {/* <img 
             src="/hero/bot.png" 
             alt="Chat Bot"
             className="w-16 h-16 object-cover relative z-10  rounded-full"
-          />
+          /> */}  
+         <svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 800 800"
+  width="40"
+  height="40"
+  role="img"
+  aria-labelledby="openIconTitle openIconDesc"
+  className="text-white relative z-10"
+>
+  <title id="openIconTitle">Opens Chat</title>
+  <desc id="openIconDesc">This icon Opens the chat window.</desc>
+
+  <path
+    fill="currentColor"
+    fillRule="evenodd"
+    clipRule="evenodd"
+    d="M400 26.2c-193.3 0-350 156.7-350 350 0 136.2 77.9 254.3 191.5 312.1 15.4 8.1 31.4 15.1 48.1 20.8l-16.5 63.5c-2 7.8 5.4 14.7 13 12.1l229.8-77.6c14.6-5.3 28.8-11.6 42.4-18.7C672 630.6 750 512.5 750 376.2c0-193.3-156.7-350-350-350zm211.1 510.7c-10.8 26.5-41.9 77.2-121.5 77.2-79.9 0-110.9-51-121.6-77.4-2.8-6.8 5-13.4 13.8-11.8 76.2 13.7 147.7 13 215.3.3 8.9-1.8 16.8 4.8 14 11.7z"
+  />
+</svg>
+
+
         
           {/* Pulsing Ring for Attention */}
           <span className="absolute inset-0 rounded-full animate-ping bg-purple-400/50 duration-2000 pointer-events-none"></span>

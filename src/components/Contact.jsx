@@ -101,7 +101,7 @@ export default function ContactSection({ imageSrc = "/footer/form_footer.jpg" })
   const isLoading = status === "loading";
 
   return (
-    <section className="bg-[#1F5A53] py-14 lg:py-20"> 
+    <section className="bg-[#3c55a5] py-14 lg:py-20"> 
     {/* FOOTER CTA */}
       <FooterCTA /> 
        {/* FOOTER CTA */} 
@@ -109,7 +109,7 @@ export default function ContactSection({ imageSrc = "/footer/form_footer.jpg" })
       <div className="mx-auto max-w-7xl px-6 lg:px-12">
         <div className="grid items-stretch gap-10 lg:grid-cols-12">
           {/* LEFT: Form panel */}
-          <div className="lg:col-span-7 rounded-[2.5rem] bg-[#1F5A53] p-8 text-white sm:p-10">
+          <div className="lg:col-span-7 rounded-[2.5rem] bg-[#3c55a5] p-8 text-white sm:p-10">
             <div className="flex items-center gap-3 text-white/85">
               <span className="h-2 w-2 rounded-full bg-white/90" />
               <p className="text-sm font-medium">Contact us</p>

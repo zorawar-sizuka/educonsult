@@ -7,61 +7,58 @@ import { Plus, ArrowRight } from "lucide-react";
 import BookButton from "@/components/FormButton/BookButton";
 
 // 1. Team Data
-const teamMembers = [
+const teamMembers = [ 
+
   {
     id: 1,
-    name: "Eleanor Pera",
-    role: "Founder & Lead Strategist",
-    image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=2776&auto=format&fit=crop",
+    name: "Sakar Jung Shahi",
+    role: "MANAGING DIRECTOR",
+    image: "/about/member3.png",
   },
   {
     id: 2,
-    name: "Marcus Chen",
-    role: "Head of Admissions",
-    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=2787&auto=format&fit=crop",
+    name: "Asghar Hussain",
+    role: "HEAD OF BUSINESS & OPERATIONS",
+    image: "/about/member1.jpg",
   },
+ 
   {
     id: 3,
-    name: "Sarah Jensen",
-    role: "Senior Visa Consultant",
-    image: "https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=2961&auto=format&fit=crop",
+    name: "Richesh Vaidya",
+    role: "OPERATIONS DIRECTOR",
+    image: "/about/member2.png",
   },
-  {
-    id: 4,
-    name: "Adam Levine",
-    role: "Marketing Executive",
-    image: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=2787&auto=format&fit=crop",
-  },
+  
 ];
 
 // 2. Timeline Data (Enhanced for the "Journey" look)
+// 2. Timeline Data (Derived from EIEC Company Journey & Milestones)
 const timelineData = [
   {
-    year: "2008",
-    title: "Discovery & Assessment", // Renamed to match the "Process" vibe of the screenshot
-    description: "Founded with a singular vision to transform how students approach international education. Our first office opened with just three dedicated counselors.",
+    year: "2016",
+    title: "Foundation & Approval",
+    description: "Officially founded and approved by the Ministry of Education, Nepal. We began with a focus on career counseling and university admissions, laying a strong foundation built on trust and ethical services.",
     image: "/about/journey1.avif"
   },
   {
-    year: "2014",
-    title: "Strategy Design",
-    description: "We expanded our services to cover 15+ countries, crafting actionable strategies aligned with student visions and building long-term university partnerships.",
+    year: "2017",
+    title: "Service Expansion",
+    description: "Expanded our services to include test preparation (IELTS, PTE, SAT) and visa counseling for major destinations like Australia, Canada, the UK, and the USA, while building international partnerships.",
     image: "/about/journey2.avif"
   },
   {
-    year: "2019",
-    title: "Digital Expansion",
-    description: "Launched our proprietary student portal. This stage set the foundation for a tailored, remote-first approach well before the world shifted online.",
+    year: "2020",
+    title: "Nationwide Presence",
+    description: "Focused on digital processes and system strengthening despite global challenges. [cite_start]This era marked our expansion into multiple cities across Nepal to improve student accessibility.",
     image: "/about/journey3.avif"
   },
   {
-    year: "2024",
-    title: "Global Leadership",
-    description: "Recognized as the top educational consultancy firm, helping over 10,000 students secure scholarships. Our focus remains on clarity, prioritization, and results.",
+    year: "2022",
+    title: "Scale & Recognition",
+    description: "Established as a trusted name with a proven track record of success. [cite_start]We grew to 18 offices across Nepal, supported by a professional team of academic counselors and immigration experts.",
     image: "/about/journey4.avif"
   },
 ];
-
 export default function AboutPage() {
   return (
     <div className="w-full bg-white">
@@ -76,7 +73,7 @@ export default function AboutPage() {
           className="absolute inset-0"
         >
           <Image
-            src="/about/about.avif" // Ensure this path is valid in your project
+            src="/about/about.avif"
             alt="Office lobby"
             fill
             className="object-cover"
@@ -127,9 +124,6 @@ export default function AboutPage() {
 
       {/* -------------------------------------------------------
           3. JOURNEY / PROCESS SECTION
-          Inspired by Screenshot 2026-01-22 at 21.42.01.png
-          - Layout: Image Left | Line Center | Content Right
-          - Green Numbers (01, 02)
       ------------------------------------------------------- */}
       <section className="py-24 w-full bg-white overflow-hidden">
         <div className="max-w-7xl mx-auto px-6 lg:px-12">
@@ -144,7 +138,8 @@ export default function AboutPage() {
           </div>
 
           <div className="relative">
-            {/* The Central Line (Hidden on mobile, visible on LG) */}
+            {/* The Central Line (Desktop) */}
+            {/* Extended to bottom-0 to run behind the final text */}
             <div className="absolute left-[20px] lg:left-1/2 top-0 bottom-0 w-px bg-slate-200 hidden lg:block" />
 
             <div className="flex flex-col gap-24 lg:gap-32">
@@ -152,18 +147,38 @@ export default function AboutPage() {
                 <JourneyStep key={index} item={item} index={index} />
               ))}
             </div>
+
+            {/* --- NEW: JOURNEY CONTINUES SECTION --- */}
+            <div className="relative z-10 pt-24 lg:pt-32 flex justify-center">
+              <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8 }}
+                className="bg-white px-8 py-6 flex flex-col items-center text-center"
+              >
+                {/* Decorative Dot to 'catch' the line */}
+                <div className="w-2 h-2 bg-slate-200 rounded-full mb-6 hidden lg:block" />
+                
+                <h4 className="text-3xl md:text-5xl font-serif text-slate-300 italic tracking-tight">
+                  The Journey Continues...
+                </h4>
+                
+                <p className="mt-3 text-xs font-bold uppercase tracking-[0.2em] text-slate-400/70">
+                  Building the Future
+                </p>
+              </motion.div>
+            </div>
+            {/* -------------------------------------- */}
+
           </div>
         </div>
       </section>
 
       {/* -------------------------------------------------------
           4. LEADERSHIP TEAM
-        
-          - Square/Portrait aspect ratio
-          - Text overlay at bottom
-          - Gradient fade
       ------------------------------------------------------- */}
-    <div className="py-12 px-4 md:px-6 bg-[#F6F5F2]">
+      <div className="py-12 px-4 md:px-6 bg-[#F6F5F2]">
         <section className="py-12 md:py-20 max-w-7xl mx-auto">
             
             <div className="text-center mb-12 md:mb-16">
@@ -175,7 +190,6 @@ export default function AboutPage() {
               </h3>
             </div>
 
-            {/* Team Grid: 2 cols on mobile, 4 on desktop */}
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-4 gap-y-10 lg:gap-6">
               {teamMembers.map((member, index) => (
                 <motion.div 
@@ -184,15 +198,9 @@ export default function AboutPage() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
-                  // Layout Switch:
-                  // Mobile: Flex column for Avatar style (Image Top, Text Bottom)
-                  // Desktop: Aspect Ratio Card (Image Fill, Text Overlay)
                   className="group relative flex flex-col items-center lg:block lg:aspect-[4/5] lg:rounded-2xl lg:overflow-hidden lg:bg-slate-300 cursor-pointer"
                 >
-                  
-                  {/* --- IMAGE CONTAINER --- */}
-                  {/* Mobile: Fixed Width/Height Circle (w-32 h-32 rounded-full) 
-                      Desktop: Absolute Fill (inset-0 w-full h-full rounded-none) */}
+                  {/* Image Container */}
                   <div className="relative w-32 h-32 sm:w-40 sm:h-40 rounded-full overflow-hidden shadow-lg 
                                   lg:shadow-none lg:absolute lg:inset-0 lg:w-full lg:h-full lg:rounded-none">
                     <Image
@@ -201,44 +209,37 @@ export default function AboutPage() {
                       fill
                       className="object-cover transition-transform duration-700 ease-in-out group-hover:scale-110"
                     />
-                    
-                    {/* Gradient Overlay: HIDDEN on mobile, Visible on Desktop */}
                     <div className="hidden lg:block absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-80 transition-opacity duration-300" />
                   </div>
 
-                  {/* --- TEXT CONTENT --- */}
-                  {/* Mobile: Margin Top, Dark Text
-                      Desktop: Absolute Position, White Text */}
+                  {/* Text Content */}
                   <div className="mt-4 text-center 
                                   lg:mt-0 lg:absolute lg:bottom-0 lg:left-0 lg:w-full lg:p-6 lg:text-left 
                                   lg:transform lg:translate-y-2 lg:group-hover:translate-y-0 lg:transition-transform lg:duration-300">
-                    
                     <h4 className="text-lg md:text-xl font-bold text-slate-900 lg:text-white mb-1">
                       {member.name}
                     </h4>
-                    
                     <p className="text-xs md:text-sm font-medium text-emerald-600 lg:text-white/70 uppercase tracking-wide">
                       {member.role}
                     </p>
                   </div>
-
                 </motion.div>
               ))}
             </div>
         </section> 
-           {/* -------------------------------------------------------
-          3. CTA
-      ------------------------------------------------------- */}
-      <section className="py-24 flex justify-center"> 
-
-<BookButton className="group relative px-8 py-4 bg-slate-900 text-white rounded-full overflow-hidden">
-  <div className="absolute inset-0 w-full h-full bg-blue-600 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out" />
-  <span className="relative z-10 font-medium tracking-wide flex items-center gap-2">
-    Start Your Application
-    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
-  </span>
-</BookButton>
-</section>
+        
+        {/* -------------------------------------------------------
+            5. CTA
+        ------------------------------------------------------- */}
+        <section className="py-24 flex justify-center"> 
+          <BookButton className="group relative px-8 py-4 bg-slate-900 text-white rounded-full overflow-hidden">
+            <div className="absolute inset-0 w-full h-full bg-blue-600 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out" />
+            <span className="relative z-10 font-medium tracking-wide flex items-center gap-2">
+              Start Your Application
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+            </span>
+          </BookButton>
+        </section>
       </div>
 
     </div>
@@ -247,13 +248,10 @@ export default function AboutPage() {
 
 // ------------------------------------------------------------------
 // Sub-Component: Journey Step
-// Matches visual style of
 // ------------------------------------------------------------------
 function JourneyStep({ item, index }) {
   const ref = useRef(null);
   const isInView = useInView(ref, { margin: "-20% 0px -20% 0px", once: true });
-
-  // Number formatting (01, 02, etc.)
   const number = (index + 1).toString().padStart(2, '0');
 
   return (
@@ -276,7 +274,6 @@ function JourneyStep({ item, index }) {
             fill
             className="object-cover"
           />
-           {/* Subtle highlight border */}
            <div className="absolute inset-0 rounded-2xl border border-black/5 pointer-events-none" />
         </div>
       </div>
@@ -289,28 +286,20 @@ function JourneyStep({ item, index }) {
       {/* 2. TEXT SIDE */}
       <div className="w-full lg:w-1/2 pl-4 lg:pl-0">
          <div className="flex flex-col items-start">
-            {/* The Number (Green, Large) */}
             <span className="text-6xl md:text-7xl font-bold text-[#10b981] opacity-90 mb-4 font-serif">
               {number}
             </span>
-            
-            {/* Title */}
             <h4 className="text-2xl md:text-3xl font-semibold text-slate-900 mb-4">
               {item.title}
             </h4>
-            
-            {/* Description */}
             <p className="text-lg text-slate-600 leading-relaxed mb-6">
               {item.description}
             </p>
-
-            {/* Year Tag */}
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-slate-100 rounded-full">
               <span className="text-sm font-bold text-slate-900">{item.year}</span>
             </div>
          </div>
       </div>
-
     </motion.div>
   );
 }

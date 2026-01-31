@@ -73,9 +73,9 @@ export default function ContactPage() {
                     <div>
                       <span className="block text-xs font-bold uppercase tracking-widest text-slate-400 mb-1">Address</span>
                       <p className="text-slate-900 leading-relaxed">
-                        123 Innovation Drive,<br />
-                        Floor 4, Suite 200<br />
-                        New York, NY 10001
+                        Putalisadak,<br />
+                        Near Star Mall<br />
+                        Kathmandu, 44600
                       </p>
                     </div>
                   </div>
@@ -86,12 +86,13 @@ export default function ContactPage() {
                     </div>
                     <div>
                       <span className="block text-xs font-bold uppercase tracking-widest text-slate-400 mb-1">Email</span>
-                      <p className="text-slate-900 hover:text-blue-600 transition-colors cursor-pointer">
-                        hello@consulting.com
+                      <p className="text-slate-900 hover:text-blue-600 transition-colors cursor-pointer"> 
+                        <a href="mailto:info@espotinternational.com">info@espotinternational.com</a>
+                      
                       </p>
-                      <p className="text-slate-900 hover:text-blue-600 transition-colors cursor-pointer">
+                      {/* <p className="text-slate-900 hover:text-blue-600 transition-colors cursor-pointer">
                         support@consulting.com
-                      </p>
+                      </p> */}
                     </div>
                   </div>
 
@@ -102,27 +103,40 @@ export default function ContactPage() {
                     <div>
                       <span className="block text-xs font-bold uppercase tracking-widest text-slate-400 mb-1">Phone</span>
                       <p className="text-slate-900">
-                        +1 (555) 123-4567
+                        01-5332391
                       </p>
                       <p className="text-slate-400 text-sm mt-1">
-                        Mon-Fri, 9am - 6pm EST
+                        Sun-Fri, 9am - 5pm Nepal Standard Time 
                       </p>
                     </div>
                   </div>
                 </div>
               </div>
 
-              {/* Socials / Extra */}
-              <div className="mt-12 pt-12 border-t border-slate-200">
-                 <span className="block text-xs font-bold uppercase tracking-widest text-slate-400 mb-4">Follow Us</span>
-                 <div className="flex gap-4">
-                    {['LinkedIn', 'Twitter', 'Instagram'].map((social) => (
-                      <a key={social} href="#" className="text-slate-900 font-medium hover:text-blue-600 transition-colors underline decoration-slate-300 underline-offset-4 decoration-1 hover:decoration-blue-600">
-                        {social}
-                      </a>
-                    ))}
-                 </div>
+          {/* Socials / Extra */}
+          <div className="mt-12 pt-12 border-t border-slate-200">
+              <span className="block text-xs font-bold uppercase tracking-widest text-slate-400 mb-4">
+                Follow Us
+              </span>
+              <div className="flex flex-wrap gap-6">
+                {[
+                  { name: 'Email', href: 'mailto:info@espotinternational.com' },
+                  { name: 'Facebook', href: 'https://www.facebook.com/espotinternational/' },
+                  { name: 'Instagram', href: 'https://www.instagram.com/espotinternational/' },
+                  { name: 'TikTok', href: 'https://www.tiktok.com/@espotinternational' }
+                ].map((social) => (
+                  <a 
+                    key={social.name} 
+                    href={social.href}
+                    target={social.name === 'Email' ? undefined : "_blank"}
+                    rel={social.name === 'Email' ? undefined : "noopener noreferrer"}
+                    className="text-slate-900 font-medium hover:text-blue-600 transition-colors underline decoration-slate-300 underline-offset-4 decoration-1 hover:decoration-blue-600"
+                  >
+                    {social.name}
+                  </a>
+                ))}
               </div>
+            </div>
 
             </div>
           </motion.div>
@@ -134,9 +148,8 @@ export default function ContactPage() {
           3. MAP SECTION
           Full width with grayscale filter for premium look
       ------------------------------------------------------- */}
-      <section className="w-full h-[50vh] relative grayscale hover:grayscale-0 transition-all duration-700 ease-in-out">
-        <iframe 
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3022.184133446864!2d-73.98565668459426!3d40.74844057932847!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c259a9b3117469%3A0xd134e199a405a163!2sEmpire%20State%20Building!5e0!3m2!1sen!2sus!4v1624608386348!5m2!1sen!2sus" 
+      <section className="w-full h-[50vh] relative  transition-all duration-700 ease-in-out">
+          <iframe src="https://www.google.com/maps/embed?pb=!1m23!1m12!1m3!1d28276.89595041781!2d85.32459519999999!3d27.636531199999997!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m8!3e6!4m0!4m5!1s0x39eb195edfebae89%3A0x94daed854bd39213!2sEspot%20International%20Education%20Consultancy%2C%20Near%20by%20Star%20Mall%2C%20Hattisar%20Rd%2C%20Kathmandu%2044600!3m2!1d27.7075171!2d85.3224211!5e0!3m2!1sen!2snp!4v1769848329397!5m2!1sen!2snp"
           width="100%" 
           height="100%" 
           style={{ border: 0 }} 
@@ -145,8 +158,8 @@ export default function ContactPage() {
           className="w-full h-full"
         ></iframe>
         
-        {/* Optional overlay to prevent accidental scroll interaction if desired */}
-        <div className="absolute inset-0 pointer-events-none shadow-[inset_0_10px_20px_rgba(0,0,0,0.1)]"></div>
+        {/* Optional overlay to prevent accidental scroll interaction if desired
+        <div className="absolute inset-0 pointer-events-none shadow-[inset_0_10px_20px_rgba(0,0,0,0.1)]"></div> */}
       </section>
 
     </div>

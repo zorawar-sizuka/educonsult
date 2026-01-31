@@ -11,7 +11,8 @@ export async function GET() {
         code: true,
         name: true,
         currencyCode: true,
-        livingCostMonthlyUsd: true,
+        livingCostMonthlyUsd: true, 
+        tutionCostMonthlyUsd: true,
         updatedAt: true,
       },
     });

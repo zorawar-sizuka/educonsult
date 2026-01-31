@@ -81,14 +81,14 @@ export default function Hero() {
         </div>
 
         {/* --- 2. DESKTOP IMAGE (Hidden on mobile, Visible on 'md' and up) --- */}
-        <div className="hidden md:block relative w-full h-full">
+        <div className=" hidden md:block relative w-full h-full">
             <Image
-            src="/hero/hero1.jpg"
+            src="/hero/hero2.jpg"
             alt="Atmospheric university campus"
             fill
-            priority
+            priority 
             sizes="100vw"
-            className="object-cover" 
+            className="object-cover aspect-[16:9]" 
             />
         </div>
 
@@ -117,7 +117,46 @@ export default function Hero() {
 
 
             <div className="mt-10 flex flex-col sm:flex-row gap-3 sm:gap-4">
-              <BookButton/>
+     {/* LEFT Action - Book Button */}
+<div className="relative z-10 hidden md:flex items-center gap-4">
+  <BookButton 
+    className={`
+      group relative flex items-center gap-3
+      pl-2 pr-6 rounded-full
+      bg-[#E5E5E5] text-black hover:bg-[#242e3c] hover:text-white
+      border border-black/5
+      overflow-hidden
+      transition-all duration-300 ease-out
+      shadow-md hover:shadow-sm cursor-pointer
+      h-[50px]
+    `}
+  >
+    <span className="
+      relative z-10 flex h-9 w-9 items-center justify-center
+      rounded-full
+      bg-[#f06625] border border-black/10
+      text-black shadow-sm
+      transition-transform duration-300
+      group-hover:scale-110
+    ">
+      <svg 
+        className="w-3.5 h-3.5 transition-transform duration-300 group-hover:rotate-45" 
+        viewBox="0 0 24 24" 
+        fill="none" 
+        stroke="currentColor" 
+        strokeWidth="2" 
+        strokeLinecap="round" 
+        strokeLinejoin="round"
+      >
+        <path d="M5 12h14" />
+        <path d="M12 5l7 7-7 7" />
+      </svg>
+    </span>
+    <span className="relative z-10 text-[15px] font-light tracking-wide">
+      Book Counselling
+    </span>
+  </BookButton>
+</div>
               <InquireButton/>
             </div>
           </div>
