@@ -1,30 +1,13 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-
-
-@layer base {
-  body {
-    @apply bg-white text-slate-900;
-  }
-}
 :root {
   --bg: 255 255 255;
   --fg: 12 18 28;
-  --muted: 90 102 120;
-  --card: 255 255 255;
-  --border: 226 232 240;
-  --brand: 16 95 255;   /* blue */
-  --brand2: 20 184 166; /* teal */
 }
 
 body {
-  color: rgb(var(--fg));
   background: rgb(var(--bg));
-}
-
-.font-display {
-  font-family: var(--font-display);
-}
-html {
-  scroll-behavior: smooth;
+  color: rgb(var(--fg));
 }
