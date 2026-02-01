@@ -5,21 +5,38 @@ export async function GET(req) {
   try {
     const { searchParams } = new URL(req.url);
     const sessionId = searchParams.get("sessionId");
-    if (!sessionId) return NextResponse.json({ ok: false, error: "sessionId required" }, { status: 400 });
+
+    if (!sessionId) {
+      return NextResponse.json({ ok: false, error: "sessionId required" }, { status: 400 });
+    }
 
     const saved = await prisma.savedUniversity.findMany({
       where: { sessionId },
-      orderBy: { createdAt: "desc" },
+      select: { universityId: true },
+    });
+
+    const universityIds = saved.map(s => s.universityId);
+
+    if (universityIds.length === 0) {
+      return NextResponse.json({ ok: true, universities: [] });
+    }
+
+    const universities = await prisma.university.findMany({
+      where: { id: { in: universityIds } },
+      orderBy: { ranking: "asc" },
       select: {
-        createdAt: true,
-        university: {
-          select: { id: true, name: true, countryCode: true, ranking: true, tuitionYearUsd: true, intake: true },
-        },
+        id: true,
+        name: true,
+        countryCode: true,
+        ranking: true,
+        tuitionYearUsd: true,
+        intake: true,
       },
     });
 
-    return NextResponse.json({ ok: true, saved });
-  } catch {
+    return NextResponse.json({ ok: true, universities });
+  } catch (e) {
+    console.error(e);
     return NextResponse.json({ ok: false, error: "Failed to load saved universities" }, { status: 500 });
   }
 }

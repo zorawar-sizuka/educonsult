@@ -118,10 +118,10 @@ export default function Hero() {
 
             <div className="mt-10 flex flex-col sm:flex-row gap-3 sm:gap-4">
      {/* LEFT Action - Book Button */}
-<div className="relative z-10 hidden md:flex items-center gap-4">
+<div className="relative z-10 flex items-center gap-4 ">
   <BookButton 
     className={`
-      group relative flex items-center gap-3
+      group relative flex items-center justify-center gap-3 w-full
       pl-2 pr-6 rounded-full
       bg-[#E5E5E5] text-black hover:bg-[#242e3c] hover:text-white
       border border-black/5

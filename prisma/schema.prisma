@@ -176,36 +176,22 @@ model ToolRun {
   @@index([sessionId])
 }
 
-// --------------------
-// SOP BUILDER
-// --------------------
+model ToolSaved {
+  id            Int      @id @default(autoincrement())
+  sessionId     String
+  toolType      String
+  payload       Json
+  result        Json?
+  originalRunId Int      @unique  // ← Changed to non-optional + @unique
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 
-model SOPTemplate {
-  id        Int      @id @default(autoincrement())
-  name      String
-  isDefault Boolean  @default(false)
-  schema    Json
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  drafts    SOPDraft[]
+  @@index([sessionId])
+  @@index([sessionId, toolType])
+  @@index([sessionId, createdAt])
 }
 
-model SOPDraft {
-  id         Int      @id @default(autoincrement())
-  sessionId  String?
-  userId     String?
-  templateId Int
-  inputs     Json
-  generated  String?  @db.Text
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
 
-  template   SOPTemplate @relation(fields: [templateId], references: [id], onDelete: Cascade)
-
-  @@index([sessionId, createdAt])
-  @@index([templateId])
-}  
 
 model User {
   id        Int      @id @default(autoincrement())

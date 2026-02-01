@@ -8,6 +8,8 @@ import { generateSOP } from '@/app/data/toolsData';
 import { logToolRun } from "@/hooks/toolRunClient";
 import { ChevronRight, Download, X, Loader2, Save } from 'lucide-react';
 import { AnimatePresence, motion } from 'framer-motion';
+import { getSessionId } from "@/hooks/toolRunClient"; 
+
 
 export default function SOPBuilder({ restore }) {
   // --- Tips Data ---
@@ -44,15 +46,15 @@ export default function SOPBuilder({ restore }) {
   const [downloading, setDownloading] = useState(false); // Modal download button spinner
   const [saving, setSaving] = useState(false);       // Save button spinner
   const [saveMsg, setSaveMsg] = useState('');
-
+  const [lastRunId, setLastRunId] = useState(null);
   const isFormValid = Object.values(data).every(v => String(v).trim() !== '');
 
-  // --- Restore Logic ---
-  useEffect(() => {
-    if (restore?.payload) {
-      setData(prev => ({ ...prev, ...restore.payload }));
-    }
-  }, [restore?.ts]);
+ // Fixed restore: use restore.data instead of restore.payload
+ useEffect(() => {
+  if (restore?.data) {
+    setData(prev => ({ ...prev, ...restore.data }));
+  }
+}, [restore?.ts]);
 
   // --- Handlers ---
 
@@ -64,7 +66,15 @@ export default function SOPBuilder({ restore }) {
     setSaveMsg(''); // Clear previous messages
     
     // Log the request
-    await logToolRun({ toolType: "sop", payload: data, result: { status: "requested" } });
+    await logToolRun({ toolType: "sop", payload: data, result: { status: "requested" } }); 
+    const logRes = await logToolRun({ 
+      toolType: "sop", 
+      payload: data, 
+      result: { status: "requested" } 
+    });
+    if (logRes?.ok && logRes?.run?.id) {
+      setLastRunId(logRes.run.id);
+    }
 
     // Artificial delay for UX
     await new Promise(resolve => setTimeout(resolve, 500));
@@ -75,15 +85,31 @@ export default function SOPBuilder({ restore }) {
 
   // 2. Save: Saves to history (Logic restored from reference)
   const handleSave = async () => {
+    if (!lastRunId) {
+      setSaveMsg("No SOP to save yet");
+      return;
+    }
     setSaving(true);
-    const res = await logToolRun({
-      toolType: "sop",
-      payload: data,
-      result: { status: "saved" },
-      saved: true
-    });
-    setSaveMsg(res?.ok ? "Saved! Check History → Saved." : "Save failed.");
-    setSaving(false);
+    setSaveMsg("");
+  
+    try {
+      const sessionId = getSessionId();
+      const res = await fetch("/api/tools/saved", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          runId: lastRunId,
+          action: "save",
+          sessionId,
+        }),
+      });
+      const json = await res.json();
+      setSaveMsg(json.ok ? "Saved! Check History → Saved." : "Save failed");
+    } catch {
+      setSaveMsg("Save failed — try again");
+    } finally {
+      setSaving(false);
+    }
   };
 
   // 3. Download: Triggers PDF generation (Only inside modal)
@@ -92,7 +118,14 @@ export default function SOPBuilder({ restore }) {
     
     // Log the success
     logToolRun({ toolType: "sop", payload: data, result: { status: "generated" } });
-
+    const logRes = await logToolRun({ 
+      toolType: "sop", 
+      payload: data, 
+      result: { status: "generated" } 
+    });
+    if (logRes?.ok && logRes?.run?.id) {
+      setLastRunId(logRes.run.id);
+    }
     // Actual PDF Trigger
     const result = generateSOP(data);
 

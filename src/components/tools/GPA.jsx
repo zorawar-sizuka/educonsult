@@ -9,7 +9,8 @@ import {
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import PillButton from './ui/PillButton';
-import { logToolRun } from '@/hooks/toolRunClient';
+import { logToolRun } from '@/hooks/toolRunClient'; 
+import { getSessionId } from "@/hooks/toolRunClient";
 
 // --- NEB Official Data (shared with backend) ---
 const GRADING_SYSTEM = [
@@ -132,7 +133,7 @@ const clientCalculate = (stream, mode, marks = {}, subjectGpas = {}) => {
   }
 };
 
-export default function GPACalculator() {
+export default function GPACalculator({restore}) {
   const [stream, setStream] = useState('science');
   const [mode, setMode] = useState('marksToGpa');
   const [marks, setMarks] = useState({});
@@ -141,7 +142,20 @@ export default function GPACalculator() {
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
   const [saveMsg, setSaveMsg] = useState("");
+  const [lastRunId, setLastRunId] = useState(null); // ← add this
 
+  // Restore logic
+  useEffect(() => {
+    if (restore?.data) {
+      const payload = restore.data;
+      setStream(payload.stream || 'science');
+      setMode(payload.mode || 'marksToGpa');
+      if (payload.marks) setMarks(payload.marks);
+      if (payload.subjectGpas) setSubjectGpas(payload.subjectGpas);
+      if (restore.result) setResult(restore.result);
+    }
+  }, [restore?.ts, restore?.data]);
+  
   const handleMarksChange = (id, type, val, max) => {
     if (val === '' || (parseFloat(val) >= 0 && parseFloat(val) <= max)) {
       setMarks(prev => ({ ...prev, [`${id}_${type}`]: val }));
@@ -176,7 +190,14 @@ export default function GPACalculator() {
         const json = await res.json();
         if (json.ok) {
           setResult(json.result);
-          await logToolRun({ toolType: "gpa", payload, result: json.result });
+          const logRes = await logToolRun({ 
+            toolType: "gpa", 
+            payload, 
+            result: json.result // or fallbackResult 
+          });
+          if (logRes?.ok && logRes?.run?.id) {
+            setLastRunId(logRes.run.id);
+          }
           setLoading(false);
           return;
         }
@@ -189,26 +210,44 @@ export default function GPACalculator() {
     const fallbackResult = clientCalculate(stream, mode, marks, subjectGpas);
     if (fallbackResult) {
       setResult(fallbackResult);
-      await logToolRun({ toolType: "gpa", payload, result: fallbackResult, note: "client-fallback" });
+      const logRes = await logToolRun({ 
+        toolType: "gpa", 
+        payload, 
+        result: json.result // or fallbackResult 
+      });
+      if (logRes?.ok && logRes?.run?.id) {
+        setLastRunId(logRes.run.id);
+      }
     }
     setLoading(false);
   };
 
   const handleSave = async () => {
-    if (!result) return;
+    if (!lastRunId) {
+      setSaveMsg("No result to save yet");
+      return;
+    }
     setSaving(true);
     setSaveMsg("");
-
-    const payload = { stream, mode, marks, subjectGpas };
-    const res = await logToolRun({
-      toolType: "gpa",
-      payload,
-      result,
-      saved: true
-    });
-
-    setSaveMsg(res?.ok ? "Saved! Check History → Saved." : "Save failed. Try again.");
-    setSaving(false);
+  
+    try {
+      const sessionId = getSessionId();
+      const res = await fetch("/api/tools/saved", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          runId: lastRunId,
+          action: "save",
+          sessionId,
+        }),
+      });
+      const json = await res.json();
+      setSaveMsg(json.ok ? "Saved! Check History → Saved." : "Save failed");
+    } catch {
+      setSaveMsg("Save failed — try again");
+    } finally {
+      setSaving(false);
+    }
   };
 
   // PDF generation (your original—unchanged)

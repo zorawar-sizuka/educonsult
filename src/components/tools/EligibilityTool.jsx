@@ -258,7 +258,8 @@ import PillButton from './ui/PillButton';
 import { SelectField } from './ui/Fields';
 import { logToolRun } from '@/hooks/toolRunClient';
 import { CheckCircle, Minus, Plus } from 'lucide-react'; 
-import { checkEligibility, mapJLPTToScore } from '@/app/data/toolsData';
+import { checkEligibility, mapJLPTToScore } from '@/app/data/toolsData'; 
+import { getSessionId } from "@/hooks/toolRunClient";
 
 export default function EligibilityTool({ countryOptions = [], countryMap = new Map(), restore }) {
   const [formData, setFormData] = useState({
@@ -272,7 +273,8 @@ export default function EligibilityTool({ countryOptions = [], countryMap = new 
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
-  const [saveMsg, setSaveMsg] = useState("");
+  const [saveMsg, setSaveMsg] = useState(""); 
+  const [lastRunId, setLastRunId] = useState(null); // ← add this
 
   const hasDbData = countryOptions.length > 0;
   const fallbackCodes = ['USA', 'UK', 'AUS', 'CAN', 'DEU', 'JPN', 'NZL'];
@@ -345,7 +347,15 @@ export default function EligibilityTool({ countryOptions = [], countryMap = new 
         const json = await res.json();
         if (json.ok) {
           setResult(json.result);
-          logToolRun({ toolType: "eligibility", payload: formData, result: json.result });
+          const logRes = await logToolRun({ 
+            toolType: "eligibility", 
+            payload: formData, 
+            result: fallbackResult, 
+            note: "client-fallback" 
+          });
+          if (logRes?.ok && logRes?.run?.id) {
+            setLastRunId(logRes.run.id);
+          }
           setLoading(false);
           return;
         }
@@ -361,24 +371,44 @@ export default function EligibilityTool({ countryOptions = [], countryMap = new 
       : { status: "Needs work", message: "Please re-check your inputs.", color: "bg-red-50 border-red-200 text-red-700" };
   
     setResult(fallbackResult);
-    logToolRun({ toolType: "eligibility", payload: formData, result: fallbackResult, note: "client-fallback" });
+    const logRes = await logToolRun({ 
+      toolType: "eligibility", 
+      payload: formData, 
+      result: fallbackResult, 
+      note: "client-fallback" 
+    });
+    if (logRes?.ok && logRes?.run?.id) {
+      setLastRunId(logRes.run.id);
+    }
     setLoading(false);
   };
 
   const handleSave = async () => {
-    if (!result) return;
+    if (!lastRunId) {
+      setSaveMsg("No result to save yet");
+      return;
+    }
     setSaving(true);
     setSaveMsg("");
-
-    const res = await logToolRun({
-      toolType: "eligibility",
-      payload: formData,
-      result,
-      saved: true
-    });
-
-    setSaveMsg(res?.ok ? "Saved! Check History → Saved." : "Save failed.");
-    setSaving(false);
+  
+    try {
+      const sessionId = getSessionId();
+      const res = await fetch("/api/tools/saved", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          runId: lastRunId,
+          action: "save",
+          sessionId,
+        }),
+      });
+      const json = await res.json();
+      setSaveMsg(json.ok ? "Saved! Check History → Saved." : "Save failed");
+    } catch {
+      setSaveMsg("Save failed — try again");
+    } finally {
+      setSaving(false);
+    }
   };
 
   return (
@@ -476,7 +506,12 @@ export default function EligibilityTool({ countryOptions = [], countryMap = new 
             </PillButton>
           )}
 
-          {saveMsg && <div infused className="text-sm text-center text-slate-600">{saveMsg}</div>}
+{saveMsg && (
+  <div className="text-sm text-center text-slate-600">
+    {saveMsg}
+  </div>
+)}
+
         </div>
 
         {/* Result */}
