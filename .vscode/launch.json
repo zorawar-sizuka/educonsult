@@ -6,8 +6,8 @@
       "type": "lldb",
       "request": "launch",
       "args": [],
-      "cwd": "/Users/sonualam/Desktop/programc",
-      "program": "/Users/sonualam/Desktop/programc/build/Debug/outDebug"
+      "cwd": "/Users/sonualam/Downloads",
+      "program": "/Users/sonualam/Downloads/build/Debug/outDebug"
     }
   ]
 }

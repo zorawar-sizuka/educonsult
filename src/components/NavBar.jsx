@@ -147,7 +147,7 @@ const Navbar = () => {
           <div className="relative z-10 hidden md:flex items-center gap-4">
             <BookButton 
               className={`
-                group relative flex items-center gap-3
+                group relative flex items-center gap-3 whitespace-nowrap
                 pl-2 pr-6 rounded-full
                 bg-[#242e3c] hover:bg-[#E5E5E5] hover:text-black text-white
                 border border-black/5
@@ -231,13 +231,31 @@ const Navbar = () => {
                       className="flex justify-between items-center group cursor-pointer"
                       onClick={() => link.dropdown && setActiveMobileDropdown(activeMobileDropdown === i ? null : i)}
                     >
-                      <Link 
-                        href={link.href} 
-                        className="text-[22px] font-medium text-slate-900"
-                        onClick={() => !link.dropdown && setMobileMenuOpen(false)}
-                      >
-                        {link.name}
-                      </Link>
+                    <Link
+  href={link.href}
+  className={[
+    "text-[22px] font-medium transition-all duration-300",
+    link.isSpecial
+      ? "text-transparent bg-clip-text bg-gradient-to-r from-violet-600 to-fuchsia-600"
+      : "text-slate-900",
+  ].join(" ")}
+  onClick={() => !link.dropdown && setMobileMenuOpen(false)}
+>
+  {link.isSpecial ? (
+    <span className="flex items-center gap-2">
+      <svg className="w-5 h-5 text-violet-600" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M12 2L9.5 9.5 2 12l7.5 2.5L12 22l2.5-7.5L22 12l-7.5-2.5z" />
+      </svg>
+      {link.name}
+      <span className="ml-1 text-[11px] font-semibold px-2 py-0.5 rounded-full bg-violet-600 text-white">
+        Exclusive
+      </span>
+    </span>
+  ) : (
+    link.name
+  )}
+</Link>
+
                       {link.dropdown && (
                          <span className={`transform transition-transform duration-300 text-black/40 ${activeMobileDropdown === i ? 'rotate-180' : ''}`}>
                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M6 9l6 6 6-6"/></svg>
@@ -268,7 +286,7 @@ const Navbar = () => {
              
              {/* Mobile CTA */}
              <div className="mt-8">
-                <BookButton className="w-full h-14 bg-slate-900 text-white rounded-2xl font-semibold text-lg hover:bg-blue-600 transition-colors flex items-center justify-center gap-2 shadow-xl">
+                <BookButton className="w-full h-14 bg-[#ff5e01] text-white rounded-2xl font-semibold text-lg hover:bg-blue-600 transition-colors flex items-center justify-center gap-2 shadow-xl">
                     <span>Book Counselling</span>
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
                 </BookButton>
@@ -290,24 +308,50 @@ function DesktopNavItem({ link, currentPath }) {
     ? currentPath === "/" 
     : currentPath.startsWith(link.href);
 
-  if (isTools) {
-    return (
-      <Link
-        href={link.href}
-        className="
-          relative px-4 py-2 rounded-full mx-1
-          text-[16px] font-medium text-transparent bg-clip-text 
-          bg-gradient-to-r from-violet-600 to-fuchsia-600
-          hover:bg-violet-50/50 transition-all duration-300
-        "
-      >
-        <span className="flex items-center gap-1.5">
-          <svg className="w-4 h-4 text-violet-600" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L9.5 9.5 2 12l7.5 2.5L12 22l2.5-7.5L22 12l-7.5-2.5z"/></svg>
-          {link.name}
-        </span>
-      </Link>
-    );
-  }
+    if (isTools) {
+      return (
+        <Link
+          href={link.href}
+          className={[
+            "group relative mx-1 inline-flex items-center rounded-full",
+            // responsive padding / height
+            "px-3.5 py-2 sm:px-4 sm:py-2",
+            // subtle exclusive pill background + ring
+            "bg-gradient-to-r from-violet-50/70 to-fuchsia-50/70",
+            "ring-1 ring-violet-200/70",
+            "hover:ring-violet-300 hover:shadow-sm transition-all duration-300",
+          ].join(" ")}
+        >
+          {/* soft glow on hover */}
+          <span className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-r from-violet-200/20 to-fuchsia-200/20" />
+    
+          <span className="relative flex items-center gap-2">
+            <svg
+              className="w-4 h-4 sm:w-[18px] sm:h-[18px] text-violet-600"
+              fill="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path d="M12 2L9.5 9.5 2 12l7.5 2.5L12 22l2.5-7.5L22 12l-7.5-2.5z" />
+            </svg>
+    
+            <span
+              className={[
+                "text-[15px] sm:text-[16px] font-medium",
+                "text-transparent bg-clip-text bg-gradient-to-r from-violet-600 to-fuchsia-600",
+              ].join(" ")}
+            >
+              {link.name}
+            </span>
+    
+            {/* Badge only on larger screens */}
+            <span className="hidden xl:inline-flex text-[11px] font-semibold px-2 py-0.5 rounded-full bg-violet-600 text-white">
+              Exclusive
+            </span>
+          </span>
+        </Link>
+      );
+    }
+    
 
   return (
     <div className="relative group px-1">
