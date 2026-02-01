@@ -83,14 +83,15 @@ async function seedUniversities() {
     { name: "University of Calgary", countryCode: "CAN", city: "Calgary", ranking: 182, tuitionYearUsd: 25000, intake: "Fall (Sep)", applicationFeeUsd: 145, website: "https://www.ucalgary.ca", tags: ["Energy", "Public"] },
 
     // Germany (8 total: Free Tuition Focus + Regionals)
-    { name: "Technical University of Munich", countryCode: "DEU", city: "Munich", ranking: 28, tuitionYearUsd: 0, intake: "Winter (Oct)/Summer (Apr)", applicationFeeUsd: 0, website: "https://www.tum.de", tags: ["Free Tuition", "Engineering", "Top Global"] },
-    { name: "Ludwig Maximilian University of Munich", countryCode: "DEU", city: "Munich", ranking: 59, tuitionYearUsd: 0, intake: "Winter (Oct)", applicationFeeUsd: 0, website: "https://www.lmu.de", tags: ["Free Tuition", "Humanities"] },
-    { name: "Heidelberg University", countryCode: "DEU", city: "Heidelberg", ranking: 84, tuitionYearUsd: 0, intake: "Winter (Oct)", applicationFeeUsd: 0, website: "https://www.uni-heidelberg.de", tags: ["Free Tuition", "Medicine"] },
-    { name: "Humboldt University of Berlin", countryCode: "DEU", city: "Berlin", ranking: 126, tuitionYearUsd: 0, intake: "Winter (Oct)", applicationFeeUsd: 0, website: "https://www.hu-berlin.de", tags: ["Free Tuition", "Social Sciences"] },
-    { name: "University of Freiburg", countryCode: "DEU", city: "Freiburg", ranking: 212, tuitionYearUsd: 0, intake: "Winter (Oct)", applicationFeeUsd: 0, website: "https://www.uni-freiburg.de", tags: ["Free Tuition", "Sustainability"] },
-    { name: "RWTH Aachen University", countryCode: "DEU", city: "Aachen", ranking: 99, tuitionYearUsd: 0, intake: "Winter (Oct)", applicationFeeUsd: 0, website: "https://www.rwth-aachen.de", tags: ["Free Tuition", "Engineering"] },
-    { name: "University of Bonn", countryCode: "DEU", city: "Bonn", ranking: 239, tuitionYearUsd: 0, intake: "Winter (Oct)", applicationFeeUsd: 0, website: "https://www.uni-bonn.de", tags: ["Free Tuition", "Research"] },
-    { name: "Technical University of Berlin", countryCode: "DEU", city: "Berlin", ranking: 147, tuitionYearUsd: 0, intake: "Winter (Oct)", applicationFeeUsd: 0, website: "https://www.tu-berlin.de", tags: ["Free Tuition", "Tech"] },
+{ name: "Technical University of Munich", countryCode: "DEU", city: "Munich", ranking: 28, tuitionYearUsd: 0, livingCostYearUsd: 13000, adminFeeUsd: 500, intake: "Winter (Oct)/Summer (Apr)", applicationFeeUsd: 0, website: "https://www.tum.de", tags: ["Free Tuition", "Engineering", "Top Global"] },
+{ name: "Ludwig Maximilian University of Munich", countryCode: "DEU", city: "Munich", ranking: 59, tuitionYearUsd: 0, livingCostYearUsd: 13000, adminFeeUsd: 500, intake: "Winter (Oct)", applicationFeeUsd: 0, website: "https://www.lmu.de", tags: ["Free Tuition", "Humanities"] },
+{ name: "Heidelberg University", countryCode: "DEU", city: "Heidelberg", ranking: 84, tuitionYearUsd: 0, livingCostYearUsd: 12000, adminFeeUsd: 450, intake: "Winter (Oct)", applicationFeeUsd: 0, website: "https://www.uni-heidelberg.de", tags: ["Free Tuition", "Medicine"] },
+{ name: "Humboldt University of Berlin", countryCode: "DEU", city: "Berlin", ranking: 126, tuitionYearUsd: 0, livingCostYearUsd: 12500, adminFeeUsd: 450, intake: "Winter (Oct)", applicationFeeUsd: 0, website: "https://www.hu-berlin.de", tags: ["Free Tuition", "Social Sciences"] },
+{ name: "University of Freiburg", countryCode: "DEU", city: "Freiburg", ranking: 212, tuitionYearUsd: 0, livingCostYearUsd: 11000, adminFeeUsd: 400, intake: "Winter (Oct)", applicationFeeUsd: 0, website: "https://www.uni-freiburg.de", tags: ["Free Tuition", "Sustainability"] },
+{ name: "RWTH Aachen University", countryCode: "DEU", city: "Aachen", ranking: 99, tuitionYearUsd: 0, livingCostYearUsd: 11500, adminFeeUsd: 450, intake: "Winter (Oct)", applicationFeeUsd: 0, website: "https://www.rwth-aachen.de", tags: ["Free Tuition", "Engineering"] },
+{ name: "University of Bonn", countryCode: "DEU", city: "Bonn", ranking: 239, tuitionYearUsd: 0, livingCostYearUsd: 10500, adminFeeUsd: 400, intake: "Winter (Oct)", applicationFeeUsd: 0, website: "https://www.uni-bonn.de", tags: ["Free Tuition", "Research"] },
+{ name: "Technical University of Berlin", countryCode: "DEU", city: "Berlin", ranking: 147, tuitionYearUsd: 0, livingCostYearUsd: 12500, adminFeeUsd: 450, intake: "Winter (Oct)", applicationFeeUsd: 0, website: "https://www.tu-berlin.de", tags: ["Free Tuition", "Tech"] },
+
 
     // Japan (6 total: National + Privates)
     { name: "University of Tokyo", countryCode: "JPN", city: "Tokyo", ranking: 28, tuitionYearUsd: 5300, intake: "Apr/Oct", applicationFeeUsd: 30, website: "https://www.u-tokyo.ac.jp", tags: ["Low Tuition", "Research", "Top Global"] },
