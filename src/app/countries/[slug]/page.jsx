@@ -58,7 +58,7 @@ export async function generateMetadata({ params }) {
     `Explore top universities, entry requirements, costs, scholarships and visa guidance for studying in ${country.name}.`;
 
   const canonical = `/countries/${country.slug}`;
-  const ogImage = country.ogImage || "/og.jpg";
+  const ogImage = country.ogImage || "/ogs/og.png";
 
   return {
     title,
@@ -97,7 +97,7 @@ export default async function CountryPage({ params }) {
       `Information about studying in ${country.name}, including universities, requirements, and guidance.`,
     isPartOf: {
       "@type": "WebSite",
-      name: "Your Consultancy Name",
+      name: "E-spot International Education Consultancy",
       url: siteUrl,
     },
   };

@@ -83,7 +83,7 @@ export default function Hero() {
         {/* --- 2. DESKTOP IMAGE (Hidden on mobile, Visible on 'md' and up) --- */}
         <div className=" hidden md:block relative w-full h-full">
             <Image
-            src="/hero/hero2.jpg"
+            src="/hero/hero_4.png"
             alt="Atmospheric university campus"
             fill
             priority 
@@ -93,7 +93,7 @@ export default function Hero() {
         </div>
 
         {/* Dark Overlay (Applies to whichever image is visible) */}
-        <div className="absolute inset-0 bg-black/20 z-10" />
+        {/* <div className="absolute inset-0 bg-black/20 z-10" /> */}
       </div>
 
       {/* Content Container */}
@@ -106,9 +106,9 @@ export default function Hero() {
             className="max-w-[640px] will-change-transform"
           >
             <h1 className="mt-24 text-[52px] sm:text-[64px] lg:text-[78px] leading-[1.05] tracking-wide font-sans">
-              EEIC 
+             <span className="font-semibold font-sans text-[#f06925]">EIEC </span> 
               <br />
-              <span className="font-semibold font-sans">Education Consultancy</span>
+              <span className="font-semibold font-sans"><span className="text-[#2d61f0]">Education</span><br/>Consultancy</span>
             </h1>
 
             <p className="mt-6 text-[15px] sm:text-[16px] leading-relaxed text-white/70 max-w-[520px]">

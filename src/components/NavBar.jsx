@@ -102,7 +102,7 @@ const Navbar = () => {
         <div className="pointer-events-auto pl-2">
             <Link href="/" className="relative flex items-center group">
                 <Image
-                    src="/logos/eeic.png"
+                    src="/logos/logo.png"
                     alt="EEIC Logo"
                     width={120}     // Original Width
                     height={80}     // Original Height

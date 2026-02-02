@@ -24,7 +24,7 @@ export const metadata = {
     description:
       "Admissions, scholarships, SOP guidance, and visa support for top destinations like UK, USA, Canada, Australia, Germany, Japan and more.",
     url: siteUrl,
-    images: [{ url: "/og.jpg", width: 1200, height: 630, alt: "Study Abroad Consultancy" }],
+    images: [{ url: "/ogs/og.png", width: 1200, height: 630, alt: "Study Abroad Consultancy" }],
     type: "website",
   },
   twitter: {
@@ -32,7 +32,14 @@ export const metadata = {
     title: "Education Consultancy in Kathmandu",
     description:
       "Study abroad guidance, admissions support, scholarships, SOP help and visa assistance.",
-    images: ["/og.jpg"],
+      images: [
+        {
+          url: "/ogs/og.png",
+          width: 1200,
+          height: 630,
+          alt: "Study Abroad Made Simple",
+        },
+      ],
   },
 };
 
@@ -42,16 +49,16 @@ export default function Home() {
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Organization",
-    name: "Your Consultancy Name",
+    name: "E-spot International Education Consultancy",
     url: siteUrl,
-    logo: `${siteUrl}/logo.png`, // add /public/logo.png (or change path)
+    logo: `${siteUrl}/logos/logo.png`, // add /public/logo.png (or change path)
     sameAs: [], // add social URLs later (optional)
   };
 
   const websiteLd = {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    name: "Your Consultancy Name",
+    name: "E-spot International Education Consultancy",
     url: siteUrl,
   };
 

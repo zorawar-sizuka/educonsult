@@ -14,14 +14,14 @@ export const metadata = {
     description:
       "Upcoming education events in Kathmandu—seminars, workshops, counselling sessions, and more.",
     url: `${siteUrl}/events`,
-    images: [{ url: "/og.jpg", width: 1200, height: 630, alt: "Events in Kathmandu" }],
+    images: [{ url: "/ogs/og.png", width: 1200, height: 630, alt: "Events in Kathmandu" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Events in Kathmandu",
     description:
       "Upcoming education events in Kathmandu—seminars, workshops, counselling sessions, and more.",
-    images: ["/og.jpg"],
+    images: ["/ogs/og.png"],
   },
 };
 
@@ -65,7 +65,7 @@ export default async function EventsPage() {
             "@type": "Place",
             name: event.location || "Kathmandu",
             address: {
-              "@type": "PostalAddress",
+              "@type": "44600",
               addressLocality: "Kathmandu",
               addressCountry: "NP",
             },

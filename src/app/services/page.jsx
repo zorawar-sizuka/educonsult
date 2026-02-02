@@ -61,7 +61,7 @@ export default function ServicesPage() {
           className="absolute inset-0"
         >
           <Image
-            src="/services/service.avif"
+            src="/services/service.png"
             alt="Services Header"
             fill
             className="object-cover"
