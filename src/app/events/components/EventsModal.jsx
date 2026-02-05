@@ -9,7 +9,17 @@ import RegistrationForm from "./RegistrationForm";
 const formatDateFull = (dateStr) => {
   const d = new Date(dateStr);
   return d.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" });
+}; 
+
+const resolveEventImage = (url) => {
+  if (!url) return "/events/event.png";
+  if (url.startsWith("data:image/")) return url;
+  if (url.startsWith("blob:")) return url;
+  if (url.startsWith("http://") || url.startsWith("https://")) return url;
+  if (url.startsWith("/")) return url;
+  return "/events/event.png";
 };
+
 
 export default function EventModal({ event, onClose }) {
   const [showRegister, setShowRegister] = useState(false);
@@ -48,7 +58,7 @@ export default function EventModal({ event, onClose }) {
 
           <div className="relative h-72 md:h-80 w-full">
             <Image
-              src={event.imageUrl || "/events/event.png"}
+              src={resolveEventImage(event.imageUrl)}
               alt={event.title}
               fill
               sizes="(min-width: 768px) 768px, 100vw"

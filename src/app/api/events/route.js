@@ -166,7 +166,8 @@ export async function GET(req) {
       orderBy: { date: "asc" },
       select: {
         id: true,
-        title: true,
+        title: true, 
+        slug:true,
         category: true,
         date: true,
         time: true,

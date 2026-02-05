@@ -66,7 +66,8 @@ model Contact {
 
 model Event {
   id              Int      @id @default(autoincrement())
-  title           String
+  title           String 
+  slug            String @unique
   category        String
   date            DateTime
   time            String

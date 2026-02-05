@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { ArrowUpRight, Clock } from "lucide-react";
+import Link from "next/link";
 
 const itemVariants = {
   hidden: { y: 18, opacity: 0, scale: 0.98 },
@@ -17,6 +18,17 @@ const formatDate = (dateStr) => {
   };
 };
 
+const resolveEventImage = (url) => {
+  if (!url) return "/events/event.png";
+  if (url.startsWith("data:image/")) return url;
+  if (url.startsWith("blob:")) return url;
+  if (url.startsWith("http://") || url.startsWith("https://")) return url;
+  if (url.startsWith("/")) return url;
+  return "/events/event.png";
+};
+
+
+
 export default function EventCard({ event, onClick }) {
   const dateObj = formatDate(event.date);
 
@@ -29,10 +41,17 @@ export default function EventCard({ event, onClick }) {
       exit="hidden"
       onClick={onClick}
       className="group cursor-pointer flex flex-col gap-5"
-    >
+    > 
+    <Link
+  href={`/events/${event.slug}`}
+  className="text-sm font-bold text-indigo-600 hover:text-indigo-800 inline-flex items-center gap-1 mt-3"
+  onClick={(e) => e.stopPropagation()}
+>
+  View details →
+</Link>
       <div className="relative aspect-[4/3] rounded-[2rem] overflow-hidden bg-slate-100 shadow-sm border border-slate-100 transition-all duration-500 group-hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.12)] group-hover:-translate-y-2">
         <Image
-          src={event.imageUrl || "/events/event.png"}
+         src={resolveEventImage(event.imageUrl)}
           alt={event.title}
           fill
           sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"

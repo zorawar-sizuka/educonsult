@@ -6,7 +6,7 @@ import animationData from "../../../../public/lottie/events.json";
 
 export default function LottieLoader() {
   return (
-    <div className="mx-auto w-56 h-56 md:w-72 md:h-72">
+    <div className="mx-auto w-64 h-64 md:w-94 md:h-92">
       <Lottie animationData={animationData} loop autoplay />
     </div>
   );

@@ -44,29 +44,36 @@ export default function EventsSection() {
   }, []);
 
   // --- EVENT HANDLERS ---
-  const handleImageDrop = (e, targetState, setTargetState) => {
+  const handleImageDrop = async (e, targetState, setTargetState) => {
     const file = e.target.files?.[0];
     if (!file) return;
-
-    const reader = new FileReader();
-    reader.onloadend = () => setTargetState(prev => ({ ...prev, imageUrl: reader.result }));
-    reader.readAsDataURL(file);
+  
+    // 1) instant preview (same UX)
+    const preview = URL.createObjectURL(file);
+    setTargetState((prev) => ({ ...prev, imageUrl: preview }));
+  
+    try {
+      // 2) upload
+      const fd = new FormData();
+      fd.append("file", file);
+  
+      const res = await fetch("/api/upload", {
+        method: "POST",
+        body: fd,
+      });
+  
+      const json = await res.json();
+      if (!res.ok || !json?.ok) throw new Error(json?.error || "Upload failed");
+  
+      // 3) replace preview with stored URL
+      setTargetState((prev) => ({ ...prev, imageUrl: json.url }));
+    } catch (err) {
+      console.error("Image upload failed:", err);
+      // keep preview so admin isn't blocked; but warn
+      alert("Image upload failed. Please try again.");
+    }
   };
-
-  const resetNewEvent = () => {
-    setNewEvent({
-      title: "",
-      category: "",
-      date: "",
-      time: "",
-      location: "",
-      description: "",
-      longDescription: "",
-      imageUrl: "", 
-      isPublished: newEvent.isPublished,
-
-    });
-  };
+  
 
   const handleCreateEvent = async (e) => {
     e.preventDefault();
@@ -81,7 +88,6 @@ export default function EventsSection() {
       });
       if (!res.ok) throw new Error("Failed to create event");
 
-      resetNewEvent();
 
       // Refetch events
       const eventsRes = await fetch("/api/admin/events");
