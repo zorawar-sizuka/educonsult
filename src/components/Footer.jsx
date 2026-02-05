@@ -3,6 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 
+
 const Footer = () => {
   // Data structure tailored for Education Consultancy
   const footerSections = [
@@ -165,7 +166,7 @@ const Footer = () => {
           </div>
         </div>
 
-      </div>
+      </div>    
     </footer>
   );
 };

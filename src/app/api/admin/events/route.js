@@ -430,7 +430,7 @@ export async function POST(req) {
         isPublished: Boolean(body.isPublished),
       },
     });
-
+    revalidatePath('/events'); // Revalidates the public events page on-demand
     // Write auto-invalidates any cached reads (public + admin GET)
     return NextResponse.json(newEvent, { status: 201 });
   } catch (error) {
@@ -451,7 +451,7 @@ export async function DELETE(req) {
     if (!id) return NextResponse.json({ error: "ID required" }, { status: 400 });
 
     await prisma.event.delete({ where: { id: Number(id) } });
-
+    revalidatePath('/events'); // Revalidates the public events page on-demand
     // Delete auto-invalidates cached reads
     return NextResponse.json({ success: true });
   } catch (error) {
@@ -483,14 +483,15 @@ export async function PUT(req) {
       where: { id: Number(id) },
       data: updateData, 
     });
-
+    revalidatePath('/events'); // Revalidates the public events page on-demand
     // Update auto-invalidates cached reads
     return NextResponse.json(updatedEvent, { status: 200 });
   } catch (error) {
     console.error("PUT Event Error:", error);
     return NextResponse.json({ error: error.message }, { status: 500 });
-  }
-}
+  } 
+  revalidatePath('/events'); // Revalidates the public events page on-demand
+} 
 
 
 
