@@ -1,5 +1,5 @@
 // app/events/loading.jsx
-import LottieLoader from "./LottieLoader";
+import LottieLoader from "./components/LottieLoader";
 
 export default function Loading() {
   return (

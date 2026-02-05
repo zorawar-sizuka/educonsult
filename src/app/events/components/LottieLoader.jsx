@@ -2,7 +2,7 @@
 "use client";
 
 import Lottie from "lottie-react";
-import animationData from "../../../public/lottie/events.json";
+import animationData from "../../../../public/lottie/events.json";
 
 export default function LottieLoader() {
   return (
