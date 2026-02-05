@@ -222,6 +222,7 @@ import { Suspense } from "react";
 import EventsHero from "./EventsHero";
 import EventsGridServer from "./Eventsgrid.server";
 import EventsGridSkeleton from "./EventsSkeleton"; // your skeleton UI
+import NewsletterCTA from "./NewsLetter";
 
 export default function EventsPage() {
   return (
@@ -230,7 +231,12 @@ export default function EventsPage() {
 
       <Suspense fallback={<EventsGridSkeleton />}>
         <EventsGridServer /> {/* streams in below */}
-      </Suspense>
+      </Suspense> 
+    
+        {/* Newsletter */}
+        <div className="my-16 sm:my-20 lg:my-24 ">
+        <NewsletterCTA />
+      </div>
     </>
   );
 }

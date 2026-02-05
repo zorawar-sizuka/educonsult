@@ -68,10 +68,7 @@ export default function EventsGridClient({ initialEvents = [] }) {
         </div>
       )}
 
-      {/* Newsletter */}
-      <div className="mt-16 sm:mt-20 lg:mt-24">
-        <NewsletterCTA />
-      </div>
+   
     </section>
   );
 }

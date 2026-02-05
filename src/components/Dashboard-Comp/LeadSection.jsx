@@ -292,93 +292,13 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Database, Mail, Users, Trash2, Download, AlertCircle, RefreshCw, Loader2 } from "lucide-react";
+import { Database, Mail, Users, Trash2, Download, Loader2 } from "lucide-react";
 import DataTable from "@/components/Dashboard-Comp/DataTable";
 import { formatDate, prettifyEnum } from "@/utils/helper";
 
-// Reusable Skeleton Row
-const SkeletonRow = () => (
-  <tr className="animate-pulse">
-    <td className="p-4"><div className="h-4 w-3/4 bg-slate-200 rounded"></div></td>
-    <td className="p-4"><div className="h-4 w-1/2 bg-slate-200 rounded"></div></td>
-    <td className="p-4"><div className="h-4 w-2/3 bg-slate-200 rounded"></div></td>
-    <td className="p-4"><div className="h-4 w-1/3 bg-slate-200 rounded"></div></td>
-    <td className="p-4"><div className="h-4 w-1/4 bg-slate-200 rounded"></div></td>
-  </tr>
-);
-
-// Reusable Loading Section (with min time + skeleton)
-const LoadingSection = ({ title, icon: Icon, columns }) => {
-  const [minTimePassed, setMinTimePassed] = useState(false);
-
-  useEffect(() => {
-    const timer = setTimeout(() => setMinTimePassed(true), 1500); // 1.5s minimum loader
-    return () => clearTimeout(timer);
-  }, []);
-
-  if (!minTimePassed) {
-    return (
-      <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-4 sm:p-6">
-        <div className="flex items-center gap-3 mb-6">
-          <Icon className="w-6 h-6 text-slate-400" />
-          <h3 className="text-xl font-bold text-slate-800">{title}</h3>
-        </div>
-        <div className="flex justify-center items-center h-48">
-          <div className="flex flex-col items-center gap-4">
-            <Loader2 className="w-10 h-10 text-indigo-500 animate-spin" />
-            <p className="text-slate-500">Loading {title.toLowerCase()}...</p>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  return (
-    <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-4 sm:p-6">
-      <div className="flex items-center gap-3 mb-6">
-        <Icon className="w-6 h-6 text-slate-400" />
-        <h3 className="text-xl font-bold text-slate-800">{title}</h3>
-      </div>
-      <div className="overflow-x-auto">
-        <table className="w-full">
-          <thead>
-            <tr className="border-b bg-slate-50">
-              {columns.map((col, idx) => (
-                <th key={idx} className="p-4 text-left text-sm font-semibold text-slate-600">
-                  {col}
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {Array(5).fill(0).map((_, i) => <SkeletonRow key={i} />)}
-          </tbody>
-        </table>
-      </div>
-    </div>
-  );
-};
-
-// Error Section (per table)
-const ErrorSection = ({ title, icon: Icon, error, onRetry }) => (
-  <div className="bg-white rounded-2xl shadow-sm border border-red-200 p-6 text-center">
-    <div className="flex flex-col items-center gap-4">
-      <AlertCircle className="w-12 h-12 text-red-500" />
-      <h3 className="text-xl font-bold text-slate-800">{title} Failed</h3>
-      <p className="text-slate-600 max-w-md">{error}</p>
-      <button
-        onClick={onRetry}
-        className="flex items-center gap-2 px-6 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 transition"
-      >
-        <RefreshCw className="w-5 h-5" />
-        Retry
-      </button>
-    </div>
-  </div>
-);
+const TYPES = ["bookings", "inquiries", "contacts", "registrations", "subscribers"];
 
 export default function LeadsSection() {
-  // Data & Selection State (per table)
   const [dashboardData, setDashboardData] = useState({
     bookings: [],
     inquiries: [],
@@ -395,94 +315,50 @@ export default function LeadsSection() {
     subscribers: [],
   });
 
-  // Per-table loading & error states
-  const [loadStates, setLoadStates] = useState({
-    bookings: { loading: true, error: null },
-    inquiries: { loading: true, error: null },
-    contacts: { loading: true, error: null },
-    registrations: { loading: true, error: null },
-    subscribers: { loading: true, error: null },
+  // ✅ per-table loading & error
+  const [loadingMap, setLoadingMap] = useState({
+    bookings: true,
+    inquiries: true,
+    contacts: true,
+    registrations: true,
+    subscribers: true,
   });
 
-  // Fetch all data once on mount
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const dataRes = await fetch("/api/admin/data");
-        if (!dataRes.ok) throw new Error("Failed to fetch admin data");
+  const [errorMap, setErrorMap] = useState({
+    bookings: null,
+    inquiries: null,
+    contacts: null,
+    registrations: null,
+    subscribers: null,
+  });
 
-        const dataJson = await dataRes.json();
+  // ✅ global busy flag for destructive actions (delete)
+  const [busy, setBusy] = useState(false);
 
-        setDashboardData({
-          bookings: dataJson.bookings || [],
-          inquiries: dataJson.inquiries || [],
-          contacts: dataJson.contacts || [],
-          registrations: dataJson.registrations || [],
-          subscribers: dataJson.subscribers || [],
-        });
+  // ── Fetch helpers ────────────────────────────────────────────────────────────
+  const setTableLoading = (type, val) =>
+    setLoadingMap((prev) => ({ ...prev, [type]: val }));
 
-        // Clear all loading states on success
-        setLoadStates({
-          bookings: { loading: false, error: null },
-          inquiries: { loading: false, error: null },
-          contacts: { loading: false, error: null },
-          registrations: { loading: false, error: null },
-          subscribers: { loading: false, error: null },
-        });
-      } catch (err) {
-        console.error("Leads Data Fetch Error:", err);
-        const errorMsg = err.message || "Failed to load leads data";
+  const setTableError = (type, val) =>
+    setErrorMap((prev) => ({ ...prev, [type]: val }));
 
-        // Set error on all tables (or you can be more granular if API supports per-type errors)
-        setLoadStates({
-          bookings: { loading: false, error: errorMsg },
-          inquiries: { loading: false, error: errorMsg },
-          contacts: { loading: false, error: errorMsg },
-          registrations: { loading: false, error: errorMsg },
-          subscribers: { loading: false, error: errorMsg },
-        });
-      }
-    };
-
-    fetchData();
-  }, []);
-
-  // Toggle single checkbox
-  const toggleSelection = (type, id) => {
-    setSelected((prev) => ({
-      ...prev,
-      [type]: prev[type].includes(id)
-        ? prev[type].filter((x) => x !== id)
-        : [...prev[type], id],
-    }));
-  };
-
-  // Toggle all checkboxes in a table
-  const toggleAll = (type, allIds) => {
-    setSelected((prev) => {
-      const allSelected = allIds.every((id) => prev[type].includes(id));
-      return { ...prev, [type]: allSelected ? [] : allIds };
+  const fetchAllTablesIndependently = async () => {
+    // If you already have /api/admin/data returning all,
+    // we can still "split" it locally. But to truly stream each independently,
+    // we'd need separate endpoints (optional).
+    //
+    // ✅ This approach still gives per-table loaders, and sets each table as
+    // loaded as soon as the one response comes back.
+    //
+    // If you *want real independent network calls*, I’ll show that too.
+    TYPES.forEach((t) => {
+      setTableLoading(t, true);
+      setTableError(t, null);
     });
-  };
-
-  // Bulk delete for a specific type
-  const handleBulkDelete = async (type, ids) => {
-    if (ids.length === 0 || !confirm(`Delete ${ids.length} selected ${type}?`)) return;
-
-    setLoadStates((prev) => ({ ...prev, [type]: { loading: true, error: null } }));
 
     try {
-      const res = await fetch("/api/admin/bulk", {
-        method: "DELETE",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ type, ids }),
-      });
-
-      if (!res.ok) throw new Error("Bulk delete failed");
-
-      // Refetch all data to reflect changes
-      const dataRes = await fetch("/api/admin/data");
-      if (!dataRes.ok) throw new Error("Failed to refetch data");
+      const dataRes = await fetch("/api/admin/data", { cache: "no-store" });
+      if (!dataRes.ok) throw new Error("Failed to fetch data");
       const dataJson = await dataRes.json();
 
       setDashboardData({
@@ -493,18 +369,69 @@ export default function LeadsSection() {
         subscribers: dataJson.subscribers || [],
       });
 
-      // Clear selection for this type
-      setSelected((prev) => ({ ...prev, [type]: [] }));
-    } catch (err) {
-      console.error(`Bulk Delete Error for ${type}:`, err);
-      setLoadStates((prev) => ({
-        ...prev,
-        [type]: { loading: false, error: err.message || "Failed to delete items" },
-      }));
+      // Mark each table “loaded”
+      TYPES.forEach((t) => setTableLoading(t, false));
+    } catch (e) {
+      console.error("Leads Data Fetch Error:", e);
+      // If the single endpoint fails, all tables fail.
+      TYPES.forEach((t) => {
+        setTableError(t, e.message || "Failed to load leads data");
+        setTableLoading(t, false);
+      });
     }
   };
 
-  // Bulk CSV export (unchanged logic)
+  useEffect(() => {
+    fetchAllTablesIndependently();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // --- CHECKBOX LOGIC ---
+  const toggleSelection = (type, id) => {
+    setSelected((prev) => ({
+      ...prev,
+      [type]: prev[type].includes(id)
+        ? prev[type].filter((x) => x !== id)
+        : [...prev[type], id],
+    }));
+  };
+
+  const toggleAll = (type, allIds) => {
+    setSelected((prev) => {
+      const allSelected = allIds.every((id) => prev[type].includes(id));
+      return { ...prev, [type]: allSelected ? [] : allIds };
+    });
+  };
+
+  // --- BULK ACTION LOGIC ---
+  const handleBulkDelete = async (type, ids) => {
+    if (ids.length === 0 || !confirm(`Delete ${ids.length} selected ${type}?`)) return;
+
+    setBusy(true);
+    setTableError(type, null);
+
+    try {
+      const res = await fetch("/api/admin/bulk", {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ type, ids }),
+      });
+      if (!res.ok) throw new Error("Failed to delete items");
+
+      // ✅ Refetch after delete (keeps your original behavior)
+      await fetchAllTablesIndependently();
+
+      // Clear selections for that type
+      setSelected((prev) => ({ ...prev, [type]: [] }));
+    } catch (e) {
+      console.error(`Bulk Delete Error for ${type}:`, e);
+      setTableError(type, e.message || "Failed to delete selected items");
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  // --- BULK CSV EXPORT ---
   const handleBulkExport = (type, data, columns, mapper) => {
     const exportData = selected[type].length > 0
       ? data.filter((item) => selected[type].includes(item.id))
@@ -517,9 +444,11 @@ export default function LeadsSection() {
 
     let csv = columns.join(",") + "\n";
     exportData.forEach((item) => {
-      const row = mapper(item).map((field) =>
-        typeof field === "string" ? `"${field.replace(/"/g, '""')}"` : field
-      ).join(",");
+      const row = mapper(item)
+        .map((field) =>
+          typeof field === "string" ? `"${field.replace(/"/g, '""')}"` : field
+        )
+        .join(",");
       csv += row + "\n";
     });
 
@@ -532,7 +461,7 @@ export default function LeadsSection() {
     window.URL.revokeObjectURL(url);
   };
 
-  // Inquiries mapper (unchanged)
+  // Inquiries mapper helper
   const inquiriesMapper = (item) => [
     item.name,
     formatDate(item.createdAt),
@@ -603,66 +532,85 @@ export default function LeadsSection() {
     },
   ];
 
+  // small table-level loader UI (keeps design minimal + “top notch”)
+  const TableLoader = ({ label }) => (
+    <div className="flex items-center justify-center py-16 text-slate-400 gap-2">
+      <Loader2 className="w-5 h-5 animate-spin" />
+      <span className="text-sm font-medium">Loading {label}…</span>
+    </div>
+  );
+
+  const TableError = ({ msg, onRetry }) => (
+    <div className="bg-red-50 border border-red-200 rounded-xl p-4 text-red-800 text-center">
+      <p className="text-sm">Error: {msg}</p>
+      <button
+        onClick={onRetry}
+        className="mt-3 px-4 py-2 bg-red-600 text-white rounded-lg text-sm font-bold"
+      >
+        Retry
+      </button>
+    </div>
+  );
+
   return (
     <div className="space-y-8">
       {sections.map((section) => {
-        const { type, title, icon: Icon, data, columns, mapper } = section;
-        const { loading, error } = loadStates[type];
+        const { type, title, icon, data, columns, mapper } = section;
         const selectedIds = selected[type];
         const allIds = data.map((item) => item.id);
 
-        return (
-          <div key={type} className="bg-white rounded-2xl shadow-sm border border-slate-200 p-4 sm:p-6">
-            {/* Bulk Actions Bar - only show when loaded and has selection */}
-            {!loading && !error && selectedIds.length > 0 && (
-              <div className="flex flex-col sm:flex-row justify-between items-center mb-4 p-3 bg-blue-50 rounded-lg border border-blue-200 gap-2">
-                <span className="text-sm text-blue-800 text-center sm:text-left">
-                  {selectedIds.length} {type} selected
-                </span>
-                <div className="flex flex-col sm:flex-row gap-2">
-                  <button
-                    onClick={() => handleBulkExport(type, data, columns, mapper)}
-                    className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white text-sm font-bold rounded-lg hover:bg-green-700 transition"
-                  >
-                    <Download className="w-4 h-4" />
-                    Export CSV
-                  </button>
-                  <button
-                    onClick={() => handleBulkDelete(type, selectedIds)}
-                    className="flex items-center gap-2 px-4 py-2 bg-red-600 text-white text-sm font-bold rounded-lg hover:bg-red-700 transition"
-                  >
-                    <Trash2 className="w-4 h-4" />
-                    Delete Selected
-                  </button>
-                </div>
-              </div>
-            )}
+        const isLoading = loadingMap[type];
+        const err = errorMap[type];
 
-            {/* Loading / Error / Data States */}
-            {loading ? (
-              <LoadingSection title={title} icon={Icon} columns={columns} />
-            ) : error ? (
-              <ErrorSection
-                title={title}
-                icon={Icon}
-                error={error}
-                onRetry={() => {
-                  setLoadStates((prev) => ({ ...prev, [type]: { loading: true, error: null } }));
-                  // Trigger full refetch (you can make per-table fetch if needed)
-                  window.location.reload(); // Simple retry - or implement per-table refetch
-                }}
-              />
+        return (
+          <div
+            key={type}
+            className="bg-white rounded-2xl shadow-sm border border-slate-200 p-4 sm:p-6"
+          >
+            {/* Table-level error */}
+            {err ? (
+              <TableError msg={err} onRetry={fetchAllTablesIndependently} />
+            ) : isLoading ? (
+              <TableLoader label={title} />
             ) : (
-              <DataTable
-                title={title}
-                icon={Icon}
-                data={data}
-                columns={columns}
-                mapper={mapper}
-                selectedIds={selectedIds}
-                onToggle={(id) => toggleSelection(type, id)}
-                onToggleAll={(ids) => toggleAll(type, ids)}
-              />
+              <>
+                {/* Bulk Actions Bar */}
+                {selectedIds.length > 0 && (
+                  <div className="flex flex-col sm:flex-row justify-between items-center mb-4 p-3 bg-blue-50 rounded-lg border border-blue-200 gap-2">
+                    <span className="text-sm text-blue-800 text-center sm:text-left">
+                      {selectedIds.length} {type} selected
+                    </span>
+                    <div className="flex flex-col sm:flex-row gap-2">
+                      <button
+                        onClick={() => handleBulkExport(type, data, columns, mapper)}
+                        className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white text-sm font-bold rounded-lg hover:bg-green-700 transition"
+                      >
+                        <Download className="w-4 h-4" />
+                        Export CSV
+                      </button>
+                      <button
+                        onClick={() => handleBulkDelete(type, selectedIds)}
+                        disabled={busy}
+                        className="flex items-center gap-2 px-4 py-2 bg-red-600 text-white text-sm font-bold rounded-lg hover:bg-red-700 disabled:opacity-60 transition"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                        {busy ? "Deleting..." : "Delete Selected"}
+                      </button>
+                    </div>
+                  </div>
+                )}
+
+                <DataTable
+                  title={title}
+                  icon={icon}
+                  data={data}
+                  columns={columns}
+                  mapper={mapper}
+                  selectedIds={selectedIds}
+                  onToggle={(id) => toggleSelection(type, id)}
+                  onToggleAll={(ids) => toggleAll(type, ids)}
+                />
+              </>
             )}
           </div>
         );

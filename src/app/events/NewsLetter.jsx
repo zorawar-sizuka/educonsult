@@ -30,7 +30,7 @@ export default function NewsletterCTA() {
   };
 
   return (
-    <section className="relative rounded-[2.5rem] bg-[#111] text-white overflow-hidden shadow-2xl">
+    <section className="relative rounded-[2.5rem] bg-[#111] text-white overflow-hidden shadow-2xl w-[90%] mx-auto">
       {/* Ambient glows */}
       <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-indigo-900/20 rounded-full blur-[100px] pointer-events-none" />
       <div className="absolute bottom-0 left-0 w-[300px] h-[300px] bg-blue-900/10 rounded-full blur-[80px] pointer-events-none" />
