@@ -83,7 +83,7 @@ export default function Hero() {
         {/* --- 2. DESKTOP IMAGE (Hidden on mobile, Visible on 'md' and up) --- */}
         <div className=" hidden md:block relative w-full h-full">
             <Image
-            src="/hero/hero_4.png"
+            src="/hero/qwqw.jpeg"
             alt="Atmospheric university campus"
             fill
             priority 

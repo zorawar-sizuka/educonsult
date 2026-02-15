@@ -57,9 +57,9 @@ if (!globalForPrisma.prisma) {
   if (process.env.ACCELERATE_URL) {
     try {
       prismaInstance = baseClient.$extends(withAccelerate());
-      console.log("[Prisma] Accelerate extension applied successfully");
+      // console.log("[Prisma] Accelerate extension applied successfully");
     } catch (err) {
-      console.error("[Prisma] Accelerate extension failed:", err.message);
+      // console.error("[Prisma] Accelerate extension failed:", err.message);
       prismaInstance = baseClient; // fallback
     }
   } else {
