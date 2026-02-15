@@ -68,7 +68,7 @@ export default function Founder() {
                   className="relative z-10 w-[260px] h-[360px] md:w-[410px] md:h-[610px] rounded-3xl overflow-hidden shadow-[0_26px_70px_rgba(0,0,0,0.10)] bg-stone-200"
                 >
                   <Image
-                    src="https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=987&auto=format&fit=crop"
+                    src="/logos/founder.jpg"
                     alt="Confident Student"
                     fill
                     className="object-cover"
@@ -148,8 +148,8 @@ export default function Founder() {
                 <div className="mt-8 md:mt-12">
                   <div className="relative w-[180px] h-[60px] md:w-[220px] md:h-[70px]">
                     <Image
-                      src="/signature.png"
-                      alt="ROSS Global Signature"
+                      src="/logos/logo.png"
+                      alt="EIEC Signature"
                       fill
                       className="object-contain"
                     />
