@@ -156,7 +156,7 @@ export default function Founder() {
                   </div>
                   <div className="mt-4 h-px w-48 md:w-56 bg-slate-200" />
                   <p className="mt-4 text-sm text-slate-500">
-                    Lead Advisors Team, ROSS Global
+                    Lead Advisors Team, EIEC
                   </p>
                 </div>
 
