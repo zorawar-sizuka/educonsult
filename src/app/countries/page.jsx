@@ -40,11 +40,13 @@ export default function CountriesIndexPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <span className="inline-block px-4 py-1.5 rounded-full bg-blue-50 text-blue-600 text-xs font-bold uppercase tracking-widest mb-4"> 
+            {/* FIXED: Changed outer 'span' to 'div' to prevent Hydration Error */}
+            <div className="inline-block px-4 py-1.5 rounded-full bg-blue-50 text-blue-600 text-xs font-bold uppercase tracking-widest mb-4"> 
                 <div className='flex items-center justify-between gap-1'>
-            <MapPinHouse/>Destinations 
-            </div> 
-            </span>
+                  <MapPinHouse size={14} /> Destinations 
+                </div> 
+            </div>
+            
             <h1 className="text-4xl md:text-6xl font-serif text-slate-900 mb-6">
               Choose Your Future
             </h1>
@@ -80,8 +82,8 @@ export default function CountriesIndexPage() {
                     
                     {/* Badge */}
                     <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-bold text-slate-900 flex items-center gap-1 shadow-sm">
-                       <Globe className="w-3 h-3 text-blue-500" />
-                       Study Hub
+                        <Globe className="w-3 h-3 text-blue-500" />
+                        Study Hub
                     </div>
                   </div>
 
@@ -94,7 +96,7 @@ export default function CountriesIndexPage() {
                       {country.tagline}
                     </p>
 
-                    {/* Footer Stats (Mini Preview) */}
+                    {/* Footer Stats */}
                     <div className="flex items-center justify-between pt-6 border-t border-slate-100">
                       <div className="flex flex-col">
                         <span className="text-[10px] uppercase tracking-wider text-slate-400 font-bold">Avg Tuition</span>
@@ -113,19 +115,20 @@ export default function CountriesIndexPage() {
           ))}
         </motion.div>
       </div>
-         {/* -------------------------------------------------------
-          3. CTA
-      ------------------------------------------------------- */}
-      <section className="py-24 flex justify-center"> 
 
-<BookButton className="group relative px-8 py-4 bg-slate-900 text-white rounded-full overflow-hidden">
-  <div className="absolute inset-0 w-full h-full bg-blue-600 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out" />
-  <span className="relative z-10 font-medium tracking-wide flex items-center gap-2">
-    Start Your Application
-    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
-  </span>
-</BookButton>
+      {/* 3. CTA */}
+      <section className="py-24 flex justify-center relative">
+  <BookButton className="group relative z-10 inline-flex items-center justify-center cursor-pointer px-8 py-4 bg-slate-900 text-white rounded-full overflow-hidden">
+    <div className="absolute inset-0 w-full h-full bg-blue-600 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out pointer-events-none" />
+    <div className="relative  font-medium tracking-wide flex items-center gap-2 ">
+      Start Your Application
+      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+      </svg>
+    </div>
+  </BookButton>
 </section>
+
     </div>
   );
 }

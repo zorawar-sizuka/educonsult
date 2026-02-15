@@ -26,6 +26,7 @@ import {
   Gavel,
   Palette
 } from 'lucide-react';
+import BookButton from '@/components/FormButton/BookButton';
 
 // --- 1. The Registry: Maps data strings to actual Components ---
 const iconRegistry = {
@@ -138,10 +139,12 @@ export default function CountryView({ country }) {
                    </a>
                  ))}
               </nav>
-
-              <button className={`w-full py-4 rounded-xl ${country.themeColor} text-white font-bold text-lg hover:opacity-90 transition-opacity flex items-center justify-center gap-2`}>
-                Start Application <ArrowRight className="w-5 h-5" />
-              </button>
+              
+              <BookButton
+  className={`w-full py-4 rounded-xl ${country.themeColor} text-white font-bold text-lg hover:opacity-90 transition-opacity flex items-center justify-center gap-2`}
+>
+  Start Application <ArrowRight className="w-5 h-5" />
+</BookButton>
             </div>
           </aside>
 
