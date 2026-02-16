@@ -107,6 +107,7 @@ import EventsSkeleton from "./EventsSkeleton";
 import EventCard from "./EventsCard";
 import FilterBar from "./FilterBar";
 import NewsletterCTA from "./NewsLetter";
+import { AnimatePresence } from "framer-motion";
 
 const MONTHS = [
   "All Months", "January", "February", "March", "April", "May", "June",
@@ -170,10 +171,7 @@ export default function EventsGridClient({ initialEvents = [] }) {
         </div>
       )}
 
-      {/* Newsletter */}
-      <div className="mt-16 sm:mt-24">
-        <NewsletterCTA />
-      </div>
+  
     </section>
   );
 }
