@@ -12,7 +12,8 @@ const Footer = () => {
       links: [
         { name: "About Us", href: "/about" },
         { name: "Events", href: "/events" },
-        { name: "Contact Us", href: "/contact" },
+        { name: "Contact Us", href: "/contact" }, 
+        { name: "Our Vision", href: "/vision" },
       ],
     },
     {
