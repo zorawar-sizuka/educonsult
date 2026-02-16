@@ -25,6 +25,16 @@ const nextConfig = {
         hostname: 'www.pexels.com', // Allow Wikipedia images
         port: '',
         pathname: '/**',
+      }, 
+      {
+        protocol: 'https',
+        hostname: 'avcylblic93rwzti.public.blob.vercel-storage.com', // Your exact Vercel Blob domain
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: '*.vercel-storage.com', // Catch-all for future projects
+        pathname: '/**',
       },
     ],
   }, 
