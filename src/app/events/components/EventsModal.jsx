@@ -130,6 +130,131 @@
 
 
 
+// 'use client';
+
+// import { useState } from "react";
+// import Image from "next/image";
+// import { motion } from "framer-motion";
+// import { X, CalendarDays, MapPin, ArrowRight } from "lucide-react";
+// import RegistrationForm from "./RegistrationForm";
+
+// const formatDateFull = (dateStr) => {
+//   const d = new Date(dateStr);
+//   return d.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" });
+// };
+
+// const getEventImageSrc = (url) => {
+//   if (!url) return "/events/event.png";
+//   if (url.startsWith("https://")) return url;
+//   if (url.startsWith("/")) return url;
+//   return "/events/event.png";
+// };
+
+// export default function EventModal({ event, onClose }) {
+//   const [showRegister, setShowRegister] = useState(false);
+//   if (!event) return null;
+
+//   const imageSrc = getEventImageSrc(event.imageUrl);
+
+//   return (
+//     <>
+//       {showRegister && (
+//         <RegistrationForm
+//           eventName={event.title}
+//           onClose={() => {
+//             setShowRegister(false);
+//             onClose();
+//           }}
+//         />
+//       )}
+
+//       <div className={`fixed inset-0 z-[100] flex items-center justify-center p-4 ${showRegister ? "hidden" : ""}`}>
+//         <motion.div
+//           initial={{ opacity: 0 }}
+//           animate={{ opacity: 1 }}
+//           className="absolute inset-0 bg-slate-900/60 backdrop-blur-md"
+//           onClick={onClose}
+//         />
+
+//         <motion.div
+//           layoutId={`card-${event.id}`}
+//           className="relative bg-[#FAFAFA] w-full max-w-3xl max-h-[90vh] overflow-y-auto rounded-[2rem] shadow-2xl z-10 overflow-hidden"
+//         >
+//           <button
+//             onClick={onClose}
+//             className="absolute top-6 right-6 z-20 bg-white/50 backdrop-blur-md p-3 rounded-full hover:bg-white text-slate-900 transition-all hover:rotate-90 shadow-sm"
+//           >
+//             <X className="w-5 h-5" />
+//           </button>
+
+//           <div className="relative h-72 md:h-80 w-full">
+//             <Image
+//               src={imageSrc}
+//               alt={event.title}
+//               fill
+//               sizes="(min-width: 768px) 768px, 100vw"
+//               className="object-cover"
+//               priority
+//               onError={(e) => {
+//                 e.target.src = "/events/event.png"; // Fallback on error
+//               }}
+//             />
+//             <div className="absolute inset-0 bg-gradient-to-t from-[#FAFAFA] to-transparent opacity-90" />
+//             <div className="absolute bottom-7 left-7 md:left-12">
+//               <span className="bg-indigo-600 text-white px-4 py-1.5 rounded-full text-xs font-bold tracking-widest uppercase mb-4 inline-block shadow-lg shadow-indigo-500/30">
+//                 {event.category || "Event"}
+//               </span>
+//               <h2 className="text-4xl md:text-5xl font-serif text-slate-900 leading-none">{event.title}</h2>
+//             </div>
+//           </div>
+
+//           <div className="p-6 md:p-12 bg-white">
+//             <div className="flex flex-col md:flex-row gap-6 md:gap-8 mb-8 md:mb-10 border-b border-slate-200 pb-8">
+//               <div className="flex items-start gap-4 flex-1">
+//                 <div className="shrink-0 p-3 bg-white border border-slate-100 shadow-sm rounded-2xl text-indigo-600">
+//                   <CalendarDays className="w-6 h-6" />
+//                 </div>
+//                 <div>
+//                   <p className="text-xs text-slate-400 uppercase font-bold tracking-widest mb-1">Date & Time</p>
+//                   <p className="text-lg text-slate-900 font-medium">{formatDateFull(event.date)}</p>
+//                   <p className="text-base text-slate-500">{event.time}</p>
+//                 </div>
+//               </div>
+
+//               <div className="flex items-start gap-4 flex-1">
+//                 <div className="shrink-0 p-3 bg-white border border-slate-100 shadow-sm rounded-2xl text-indigo-600">
+//                   <MapPin className="w-6 h-6" />
+//                 </div>
+//                 <div>
+//                   <p className="text-xs text-slate-400 uppercase font-bold tracking-widest mb-1">Location</p>
+//                   <p className="text-lg text-slate-900 font-medium leading-tight">{event.location}</p>
+//                 </div>
+//               </div>
+//             </div>
+
+//             <div className="prose prose-base md:prose-lg text-slate-600 max-w-none mb-10 font-light">
+//               <p className="text-lg md:text-xl text-slate-800 font-normal leading-relaxed">{event.description}</p>
+//               <p>{event.longDescription || "Join us for an immersive experience designed to inspire and connect."}</p>
+//             </div>
+
+//             <button
+//               onClick={() => setShowRegister(true)}
+//               className="w-full bg-slate-900 text-white py-4 md:py-5 rounded-2xl font-bold text-base md:text-lg hover:bg-indigo-600 transition-colors flex items-center justify-center gap-2 group shadow-xl shadow-slate-900/10 active:scale-[0.98] duration-200"
+//             >
+//               Secure Your Spot
+//               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+//             </button>
+//           </div>
+//         </motion.div>
+//       </div>
+//     </>
+//   );
+// }
+
+
+
+
+
 'use client';
 
 import { useState } from "react";
@@ -172,22 +297,24 @@ export default function EventModal({ event, onClose }) {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="absolute inset-0 bg-slate-900/60 backdrop-blur-md"
+          className="absolute inset-0 bg-black/60 backdrop-blur-md"
           onClick={onClose}
         />
 
         <motion.div
           layoutId={`card-${event.id}`}
-          className="relative bg-[#FAFAFA] w-full max-w-3xl max-h-[90vh] overflow-y-auto rounded-[2rem] shadow-2xl z-10 overflow-hidden"
+          className="relative bg-white w-full max-w-3xl max-h-[90vh] overflow-y-auto rounded-3xl shadow-2xl z-10 overflow-hidden border border-[#d8e0f5]"
         >
+          {/* Close button */}
           <button
             onClick={onClose}
-            className="absolute top-6 right-6 z-20 bg-white/50 backdrop-blur-md p-3 rounded-full hover:bg-white text-slate-900 transition-all hover:rotate-90 shadow-sm"
+            className="absolute top-5 right-5 z-20 bg-white/80 backdrop-blur-md p-3 rounded-full hover:bg-[#eef2ff] text-[#3a56a4] hover:text-[#ef6925] transition-all duration-300 hover:rotate-90 shadow-sm"
           >
-            <X className="w-5 h-5" />
+            <X className="w-6 h-6" />
           </button>
 
-          <div className="relative h-72 md:h-80 w-full">
+          {/* Hero image section */}
+          <div className="relative h-64 sm:h-72 md:h-80 w-full">
             <Image
               src={imageSrc}
               alt={event.title}
@@ -196,53 +323,75 @@ export default function EventModal({ event, onClose }) {
               className="object-cover"
               priority
               onError={(e) => {
-                e.target.src = "/events/event.png"; // Fallback on error
+                e.target.src = "/events/event.png";
               }}
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#FAFAFA] to-transparent opacity-90" />
-            <div className="absolute bottom-7 left-7 md:left-12">
-              <span className="bg-indigo-600 text-white px-4 py-1.5 rounded-full text-xs font-bold tracking-widest uppercase mb-4 inline-block shadow-lg shadow-indigo-500/30">
-                {event.category || "Event"}
-              </span>
-              <h2 className="text-4xl md:text-5xl font-serif text-slate-900 leading-none">{event.title}</h2>
+            <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/30 to-transparent" />
+
+            <div className="absolute bottom-6 left-6 right-6 md:bottom-8 md:left-8 md:right-8">
+              <div className="flex flex-wrap items-center gap-3 mb-4">
+                <span className="px-4 py-1.5 rounded-full text-xs md:text-sm font-bold uppercase tracking-wider bg-[#ef6925] text-white shadow-md">
+                  {event.category || "Event"}
+                </span>
+              </div>
+
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-white leading-tight drop-shadow-lg">
+                {event.title}
+              </h2>
             </div>
           </div>
 
-          <div className="p-6 md:p-12 bg-white">
-            <div className="flex flex-col md:flex-row gap-6 md:gap-8 mb-8 md:mb-10 border-b border-slate-200 pb-8">
-              <div className="flex items-start gap-4 flex-1">
-                <div className="shrink-0 p-3 bg-white border border-slate-100 shadow-sm rounded-2xl text-indigo-600">
-                  <CalendarDays className="w-6 h-6" />
+          {/* Content */}
+          <div className="p-6 md:p-10 bg-white">
+            {/* Date & Location */}
+            <div className="grid sm:grid-cols-2 gap-6 md:gap-8 mb-10 pb-8 border-b border-[#e4e9f6]">
+              <div className="flex items-start gap-4">
+                <div className="shrink-0 p-3.5 bg-[#eef2ff] rounded-2xl text-[#3a56a4] border border-[#d0dfff]">
+                  <CalendarDays className="w-7 h-7" />
                 </div>
                 <div>
-                  <p className="text-xs text-slate-400 uppercase font-bold tracking-widest mb-1">Date & Time</p>
-                  <p className="text-lg text-slate-900 font-medium">{formatDateFull(event.date)}</p>
-                  <p className="text-base text-slate-500">{event.time}</p>
+                  <p className="text-xs text-[#3a56a4] uppercase font-bold tracking-wider mb-1.5">
+                    Date & Time
+                  </p>
+                  <p className="text-lg md:text-xl font-semibold text-[#1f2d4d]">
+                    {formatDateFull(event.date)}
+                  </p>
+                  <p className="text-base text-[#6b7899] mt-1">{event.time}</p>
                 </div>
               </div>
 
-              <div className="flex items-start gap-4 flex-1">
-                <div className="shrink-0 p-3 bg-white border border-slate-100 shadow-sm rounded-2xl text-indigo-600">
-                  <MapPin className="w-6 h-6" />
+              <div className="flex items-start gap-4">
+                <div className="shrink-0 p-3.5 bg-[#eef2ff] rounded-2xl text-[#3a56a4] border border-[#d0dfff]">
+                  <MapPin className="w-7 h-7" />
                 </div>
                 <div>
-                  <p className="text-xs text-slate-400 uppercase font-bold tracking-widest mb-1">Location</p>
-                  <p className="text-lg text-slate-900 font-medium leading-tight">{event.location}</p>
+                  <p className="text-xs text-[#3a56a4] uppercase font-bold tracking-wider mb-1.5">
+                    Location
+                  </p>
+                  <p className="text-lg md:text-xl font-semibold text-[#1f2d4d] leading-tight">
+                    {event.location || "Kathmandu, Nepal"}
+                  </p>
                 </div>
               </div>
             </div>
 
-            <div className="prose prose-base md:prose-lg text-slate-600 max-w-none mb-10 font-light">
-              <p className="text-lg md:text-xl text-slate-800 font-normal leading-relaxed">{event.description}</p>
-              <p>{event.longDescription || "Join us for an immersive experience designed to inspire and connect."}</p>
+            {/* Description */}
+            <div className="prose prose-base md:prose-lg max-w-none mb-10">
+              <p className="text-lg md:text-xl text-[#3f4e7a] leading-relaxed font-normal">
+                {event.description}
+              </p>
+              <p className="mt-6 text-[#4a587a] leading-relaxed">
+                {event.longDescription || "Join us for an inspiring and enriching experience designed to connect and empower."}
+              </p>
             </div>
 
+            {/* CTA Button */}
             <button
               onClick={() => setShowRegister(true)}
-              className="w-full bg-slate-900 text-white py-4 md:py-5 rounded-2xl font-bold text-base md:text-lg hover:bg-indigo-600 transition-colors flex items-center justify-center gap-2 group shadow-xl shadow-slate-900/10 active:scale-[0.98] duration-200"
+              className="w-full bg-[#3a56a4] text-white py-4 md:py-5 rounded-2xl font-bold text-base md:text-lg hover:bg-[#2f4688] focus:ring-4 focus:ring-[#3a56a4]/30 transition-all duration-300 flex items-center justify-center gap-3 shadow-lg shadow-[#3a56a4]/20 active:scale-[0.98]"
             >
               Secure Your Spot
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
             </button>
           </div>
         </motion.div>

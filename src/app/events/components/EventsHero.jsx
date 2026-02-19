@@ -47,7 +47,7 @@ export default function EventsHero() {
             >
               <span className="relative flex h-2.5 w-8">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-60"></span>
-                <span className="relative inline-flex rounded-full h-2.5 w-8 bg-indigo-600"></span>
+                <span className="relative inline-flex rounded-full h-2.5 w-8 bg-[#ef6925]"></span>
               </span>
               <span className="text-xs font-bold uppercase tracking-widest text-indigo-900">
                 Kathmandu Events
@@ -58,10 +58,10 @@ export default function EventsHero() {
               initial={{ opacity: 0, y: 26 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.05, duration: 0.8 }}
-              className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-serif text-slate-900 leading-[0.92] tracking-tighter"
+              className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-serif text-[#3a56a4] leading-[0.92] tracking-tighter"
             >
               Curated <br />
-              <span className="italic text-slate-400">Moments.</span>
+              <span className="italic text-[#f5682b]/60">Moments.</span>
             </motion.h1>
 
             {/* Tags row (vertical line style) */}

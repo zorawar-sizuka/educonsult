@@ -106,7 +106,7 @@ export default function Hero() {
             className="max-w-[640px] will-change-transform"
           >
             <h1 className="mt-24 text-[52px] sm:text-[64px] lg:text-[78px] leading-[1.05] tracking-wide font-sans">
-             <span className="font-semibold font-sans text-[#f06925]">EIEC </span> 
+             <span className="font-semibold font-sans text-[#f06925] whitespace-nowrap">E-spot Int'l </span> 
               <br />
               <span className="font-semibold font-sans"><span className="text-[#2d61f0]">Education</span><br/>Consultancy</span>
             </h1>

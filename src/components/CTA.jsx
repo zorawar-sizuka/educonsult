@@ -53,9 +53,9 @@ const FooterCTA = () => {
 
         {/* --- CENTER CONTENT --- */}
         <div className="relative z-20 text-center max-w-lg px-6 py-12">
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 tracking-tight leading-tight mb-4">
+          <h2 className="text-4xl md:text-5xl font-bold text-[#ff5e00] tracking-tight leading-tight mb-4">
             Build better <br />
-            <span className="text-gray-900">futures.</span>
+            <span className="text-[#ff5e00]">futures.</span>
           </h2>
           
           <p className="text-base text-gray-500 mb-8 font-medium leading-relaxed">
@@ -64,7 +64,7 @@ const FooterCTA = () => {
 
           <Link 
             href="/contact" 
-            className="group relative inline-flex items-center gap-2 bg-gray-900 text-white px-8 py-3.5 rounded-full text-sm font-semibold tracking-wide hover:bg-gray-800 transition-all duration-300 shadow-[0_10px_20px_-10px_rgba(0,0,0,0.5)] hover:shadow-[0_20px_30px_-10px_rgba(0,0,0,0.6)] hover:-translate-y-0.5"
+            className="group relative inline-flex items-center gap-2 bg-[#0c38b0] text-white px-8 py-3.5 rounded-full text-sm font-semibold tracking-wide hover:bg-[#f16825] transition-all duration-300 shadow-[0_10px_20px_-10px_rgba(0,0,0,0.5)] hover:shadow-[0_20px_30px_-10px_rgba(0,0,0,0.6)] hover:-translate-y-0.5"
           >
             <span>Work with us</span>
             <div className="bg-white/20 rounded-full p-1 group-hover:translate-x-1 transition-transform">

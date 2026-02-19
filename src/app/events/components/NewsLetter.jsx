@@ -31,15 +31,16 @@ export default function NewsletterCTA() {
 
   return (
     <section className="relative rounded-[2.5rem] bg-[#111] text-white overflow-hidden shadow-2xl w-[90%] mx-auto">
-      {/* Ambient glows */}
-      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-indigo-900/20 rounded-full blur-[100px] pointer-events-none" />
-      <div className="absolute bottom-0 left-0 w-[300px] h-[300px] bg-blue-900/10 rounded-full blur-[80px] pointer-events-none" />
+      
+      {/* Ambient glows (Updated to Brand Blue instead of Indigo/Purple) */}
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#3a56a4]/25 rounded-full blur-[100px] pointer-events-none" />
+      <div className="absolute bottom-0 left-0 w-[300px] h-[300px] bg-[#3a56a4]/15 rounded-full blur-[80px] pointer-events-none" />
 
       <div className="relative z-10 py-20 px-6 md:px-20 flex flex-col lg:flex-row items-center justify-between gap-12">
         
         {/* Text */}
         <div className="max-w-xl text-center lg:text-left">
-          <div className="inline-flex items-center gap-2 mb-6 text-indigo-300">
+          <div className="inline-flex items-center gap-2 mb-6 text-[#ef6925]">
             <Mail className="w-5 h-5" />
             <span className="text-xs font-bold uppercase tracking-widest">
               Newsletter
@@ -90,9 +91,9 @@ export default function NewsletterCTA() {
               bg-white text-black
               px-8 py-4 rounded-full
               font-bold
-              hover:bg-indigo-500 hover:text-white
+              hover:bg-[#3a56a4] hover:text-white
               transition-all
-              shadow-lg hover:shadow-indigo-500/25
+              shadow-lg hover:shadow-[#3a56a4]/30
               shrink-0
               flex items-center justify-center gap-2
             "
