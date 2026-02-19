@@ -518,7 +518,7 @@ const Navbar = () => {
         ].join(" ")}
       >
         {/* 1. LOGO AREA */}
-        <div className="pointer-events-auto pl-1 mr-2">
+        {/* <div className="pointer-events-auto pl-1 mr-2">
           <Link href="/" className="relative flex items-center group">
             <div className="rounded-xl bg-white/90 backdrop-blur border border-black/10 dark:border-white/10 shadow-md overflow-hidden">
               <Image
@@ -540,8 +540,38 @@ const Navbar = () => {
               />
             </div>
           </Link>
-        </div>
-
+        </div> */}
+{/* 1. LOGO AREA – responsive magic */}
+<div className="pointer-events-auto pl-1.5 pr-2 md:pr-3 flex-shrink-0">
+  <Link href="/" className="relative flex items-center group">
+    <div className="
+      rounded-xl bg-white/90 backdrop-blur 
+      border border-black/10 dark:border-white/10 
+      shadow-md overflow-hidden
+      transition-all duration-300
+      w-[6rem] h-[6rem]          /* mobile base – ~72px */
+      xs:w-20 xs:h-20                 /* small phones landscape ~80px */
+      sm:w-28 sm:h-28                 /* tablet / larger phones ~112px */
+      md:w-34 md:h-24                 /* your perfect desktop size */
+    ">
+      <Image
+        src="/logos/logo.png"
+        alt="EEIC Logo"
+        width={340}                     // high-res source for sharpness
+        height={240}
+        className="
+          w-full h-full
+          object-contain
+          scale-125                     // your preferred enlargement
+          p-1.5                         // inner breathing room
+          transition-transform duration-500 
+          group-hover:scale-135         // slightly more dramatic hover
+        "
+        priority
+      />
+    </div>
+  </Link>
+</div>
         {/* 2. NAVIGATION CAPSULE */}
         <div
           className={[
