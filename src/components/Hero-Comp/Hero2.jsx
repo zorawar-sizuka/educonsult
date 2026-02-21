@@ -109,13 +109,13 @@ export default function Hero2() {
     world-class education, skilled career pathways, and global citizenship.
   </p>
 
-  {/* UPGRADED CTA BUTTON */}
+  {/*  CTA BUTTON */}
   <Link 
     href="/vision" 
     className="group inline-flex items-center gap-3 font-bold text-[#0A2558] text-sm tracking-widest uppercase hover:text-blue-700 transition-colors"
   >
     Explore the Vision
-    {/* New Icon: Diagonal "Growth" Arrow */}
+ 
     <span className="bg-[#fe5f01] text-white rounded-full p-1.5 transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1">
       <svg 
         className="w-3.5 h-3.5" 

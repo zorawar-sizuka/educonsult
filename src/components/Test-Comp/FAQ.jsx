@@ -1,4 +1,4 @@
-// src/components/Test-Comp/Faq.jsx
+
 "use client";
 
 import { useMemo, useState } from "react";

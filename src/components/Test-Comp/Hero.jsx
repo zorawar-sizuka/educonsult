@@ -1,4 +1,4 @@
-// src/components/Test-Comp/Hero.jsx
+
 "use client";
 
 import { motion } from "framer-motion";

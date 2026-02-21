@@ -1,33 +1,3 @@
-// import { PrismaClient } from '@prisma/client';
-// import { NextResponse } from 'next/server';
-
-// const prisma = new PrismaClient();
-
-// export async function POST(req) {
-//   try {
-//     const body = await req.json();
-//     console.log("📝 Attempting inquiry:", body);
-
-//     const result = await prisma.inquiry.create({
-//       data: {
-//         name: body.name,
-//         email: body.email,
-//         destination: body.destination,
-//         gpa: body.gpa,
-//         englishScore: body.englishScore,
-//         course: body.course,
-//       },
-//     });
-
-//     console.log("✅ Inquiry Saved:", result);
-//     return NextResponse.json(result);
-//   } catch (error) {
-//     console.error("❌ Inquiry Error:", error);
-//     return NextResponse.json({ error: error.message }, { status: 500 });
-//   }
-// } 
-
-
 
 
 

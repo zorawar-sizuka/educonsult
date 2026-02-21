@@ -97,7 +97,7 @@ export default function AboutPage() {
       <section className="py-24 px-4 sm:px-6 lg:px-12 max-w-7xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-32 items-start">
           <div className="flex flex-col gap-8"> {/* Removed sticky top-24 */}
-            <div className="inline-flex items-center gap-2 bg-[#D2F023] px-3 py-1.5 self-start">
+            <div className="inline-flex items-center gap-2 bg-[#FF7700] px-4 py-2.5 self-start">
               <Plus className="w-3 h-3 text-black" />
               <span className="text-xs font-bold uppercase tracking-widest text-black">
                 Our Mission
@@ -176,7 +176,7 @@ export default function AboutPage() {
         <section className="py-12 md:py-20 max-w-7xl mx-auto">
             
           <div className="text-center mb-12 md:mb-16">
-            <span className="text-xs font-bold uppercase tracking-widest text-[#10b981] mb-2 block">
+            <span className="text-xs font-bold uppercase tracking-widest text-[#0c39b1] mb-2 block">
               Expertise
             </span>
             <h3 className="text-3xl md:text-5xl font-medium text-slate-900 font-serif">
@@ -281,7 +281,7 @@ function JourneyStep({ item, index }) {
       {/* 2. TEXT SIDE */}
       <div className="w-full lg:w-1/2 pl-0 lg:pl-0">
         <div className="flex flex-col items-start">
-          <span className="text-5xl sm:text-6xl md:text-7xl font-bold text-[#10b981] opacity-90 mb-4 font-serif">
+          <span className="text-5xl sm:text-6xl md:text-7xl font-bold text-[#4373f8] opacity-90 mb-4 font-serif">
             {number}
           </span>
           <h4 className="text-xl sm:text-2xl md:text-3xl font-semibold text-slate-900 mb-4">

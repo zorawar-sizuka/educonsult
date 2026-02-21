@@ -64,7 +64,7 @@ export default function Founder() {
                   whileInView={{ scale: 1, opacity: 1 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.85, ease: "circOut" }}
-                  // Mobile: w-[260px] to ensure pills fit on sides on small screens
+             
                   className="relative z-10 w-[260px] h-[360px] md:w-[410px] md:h-[610px] rounded-3xl overflow-hidden shadow-[0_26px_70px_rgba(0,0,0,0.10)] bg-stone-200"
                 >
                   <Image
@@ -176,9 +176,7 @@ export default function Founder() {
   );
 }
 
-/** * Subcomponent: Stat Pill 
- * Slightly smaller padding/text on mobile for better fit 
- */
+/** * Subcomponent: Stat Pill*/
 function StatPill({ label, value, delay, side }) {
   return (
     <motion.div

@@ -167,7 +167,7 @@ const TermsOfService = () => {
           {/* Non-clickable Thank You Badge */}
           <div className="inline-flex items-center gap-2 bg-slate-900 text-white px-8 py-4 rounded-full shadow-lg shadow-slate-900/20 cursor-default">
             <Globe size={18} />
-            <span className="font-bold text-sm tracking-wide">Thank you for choosing EEIC</span>
+            <span className="font-bold text-sm tracking-wide">Thank you for choosing EIEC</span>
           </div>
           <p className="text-slate-400 text-xs uppercase tracking-widest">
             © {new Date().getFullYear()} E-Spot International. All rights reserved.

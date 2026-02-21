@@ -8,13 +8,13 @@ export default function LogoMarquee({
   speed = 40,
   pauseOnHover = true,
   className = "",
-  originalColor = false, // 1. Added new prop with default false
+  originalColor = false, 
 }) {
   return (
     <div className={`w-full ${className}`}>
       
       <div className="text-center px-16">
-        {/* Optional header */}
+       
       </div>
 
       <Marquee
@@ -37,8 +37,7 @@ export default function LogoMarquee({
                   alt={l.alt}
                   width={160}
                   height={50}
-                  // 2. Logic: If originalColor is true, we skip the filters.
-                  //    If false, we apply grayscale, brightness-0, and invert.
+               
                   className={`h-full w-auto object-contain opacity-100 transition-all duration-500 cursor-pointer 
                     ${originalColor 
                       ? "" 
@@ -49,7 +48,7 @@ export default function LogoMarquee({
                   blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaUMk9jkHLUw2QzGpEnb0STETSlGYb4kXq6CWWKv/9k="
                 />
                 
-                {/* 3. Only show the hover glow effect if we are NOT in original color mode */}
+          
                 {!originalColor && (
                    <div className="absolute inset-0 bg-white/0 group-hover:bg-white/5 transition-all duration-300 rounded-lg"></div>
                 )}

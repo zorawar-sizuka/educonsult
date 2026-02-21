@@ -13,8 +13,8 @@ export default function ContactSection({ imageSrc = "/footer/form_footer.jpg" })
   });
 
   // UX state
-  const [status, setStatus] = useState("idle"); // idle | loading | success | error
-  const [feedback, setFeedback] = useState(""); // success/error message
+  const [status, setStatus] = useState("idle"); 
+  const [feedback, setFeedback] = useState(""); 
   const [shake, setShake] = useState(false);
 
   const abortRef = useRef(null);

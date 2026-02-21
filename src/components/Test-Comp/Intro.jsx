@@ -1,4 +1,4 @@
-// src/components/Test-Comp/Intro.jsx
+
 export default function Introduction({ data }) {
     if (!data) return null;
   

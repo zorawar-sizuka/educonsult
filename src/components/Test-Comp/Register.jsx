@@ -1,4 +1,4 @@
-// src/components/Test-Comp/Register.jsx
+
 export default function Register({ data }) {
     if (
       !data ||

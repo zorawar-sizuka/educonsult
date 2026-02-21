@@ -7,7 +7,7 @@ import BookButton from "../FormButton/BookButton";
 import InquireButton from "../FormButton/InquireButton";
 
 export default function Hero() {
-  // 1. Remove useState. Use Refs to access DOM elements directly.
+
   const bgRef = useRef(null);
   const contentRef = useRef(null);
   const scrollIndRef = useRef(null);
@@ -21,22 +21,20 @@ export default function Hero() {
     const loop = () => {
       const targetY = window.scrollY || 0;
       
-      // Smooth Inertia Math
-      // If the difference is extremely small, stop calculating to save resources
+      
       const diff = targetY - currentY.current;
       if (Math.abs(diff) > 0.05) {
         currentY.current += diff * 0.08;
       }
 
-      // 2. Update styles directly via Refs (No Re-renders!)
       
-      // Background Parallax
+  
       if (bgRef.current) {
         const bgTranslate = Math.min(currentY.current * 0.22, 140);
         bgRef.current.style.transform = `translateY(${bgTranslate}px)`;
       }
 
-      // Content Float & Fade
+    
       if (contentRef.current) {
         const textTranslate = Math.min(currentY.current * 0.04, 26);
         const textOpacity = Math.max(0, 1 - currentY.current * 0.0013);
@@ -45,7 +43,7 @@ export default function Hero() {
         contentRef.current.style.opacity = textOpacity;
       }
 
-      // Scroll Indicator Fade
+      
       if (scrollIndRef.current) {
         scrollIndRef.current.style.opacity = Math.max(0, 1 - currentY.current * 0.01);
       }
@@ -102,7 +100,7 @@ export default function Hero() {
           
           {/* Left Content Block */}
           <div
-            ref={contentRef} // Attached Ref
+            ref={contentRef} 
             className="max-w-[640px] will-change-transform"
           >
             <h1 className="mt-24 text-[52px] sm:text-[64px] lg:text-[78px] leading-[1.05] tracking-wide font-sans">
@@ -170,7 +168,7 @@ export default function Hero() {
 
       {/* Scroll indicator */}
       <div
-        ref={scrollIndRef} // Attached Ref
+        ref={scrollIndRef} 
         className="absolute bottom-12 left-1/2 -translate-x-1/2 z-20 hidden md:block"
       >
         <div className="flex flex-col items-center">

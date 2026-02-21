@@ -101,7 +101,7 @@ export default function TestimonialMarquee() {
         
         {/* MAIN HEADLINE */}
         <h2 className="text-3xl md:text-5xl font-serif text-[#1a1a1a] mb-2 tracking-tight">
-          Real stories. Real winners.
+          Real <span className="text-[#f06625]">stories.</span> Real <span className="text-[#0c39b1]">winners.</span>
         </h2>
         <h2 className="text-3xl md:text-5xl font-serif text-gray-400 tracking-tight italic">
           Straight from our clients.

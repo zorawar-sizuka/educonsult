@@ -1,4 +1,4 @@
-// src/components/Test-Comp/TableSection.jsx
+
 export default function TableSection({ data }) {
     if (!data || !data.title || !data.mode) return null;
   

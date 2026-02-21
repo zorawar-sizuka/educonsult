@@ -1,4 +1,4 @@
-// src/components/Test-Comp/Stat.jsx
+
 export default function Stat({ data }) {
     if (!data || !Array.isArray(data)) return null;
   
